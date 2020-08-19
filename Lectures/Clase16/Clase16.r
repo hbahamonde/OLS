@@ -48,9 +48,11 @@ graphics.off()
 # r2: Viendo el r2
 #################################################################
 
+# Cargar paquete para cargar bases que no son de R.
 # install.packages("foreign")
 library(foreign) # significa "foraneo"
-dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Lectures/Clase15/Obama.dta")
+options(scipen = 1000000) # apagar notacion cientifica.
+dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/obama.dta")
 
 # Base
 head(dat) # Base sobre preferencias politicas: Obama.

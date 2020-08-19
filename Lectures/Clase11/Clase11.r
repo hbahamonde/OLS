@@ -24,8 +24,10 @@ graphics.off()
 if (!require("pacman")) install.packages("pacman"); library(pacman)
 
 # Cargar paquete para cargar bases que no son de R.
-p_load(foreign) # significa "foraneo"
-dat <- read.dta("cow.dta") # cargar base en  R (hasta el momento solo la habiamos descargado).
+# install.packages("foreign")
+library(foreign) # significa "foraneo"
+options(scipen = 1000000) # apagar notacion cientifica.
+dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/cow.dta")
 
 # Siempre inspeccionar base
 options(scipen=9999999)

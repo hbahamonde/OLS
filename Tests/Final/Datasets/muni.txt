@@ -1,0 +1,17 @@
+comuna
+comuna_id	
+region	
+n_encuestados	numero de encuestados
+poblacion	
+porc_rural	porcentaje de ruralidad
+edad_prom	edad promedio
+porc_mujeres	porcentaje de mujeres
+porc_profesionales	porcentaje de profesionales
+porc_pobres_ing	 porcentajes de pobres medido bajo cierto ingreso
+porc_pobres_md4	 porcentaje de pobres dentro de una categoria de pobreza multidimensional
+porc_uso_diario_inet	porcentaje de uso diario de internet
+porc_particip_iglesia	porcentaje de personas que va a la iglesia al menos 1 vez a la semana
+porc_mapuche	 porcentaje de poblacion mapuche
+alcalde_nombre	
+alcalde_coalicion	
+alcalde_reelecto  1 si fue reelecto 0 si no

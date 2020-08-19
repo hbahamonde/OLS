@@ -1,0 +1,17 @@
+provincia
+region	
+pob2017	poblacion 2017
+urbancenso porcentaje de gente urbana	
+indigena porcentaje de indigenas	
+superficie  superficie de la comuna	
+alcant	 porcentaje de gente con alcantarillado
+electr	 porcentaje de gente con electricidad
+pobreza	 porcentaje de pobres
+escuelas	numero de escuelas publicas
+salud	 numero de recintos de salud publicos
+crimen	crimenes de mayor connotacion social (asesinatos, robos, etc)
+gini	 coeficiente de gini mide desigualdad
+IPC	  ingreso per capita de la comuna
+escolaridad	años de escolaridad
+IDH	indice de desarrollo humano
+pdtotal  personas detenidas producto de infringir la ley de drogas

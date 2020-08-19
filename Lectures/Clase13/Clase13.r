@@ -34,7 +34,7 @@ graphics.off()
 # install.packages("foreign")
 library(foreign) # significa "foraneo"
 options(scipen = 1000000) # apagar notacion cientifica.
-dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Lectures/Clase13/cow.dta")
+dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/cow.dta")
 
 
 # Hoy pensaremos en que factores ayudan a subir la poblacion en los paises.

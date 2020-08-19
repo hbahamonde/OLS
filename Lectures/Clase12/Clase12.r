@@ -8,8 +8,8 @@ graphics.off()
 # Cargar paquete para cargar bases que no son de R.
 # install.packages("foreign")
 library(foreign) # significa "foraneo"
-dat <- read.dta("cow.dta") # cargar base en  R (hasta el momento solo la habiamos descargado).
-
+options(scipen = 1000000) # apagar notacion cientifica.
+dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/cow.dta")
 
 # Estimar modelo lineal: relacion entre crecimiento economico y democracia, controlando por poblacion
 modelo.1 = lm(rgdpch ~ democracy + pop, dat)
