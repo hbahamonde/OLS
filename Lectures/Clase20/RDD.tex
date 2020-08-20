@@ -200,7 +200,7 @@ La idea de este m\'etodo es poder imitar RCTs (\emph{randomized control trials})
 \\
 Imagina el siguiente problema. Supongamos que queremos saber el efecto que tuvo una pol\'itica p\'ublica. Qu\'e herramientas econom\'etricas podr\'ias usar para simular un efecto causal del tratamiento?
 
-Partiremos pensando en una equaci\'on lineal, donde nuevamente $z$ es nuestro (cuasi) tratamiento. La variable $z$ es binaria [0, 1] y representa si la observaci\'on $i$ fue tratada $z(1)$ o no $z(0)$. Como en todos los supuestos de la inferencia causal, el promedio de los {\bf observables} de $i(1)$ y $i(0)$ son iguales. Veamos la ecuaci\'on:
+Partiremos pensando en una equaci\'on lineal, donde nuevamente $z$ es nuestro (cuasi) tratamiento. La variable $z$ es binaria [0, 1] y representa si la observaci\'on $i$ fue tratada $z(1)$ o no $z(0)$. Veamos la ecuaci\'on:
 
 \begin{equation}\label{eq:1}
 y_{i} \;=\; \beta_{0} + \beta_{1}x_{i} + \pi z_{i} + \rho x_{i}z_{i} + \epsilon_{i}
@@ -211,7 +211,7 @@ donde $y$ es la variable dependiente, $\beta_{0}$ es el intercepto y $\epsilon_{
 \begin{enumerate}
 	\item {\bf ``Cambio en el intercepto''}: Se observa al ver el efecto y significancia de $\pi$ que es el par\'ametro a estimar asociado al tratamiento $z$.
 
-	\item  {\bf `Cambio en el slope/pendiente''}: este se observa al ver el par\'ametro $\rho$ que representa al efecto estimado \emph{combinado} de la variable tratamiento $z$ {\bf y} la variable control $x$. Matem\'aticamente, esto significa que tendremos un par\'ametro asociado a un {\bf t\'ermino de interacci\'on} de la siguiente forma: $\rho(x_{i}\times z_{i})$. 
+	\item  {\bf ``Cambio en el intercepto y la pendiente''}: este se observa al ver el par\'ametro $\rho$ que representa al efecto estimado \emph{combinado} de la variable tratamiento $z$ {\bf y} la variable control $x$. Matem\'aticamente, esto significa que tendremos un par\'ametro asociado a un {\bf t\'ermino de interacci\'on} de la siguiente forma: $\rho(x_{i}\times z_{i})$. 
 \end{enumerate}
 
 \subsection*{T\'erminos de Interacci\'on}
@@ -241,7 +241,7 @@ Debido a que los efectos (cuasi) causales en los RDDs son (matem\'aticamente hab
 	\item {\bf La relaci\'on entre $x$ e $y$ no es mejor explicada por una funcion polynomial} (Fig. 6.1.1 en \emph{Mostly Harmless Econometrics}). El ``salto'' que se produce en $y$ al cambiar de $z(0)$ a $z(1)$ es mejor explicado por $z$ mismo que por ejemplo, una funci\'on polynomial. Esto es, con interacciones, tal y como en \autoref{eq:int:term}, pero esta vez, la variable es multiplicada por s\'i misma (como en \autoref{eq:2}). Un ejemplo de una regresi\'on polynomial permite curvas en la linea, y en general se ven as\'i:
 
 		\begin{equation}\label{eq:2}
-			y_{i} \;=\; \beta_{0} + \beta_{1}x_{i} + \beta_{2}(x_{i})^2 \epsilon_{i}
+			y_{i} \;=\; \beta_{0} + \beta_{1}x_{1} + \beta_{2}(x_{2})^2 + \epsilon_{i}
 		\end{equation}
 
 	\item {\bf La variable $x$ es continua}. 
@@ -265,12 +265,12 @@ Si todos estos supuestos se cumplen, debemos seguir los siguientes pasos:
 Realizando estos pasos, deberemos estimar la siguiente ecuaci\'on:
 
 		\begin{equation}\label{eq:3}
-			y_{i} \;=\; \beta_{0} + \beta_{1}(x_{i}-x_{\text{corte}}) + \pi z_{i} + \rho_{2}(x_{i}-x_{\text{corte}}) \times z_{i} +  \epsilon_{i}
+			y_{i} \;=\; \beta_{0} + \beta_{1}(x_{i}-x_{\text{corte}}) + \pi z_{i} + \rho([x_{i}-x_{\text{corte}}] \times z_{i}) +  \epsilon_{i}
 		\end{equation}
 
 Realizaremos este modelo general en los siguientes ejercicios.
 
-\paragraph{Group 2: ``Cambio en el intercepto'' ($\pi$)}. Si te fijas, \label{eq:3} contiene dos resultados diferentes (que se pueden ver en el output de \texttt{R}). La siguiente ecuaci\'on nos muestra un resultado para $z(1)$ y otro para $z(0)$.
+\paragraph{Group 2: ``Cambio en el intercepto'' ($\pi$).} Si te fijas, \label{eq:3} contiene dos resultados diferentes (que se pueden ver en el output de \texttt{R}). La siguiente ecuaci\'on nos muestra un resultado para $z(1)$ y otro para $z(0)$.
 
 \begin{equation} \label{eq:4}
 \begin{split}
@@ -298,9 +298,9 @@ y_{i}(1) &= 56.27 + 5.32(x_{i}-10.5) +  \epsilon_{i}
 \end{split}
 \end{equation}
 
-Es claro ver que \autoref{eq:4} nos muestra el pre-treatment $z(0)$ y el post-treatment $z(1)$. Y eso se ve reflejado en el output de \texttt{R}. Es importante que entiendas que matem\'aticamente el efecto asociado a $z$ (esto es, $\rho$), es una multiplicaci\'on entre $x_{i}$ y $z$.
+Es claro ver que \autoref{eq:4} nos muestra el pre-treatment $z(0)$ y el post-treatment $z(1)$. Y eso se ve reflejado en el output de \texttt{R}. Es importante que entiendas que matem\'aticamente el efecto asociado a $z$ (esto es, $\pi$), es una multiplicaci\'on entre $x_{i}$ y $z$.
 
-\paragraph{Group 3: ``Interaction Effect'' ($\rho$)}. Otra manera de ver el efecto (cuasi) causal de \autoref{eq:1}, es observar el par\'ametro $\rho$ que est\'a asociado al t\'ermino de interacci\'on $(x_{i}\times z_{i})$.
+\paragraph{Group 3: ``Cambio en el intercepto y la pendiente'' ($\rho$).} Otra manera de ver el efecto (cuasi) causal de \autoref{eq:1}, es observar el par\'ametro $\rho$ que est\'a asociado al t\'ermino de interacci\'on $(x_{i}\times z_{i})$. Aqu\'i, observamos el cambio combinado del intercepto ($\pi$) {\bf y} de la pendiente ($\rho$).
 
 \subsection*{Por Qu\'e Esta T\'ecnica Es (Cuasi) Experimental?}
 
@@ -312,9 +312,9 @@ Es claro ver que \autoref{eq:4} nos muestra el pre-treatment $z(0)$ y el post-tr
 
 \subsection*{Sharp y Fuzzy Designs}
 
-En esta ocasi\'on hemos visto \emph{``sharp'' designs}. Estos dise\~nos asumen \emph{``perfect compliance''}: al cambiar de $z(0)$ a $z(1)$, no existe overlap entre observaciones a lo largo de $x$. Substantivamente, esto significa que la variable $z$ clasifica $perfectamente$ a las observaciones a lo largo de $x$, lo que en la realidad no siempre es as\'i.
+En esta ocasi\'on hemos visto \emph{``sharp'' designs}. Estos dise\~nos asumen \emph{``perfect compliance''}: al cambiar de $z(0)$ a $z(1)$, no existe \emph{overlap} entre observaciones a lo largo de $x$. Substantivamente, esto significa que la variable $z$ clasifica $perfectamente$ a las observaciones a lo largo de $x$, lo que en la realidad no siempre es as\'i.
 
-Queda pendiente para la siguiente iteraci\'on de este curso:
+\paragraph{}Queda pendiente para la siguiente iteraci\'on de este curso:
 
 \begin{enumerate}
 	\item \emph{Fuzzy designs}, \emph{averge treatment among the treatments} (\emph{ATT}, que se usa en \emph{sharp designs}), \emph{intention to treat} y \emph{local average treatment effects} (LATE), que se usan en \emph{fuzzy designs}.
