@@ -122,7 +122,7 @@ vector.n.2
 vector.n.2 > vector.n
 
 # acceder al segundo elemento de un vector
-vector.n.2[40]
+vector.n.2[2]
 
 
 ##################
@@ -151,7 +151,7 @@ mi.informacion$profe[2]
 ##################
 
 # creemos una matriz, cuyos escalares (numeros) sigan una secuencia del 1 al 6, 1:6, y que tenga dos filas (rows).
-a <- matrix(1:6, nrow=2)
+a <- matrix(1:6 , nrow=s)
 
 
 # row 2 column 3
