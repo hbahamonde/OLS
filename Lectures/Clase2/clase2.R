@@ -1,6 +1,9 @@
 # Funciones básicas: promedio, help(), operadores, tipos de objetos (character, arrays, fechas, listas, dataframes).
 
 
+cat("\014")
+rm(list=ls())
+
 # 1+2
 ## Esta linea es un comentario. No ejecuta nada. 
 ## Destacala, y aprieta "Run" (que significa, "correr").
@@ -145,20 +148,18 @@ mi.informacion$clases
 # accedamos a un elemento por nombre y posicion
 mi.informacion$profe[2]
 
-
 ##################
 ## Tipos de objetos: Matrix
 ##################
 
 # creemos una matriz, cuyos escalares (numeros) sigan una secuencia del 1 al 6, 1:6, y que tenga dos filas (rows).
-a <- matrix(1:6 , nrow=s)
-
+a <- matrix(1:6 , nrow=2)
 
 # row 2 column 3
 a[2,3]
 
 # all rows column 2
-a[,2]
+a[ ,2]
 
 # all columns row 1
 a[1,]
@@ -175,10 +176,10 @@ c = as.Date('1/17/2001',format='%m/%d/%Y')
 a>b
 
 # crear texto
-texto = "2001-01-17"
+cualquier.cosa = "2001-01-17"
 
-c==texto # compara ambos textos (que son iguales).
-c>text # ya no funciona porque compara un texto con una fecha.
+c==cualquier.cosa # compara ambos textos (que son iguales).
+c>cualquier.cosa # ya no funciona porque compara un texto con una fecha.
 
 ##################
 ## Tipos de objetos: Dataframes (bases de datos)
@@ -197,7 +198,7 @@ head(base.de.datos)
 # describir lo basico de un df: "View"
 View(base.de.datos) # Igual a un Excel
 
-base.de.datos[3,2] # fila 3, columna 2
+base.de.datos[3,2] # fila 2, columna 3
 
 base.de.datos[1:2, "kilos"] # filtrando, pero usando el nombre de la columna. Para las filas, la secuencia de los dos primeros elementos. 
 base.de.datos[ ,"diabetico"] # todas las filas de la columna "diabetico"
@@ -207,6 +208,9 @@ colnames(base.de.datos)
 
 ## Acabas de descubrir un error. No eran kilos, si no que "edad". Cambia el nombre de las columnas.
 colnames(base.de.datos) <- c("diabetico", "edad", "nombre")
+
+base.de.datos
+
 
 ## Comprueba...
 colnames(base.de.datos)
