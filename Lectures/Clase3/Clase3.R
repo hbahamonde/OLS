@@ -47,7 +47,7 @@ colnames(Prestige.drop.2)
 
 ### Problema: ahora queremos hacer un "merge" (*pegar columnas*) de las dos DF's. El unico elemento en comun, es la variable "income".
 
-# Antes habiamos "merged" usando una variable categorica ("woman"). Ahora "mergiemos" una variable numerica. 
+# Antes habiamos "merged" usando la "woman" (%, es numerica). 
 
 # Pregunta: Cual es el riesgo de "mergiar" ocupando una variable categorica?
 
@@ -69,11 +69,12 @@ View(
         data.frame(
                 Prestige.drop.1$income,
                 Prestige.drop.2$income,
+                rev(Prestige.drop.1$income),
                 c(rev(Prestige.drop.1$income) == Prestige.drop.2$income)
         )
 )
 
-# OK. Dos profesiones ganan 3485. Veamos cual es.
+# OK. Dos profesiones ganan 3485. Veamos cuales son.
 
 ## Manera facil (usando "View" y despues filtrando):
 View(Prestige) # Y despues en el "Finder" (buscador), "3485"
@@ -99,7 +100,6 @@ Prestige.merge
 
 # Al ver Prestige.merge, comprobamos que aunque los datos esten desordenados, R los pegara.
 
-# Pregunta: por que no es muy bueno pegar por la variable "genero" como lo hicimos la clase pasada?
 # Pregunta: como podemos recontra asegurarnos de que estamos pegando ("merging") las columnas adecuadas. Por ejemplo, acabamos de darnos cuenta que "income" estaba (por casualidad) repetido. Como evitar estas situaciones?
 
 
@@ -208,7 +208,7 @@ Prestige$log.women.mas.uno = log(Prestige$women.mas.uno)
 
 head(Prestige) # Veamos...
 
-hist(Prestige$log.women.mas.uno, breaks = 5) # Ahora grafiquemos de nuevo, y veamos si el problema se resuelve.
+hist(Prestige$log.women.mas.uno, breaks = 10) # Ahora grafiquemos de nuevo, y veamos si el problema se resuelve.
 
 
 hist(Prestige$women, breaks = 5) # Comparemos con antes

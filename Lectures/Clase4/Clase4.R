@@ -1,4 +1,4 @@
-# Visualización de datos (I): bar plots (variable categórica/continua, categórica/categórica), scat- ter plots, histogramas, time series plots.
+# Visualización de datos (I): bar plots (variable categórica/continua, categórica/categórica),scatter plots, histogramas, time series plots.
 
 cat("\014")
 rm(list=ls())
@@ -20,7 +20,7 @@ Prestige$income.categorical <- ifelse(Prestige$income > mean(Prestige$income), "
 ## Grafiquemos variables categoricas o cualitativas (o "factors" en lenguaje R). Son todos sinonimos: categoricas = cualitativas = factors.
 plot(Prestige$income.categorical) 
 
-# Ups..error. R no entiende, porque "alto" y "bajo" es texto. Añadamos "levels" (o "etiquetas" que R pueda entender).
+# Ups..error. R no entiende porque "alto" y "bajo" son textos. Añadamos "levels" (o "etiquetas" que R pueda entender).
 Prestige$income.categorical = as.factor(Prestige$income.categorical)
 Prestige$income.categorical #  Fijate que abajo dice "Levels...". Ok, problema solucionado.
 
