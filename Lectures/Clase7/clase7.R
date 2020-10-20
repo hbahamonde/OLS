@@ -41,7 +41,7 @@ install.packages("LaplacesDemon")
 library(LaplacesDemon)
 
 set.seed(123)
-rbern(10, 0.5)
+bern=rbern(10, 0.5)
         # 1) numero de observaciones
         # 2) probabilidad de exito del "experimento".
        
@@ -56,7 +56,7 @@ rbern(10, 0.9)
 # Binomial
 ############################################
 
-# Es como la Bernoulli, pero para varios experimentos. Imaginate, 24 sets de 10 momnedas 
+# Es como la Bernoulli, pero para varios experimentos. Imaginate, 24 sets de 10 monedas 
 # que lanzamos; un set a la vez. Aqui tenemos "24 experimentos".
 
 set.seed(123)
