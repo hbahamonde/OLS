@@ -6,7 +6,7 @@
 
 # Objetivos: 
         # 1) Existen mas distribuciones que la distribucion normal.
-        # 2) Los varios tipos de distribuciones se ven distintas.
+        # 2) Las distribuciones se ven distintas.
         # 3) Cada una de ellas tienen una manera intuitiva de reconocerlas.
         # 4) Los metodos que ocuparemos desde la proxima clase, estaran orientados solo a modelar distribuciones normales.
 
@@ -56,8 +56,8 @@ rbern(10, 0.9)
 # Binomial
 ############################################
 
-# Es como la Bernoulli, pero para varios experimentos. Imaginate, diez personas   A Bernoulli distribution is a special case of binomial distribution. Specifically, when 𝑛=1
-    # = 1 he binomial distribution becomes Bernoulli distribution.
+# Es como la Bernoulli, pero para varios experimentos. Imaginate, 24 sets de 10 momnedas 
+# que lanzamos; un set a la vez. Aqui tenemos "24 experimentos".
 
 set.seed(123)
 rbinom(10, 24, 1)
@@ -66,12 +66,15 @@ rbinom(10, 24, 1)
         # 3. probabilidad de exito de cada "experimento". 
 
         ## Ej., si el numero de experimentos es "24", y la probabilidad especificada es 1, los 
+        ## 24 experimentos daran 1.
 
 set.seed(123)
-rbinom(10, 3, 1)
+rbinom(10, 3, 0.5)
 # 1. numero de observaciones.
 # 2. numero de "experimentos".
 # 3. probabilidad de exito de cada "experimento". 
+
+# Si es "0.5", la posobilidad de que en estos 10 experimentos salga un "3" es de 50%.
 
 
 
@@ -139,7 +142,7 @@ plot(
 # CASOS ESPECIALES
 ###########################################
 
-# AHora, solo para conocimiento gral., veremos otras distribuciones.
+# Ahora, solo para conocimiento gral., veremos otras distribuciones.
 # El punto importante, mas alla de saber (o no) programar esto, es que veas 
 # que las distribuciones son realizaciones de cuestiones cotidianas que
 # se ven en las ciencias sociales en general.
