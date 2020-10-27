@@ -38,29 +38,23 @@ t(x) %*% x
 # 324
 
 ## segundo, encontrar Adjacente
-## Multiples maneras. 
 
-# Hagamos el proceso de manera directa. Invirtamos 'x'
+# Hagamos el proceso de manera directa. Invirtamos x'x
 
-# Usuarios MAC: asegurarse de tener XQuartz instalado
-# https://dl.bintray.com/xquartz/downloads/XQuartz-2.7.11.dmg
-
-if (!require("pacman")) install.packages("pacman"); library(pacman)
-p_load(matlib)
-
-inv(t(x)%*%x)
+solve(t(x)%*%x)
 
 ###########################
 # Modelo
 ###########################
 
-# En Matriz
+# En Matriz: b = (x'x)-1*x'y
 options(scipen=99)
-inv(t(x) %*% x)%*%t(x)%*%y # beta
+solve(t(x) %*% x)%*%t(x)%*%y # beta
 
 # Usando el comando "lm"
 data = data.frame(
         x=x[,2:3],
-        y=y)
+        y=y
+        )
 
-lm(y ~ x.1 + x.2, data)
+lm(y ~ x.1 + x.2, data) # "lineal model"

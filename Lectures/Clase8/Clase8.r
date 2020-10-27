@@ -1,5 +1,10 @@
 # Introducción a modelos lineales: Qué es OLS?
 
+cat("\014")
+rm(list=ls())
+graphics.off()
+options(scipen=9999999)
+
 #######################################################
 # Cual es la relacion entre educacion y prestigio? 
 #######################################################
@@ -19,8 +24,8 @@ plot(base$educacion,base$prestigio) # Que tipo de relacion es esta? Positiva? Ne
 # Ahora creemos un modelo, es decir, estimemos beta_1
 modelo = lm(prestigio ~ educacion, data = base)
 
-modelo # veamos que nos dice nuestro "modelo"
-# interpretacion: Siempre partimos con nuestra X. Por cada unidad que subimos nuestra x (educacion), subimos beta_1 en nuestra y (prestigio). Supongamos que educacion esta medido en meses y prestigio en puntos. Esta sera nuestra unidad de medida. Es decir, si subo un mes de educacion, subo en prestigio 1.306 puntos. (Y ahi esta nuestra relacion positiva).
+summary(modelo) # veamos que nos dice nuestro "modelo"
+# interpretacion: Siempre partimos con nuestra X. Por cada unidad que subimos nuestra x (educacion), subimos la cantidad establecida en beta_1 (educacion) en nuestra y (prestigio). Supongamos que educacion esta medido en meses y prestigio en puntos. Esta sera nuestra unidad de medida. Es decir, si subo un mes de educacion, subo en prestigio 1.306 puntos. (Y ahi esta nuestra relacion positiva).
 
 
 # a) Por que se llama "modelo"? Pista: esta es la parte mas "artistica" de la estadistica. 
@@ -44,11 +49,21 @@ predict(modelo)
 #######################################################
 
 # vector para el error. Algebra simple...pero con comandos.
+# Volvamos a la ecuacion de OLS: 
+# y = b0 + b1*x1 + e
+# Reordenando los terminos, tenemos que e=
+# e = y-beta0-beta1*x
+# Hagamoslo con R...y metamos esos numeros en una nueva variable "error" dentro de nuestro objeto "base"
+
 base$error <- c(
         base$prestigio[1] - as.numeric(modelo$coefficients[1]) - (base$educacion[1] * as.numeric(modelo$coefficients[2])),
         base$prestigio[2] - as.numeric(modelo$coefficients[1]) - (base$educacion[2] * as.numeric(modelo$coefficients[2])),
         base$prestigio[3] - as.numeric(modelo$coefficients[1]) - (base$educacion[3] * as.numeric(modelo$coefficients[2]))
         )
+
+# Comprobemos que esta correcto
+base$error
+modelo$residuals
 
 # vector para el intercepto. Ojo: es un intercepto para todos. Por eso no esta indexado.
 base$intercepto <- c(

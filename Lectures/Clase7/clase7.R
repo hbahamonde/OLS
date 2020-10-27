@@ -1,5 +1,11 @@
 # Estadística descriptiva (II): binomial, normal, otras; simulación.
 
+cat("\014")
+rm(list=ls())
+graphics.off()
+options(scipen=9999999)
+
+
 ############################################
 # Tipos de Distribuciones
 ############################################
