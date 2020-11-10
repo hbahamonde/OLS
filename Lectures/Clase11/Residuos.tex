@@ -197,13 +197,13 @@
 
 
 \begin{gather}
-Y_{i} \ =\ \beta 0+\beta 1X1_{i} \ +\ e_{i} \notag\\
+y_{i} \ =\ \beta_{0}+\beta_{1}x_{i} \ +\ e_{i} \notag\\
  \notag
 \end{gather}
 
 
 \begin{gather}
-\text{Represi\'on}_{i} \ =\ \beta 0+\beta 1\text{Democracia}_{i} \ +e_{i} \notag\\
+\text{Represi\'on}_{i} \ =\ \beta_{0}+\beta_{1}\text{Democracia}_{i} \ +e_{i} \notag\\
 \notag
 \end{gather}
 
@@ -218,16 +218,24 @@ Y_{i} \ =\ \beta 0+\beta 1X1_{i} \ +\ e_{i} \notag\\
 \begin{bmatrix}
 -1.6370\\
 -1.3420\\
-0.5433 
+0.5433\\
+\vdots\\
+i_{N}
 \end{bmatrix}_{y_{i}} \ =\ -0.58566_{\beta 0} - 0.19107_{\beta_{1}}\begin{bmatrix}
 0.6156\\
 0.9518\\
--4.9760
-\end{bmatrix}_{X1_{i}} \ +\ \begin{bmatrix}
+-4.9760\\
+\vdots\\
+i_{N}
+\end{bmatrix}_{x_{i}} \ +\ \begin{bmatrix}
 -0.9337127\\
 -0.5744742\\
-0.1781864
+0.1781864\\
+\vdots\\
+i_{N}
 \end{bmatrix}_{\epsilon_{i}}
 \end{equation*}
+
+Es f\'acil ver entonces que $\epsilon_{i}= y_{i}-\hat y_{i}$. 
 
 \end{document}

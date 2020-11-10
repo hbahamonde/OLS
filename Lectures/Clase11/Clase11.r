@@ -30,7 +30,6 @@ options(scipen = 1000000) # apagar notacion cientifica.
 dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/cow.dta")
 
 # Siempre inspeccionar base
-options(scipen=9999999)
 head(dat)
 
 # country Country Name
@@ -60,8 +59,10 @@ summary(reg.bivariada) # Hoy solo miraremos los coeficientes. Otro dia veremos e
 # (2) Como podriamos escribir esto en forma de ecuacion?
 # (3) Como podriamos escribir esto en forma de matrix?
 
+# Veamos la guia en el pdf.
+
 # Calculando el error. El error es la diferencia entre lo que predecimos
-# y lo que vemos. Es decir entre "y" (niveles reales de represeion) 
+# y lo que vemos. Es decir entre "y" (niveles reales de repression) 
 # y "y'" (y prima), (niveles predecidos de represion). 
 
 # Primero, calculemos y'
@@ -95,9 +96,8 @@ round(median(dat$error),4) == round(median(reg.bivariada$residuals),4)
 # Puntos importantes:
 # (1.1) Siempre se dice que "los errores se cancelan mutuamente"
 # (1.2) Ej.: error de medicion en encuestas (mentirosos). 
-# (2.1) En este caso igual:
 
-head(dat$error, 50) 
+
 
 # Una manera grafica de ver el error, es ver un scatter plot
 # entre el error y el valor real.
@@ -167,7 +167,6 @@ x
 
 # Fijate que la primera y la segunda columna significan lo mismo ("notas en matematicas").
 
-# Imaginate que la fila 1 es Pedro, y la fila 2 es Juan.
 
 # Volvamos al modelo. Queremos ver que la ecuacion de regresion con dos variables
 # independientes que son identicas es imposible. Es decir, esto es imposible:
@@ -190,7 +189,7 @@ library(matlib) # para invertir matrices
 inv(t(x) %*% x) # Matriz no es invertible
 ## Esto significa que la determinante de la matriz es 0.
 
-### EJEMPLO EN LA PIZARRA
+
 
 # Es por esto que lm() no sabe muy bien que hacer con este problema. Veamos.
 
