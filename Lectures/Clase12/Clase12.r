@@ -14,13 +14,8 @@ dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/cow.dta")
 # Estimar modelo lineal: relacion entre crecimiento economico y democracia, controlando por poblacion
 modelo.1 = lm(rgdpch ~ democracy + pop, dat)
 
-dat$log.pop = log(dat$pop)
-
 # (1) Que significa "controlando por"?
 
-# resumen del modelo
-options(scipen = 1000000) # apagar notacion cientifica.
-summary(modelo.1)
 
 # Obtener intervalos de confianza
 ## Estos valores representan la incertidumbre de nuestra estimacion al promedio de cada variable, 
@@ -43,8 +38,9 @@ confint(modelo.1, level = 0.99) # 99% de confianza
 # plotear CI
 # install.packages("coefplot", "ggplot2")
 library(coefplot, ggplot2)
+coefplot(modelo.1)
 
-coefplot(modelo.1, strict=TRUE)
+
 
 
 # (1) Compara los numeros de la tabla "confint" y lo que ves en el grafico.
@@ -88,27 +84,21 @@ plot(allEffects(modelo.1))
 # Primero, obtengamos el error
 e = as.vector(modelo.1$residuals)
 e # es simplemente un vector con todos los errores (diferencia entre observado
-# y predicho?)
+# y predicho)
 
 # Segundo, veamos cuantos parametros estimamos. Sera importante para la formula.
 k = 3 # numero de variables a estimar (incluyendo intercepto).
 # Tenemos "democracy", "pop", "Intercept". Entonces, tenemos 3 parametros.
 
 # sigma.2 (varianza del error)
-# Varianza es una medida de la variabilidad o dispersion de un vector. 
-# En este caso, del vector "e", que es nuestro error. 
-# Matematicamente, es la suma de los elementos diagonales que resultan de multiplicacion entre el vector del error
-# y el vector del error traspuesto, dividido por la cantidad de observaciones,
-# menos el numero de parametros que estaremos estimando (3 en este ejemplo).
+# Varianza es una medida de la variabilidad o dispersion de un vector. En este caso, del vector "e", que es nuestro error. Matematicamente, es la suma de los elementos diagonales que resultan de la multiplicacion entre el vector del error y el vector del error traspuesto, dividido por la cantidad de observaciones menos el numero de parametros que estaremos estimando (3 en este ejemplo).
 sigma.2 = (1/(nrow(dat)-k))*sum(diag(e %*% t(e)))
 
 
 # Tercero, obtengamos la matriz "x". La matriz "x" representa lo que observamos.
-## Recuerda que para calcular el intercepto,
-## debemos poner una columna de 1's del mismo largo que la dimension
-## de el resto de las variables
+## Recuerda que para calcular el intercepto, debemos poner una columna de 1's del mismo largo que la dimension de el resto de las variables. 
 unos = rep(1, nrow(dat)) # repetir "1" 112 veces, que es el largo de la base de datos
-# que lo acabo de calcualr con "nrow(dat)".
+# que lo acabo de calcular con "nrow(dat)".
 
 ## OK, ahora creemos la matrix "x".
 x = matrix(c(unos, dat$democracy, dat$pop), ncol=3) 
@@ -116,8 +106,7 @@ x # Ve como quedo.
 
 
 # Cuarto, estimemos los errores estandard. 
-# Es importante sacar los errores estandard porque necesitamos eso 
-# para calcular los intervalos de confianza.
+# Es importante sacar los errores estandard porque necesitamos eso para calcular los intervalos de confianza.
 
 # Los errores estandard de hecho, salen en nuestra tabla de regresion.
 
@@ -138,20 +127,16 @@ sigma.2 * inv(t(x) %*% x)
 # Pero habia un camino mas corto...
 vcov(modelo.1)
 
-# Recapitulemos, esta matriz de Varianzas y Covarianzas 
-# tiene elementos importantes para calcular el error estandard,
-# que sera necesario para calcular el intervalo de confianza.
+# Recapitulemos, esta matriz de Varianzas y Covarianzas tiene elementos importantes para calcular el error estandard, que sera necesario para calcular el intervalo de confianza.
 
-# Lo interesante es que la raiz cuadrada de la diagonal, son los 
-# errores estandard.
+# Lo interesante es que la raiz cuadrada de la diagonal, son los errores estandard.
 sqrt(diag(sigma.2 * inv(t(x) %*% x)))
 
 # Comprobemos. Los errores std. del "summary" debieran ser los mismos
 # que los que estimamos nosotros manualmente.
 summary(modelo.1)
 
-# OK. Una manera de anotar esto, es extraer elemento 
-# por elemento de lo que acabamos de calcular. 
+# OK. Una manera de anotar esto, es extraer elemento por elemento de lo que acabamos de calcular. 
 sqrt(diag(sigma.2 * inv(t(x) %*% x)))[1] # error std. del intercepto
 sqrt(diag(sigma.2 * inv(t(x) %*% x)))[2] # error std. de democracy
 sqrt(diag(sigma.2 * inv(t(x) %*% x)))[3] # error std. de pop.
@@ -171,11 +156,9 @@ sqrt(diag(sigma.2 * inv(t(x) %*% x)))[3] # error std. de pop.
 ### politicas. Dado que no podemos entrevistar a todo el pais (POBLACION), entrevistamos
 ### a una MUESTRA, generalmente, aleatoria. 
 
-### Entonces, el error estandar del coeficiente hace referencia a algo que 
-### no conocemos.
+### Entonces, el error estandar del coeficiente hace referencia a algo que no conocemos.
 
-### En ese sentido, es precisamente la informacion que necesitamos 
-### para calcular los Intervalos de Confianza (nuestro tema de hoy).
+### En ese sentido, es precisamente la informacion que necesitamos para calcular los Intervalos de Confianza (nuestro tema de hoy).
 
 ### Antes de seguir, definamos los "grados de libertad"
 ### Se define como el numero de observaciones - 2.
