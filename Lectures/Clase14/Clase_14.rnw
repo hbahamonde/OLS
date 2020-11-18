@@ -201,7 +201,7 @@ Se usan cuando queremos saber el efecto {\bf combinado} de dos variables. Un mod
 
 En este ejemplo asume que la variable \emph{hombre} s\'olo toma valores 0 (mujer) y 1 (hombre). 
 
-La manera en la que est\'a parametrizada el modelo lineal con interacciones es parecida al modelo tradicional. Pero existen algunas diferencias. Volvamos a la \autoref{eq:int:term}.
+La manera en la que est\'a parametrizada el modelo lineal con interacciones es \emph{parecida} al modelo tradicional. Pero existen algunas diferencias. Volvamos a la \autoref{eq:int:term}.
 
 \begin{enumerate}
   \item Los par\'ametros $\beta_{0}$ y $\beta_{1}$ son el intercepto y la pendiente---respectivamente---de la ``categor\'ia de referencia'', es decir, de la categor\'ia base: cuando la variable \emph{hombre}=0 (es decir, el caso de las mujeres). Esto es muy intuitivo. Cuando la variable \emph{hombre}=0, el modelo se reduce a \autoref{eq:int:term:0}.
@@ -240,18 +240,71 @@ La manera en la que est\'a parametrizada el modelo lineal con interacciones es p
 \section*{Buenas Pr\'acticas}
 
 
-F\'ijate que cada vez que incluimos un t\'ermino de interacci\'on (${\text{hombre}}_{i}\times \text{educaci\'on}_{i}$), para interpretar su par\'ametro asociado ($\beta_{3}$), es necesario incluir los sub-t\'erminos por separado. Esto es, permitir que la ecuaci\'on tenga un par\'ametro independiente asociado a \emph{hombre} y \emph{educaci\'on}, esto es, $\beta_{1}$ y $\beta_{2}$ (tal y como aparece en \autoref{eq:int:term}). Si estimamos s\'olo la siguiente ecuaci\'on, $\beta_{3}$ estar\'a sesgado. {\bf NO HAGAS LO SIGUIENTE}:
+F\'ijate que cada vez que incluimos un t\'ermino de interacci\'on ($\text{educaci\'on}_{i} \times {\text{hombre}}_{i}$), para interpretar su par\'ametro asociado ($\beta_{3}$), es necesario incluir los sub-t\'erminos por separado. Esto es, permitir que la ecuaci\'on tenga un par\'ametro independiente asociado a \emph{educaci\'on} y \emph{hombre}, esto es, $\beta_{1}$ y $\beta_{2}$ (tal y como aparece en \autoref{eq:int:term}). Si estimamos s\'olo la siguiente ecuaci\'on, $\beta_{3}$ estar\'a sesgado. {\bf NO HAGAS LO SIGUIENTE}:
 
 
     \begin{equation}\label{eq:int:term:mala}
       \text{ingresos}_{i} \;=\; \beta_{0} + \beta_{3}{\text{hombre}}_{i}\times \text{educaci\'on}_{i} + \epsilon_{i}
     \end{equation}
 
+
+
+\section*{Estimaci\'on en \texttt{R}}
+
+De acuerdo a \textcite[73]{Brambor2006},\footnote{Ecuaciones 11-13.} el efecto marginal en la ecuaci\'on \autoref{eq:normal},
+
+    \begin{equation}\label{eq:normal}
+      \text{ingresos}_{i} \;=\; \beta_{0} + \beta_{1}\text{educaci\'on}_{i} + \beta_{2}\text{hombre}_{i} + \epsilon_{i}
+    \end{equation}
+
+est\'a dado por el siguiente c\'alculo:
+
+    \begin{equation}\label{ef:marg:normal}
+      \frac{\partial y}{\partial x_{1}} = \beta_{1}
+    \end{equation}
+
+Sin embargo el t\'ermino de interacci\'on en \autoref{eq:int:term} es distinto, y est\'a dado por el siguiente c\'alculo:
+
+    \begin{equation}\label{ef:marg:t:i}
+      \frac{\partial y}{\partial x_{1}} = \beta_{1} + \beta_{3}\text{hombre}
+    \end{equation} % this shows in https://rdrr.io/cran/margins/f/vignettes/Introduction.Rmd Brambor's paper got the equation with a typo. 
+
+En palabras, es cu\'anto cambia $y$ cuando cambia $x$, seg\'un niveles de la variable \emph{hombre}.
+
+Cambiemos de ejemplo, y estimemos un modelo con tres niveles (no dos, como \emph{hombre}).
+
+Carguemos los datos:
+
+
+<<i:c:1, echo = TRUE, warning = FALSE, message = F, fig.align='center', fig.width=6, fig.height=6,dpi=1000,cache=F, include = TRUE>>=
+p_load(effects)
+data(Duncan)
+summary(Duncan)
+@
+
+Estimemos el modelo. Nota que hemos puesto la multiplicaci\'on, y \texttt{R} ``sabe'' que debe meter los t\'erminos constitutivos.
+
+<<i:c:2, echo = TRUE, warning = FALSE, message = F, fig.align='center', fig.width=6, fig.height=6,dpi=1000,cache=F, include = TRUE>>=
+modelo.1 = lm(prestige ~ income*type, data = Duncan)
+summary(modelo.1)
+@
+
+Como explican \textcite{Brambor2006}, las tablas de regresi\'on no nos ayudan a interpretar los modelos interactivos. Debemos proceder interpretando como se se\~nala en \autoref{ef:marg:t:i}. Afortunadamente existe la librer\'ia \texttt{effects}.
+
+
+<<i:c:3, echo = TRUE, warning = FALSE, message = F, fig.align='center', fig.width=6, fig.height=6,dpi=1000,cache=F, include = TRUE>>=
+term.int <- effect("income*type", modelo.1)
+plot(term.int, as.table=T)
+@
+
+
+
+
+
 <<output, echo = FALSE, warning = FALSE, message = F, cache=F, include = TRUE>>=
 knitr::purl('Clase_14.Rnw')
 Stangle('Clase_14.Rnw')
 @
-
 %\newpage
 %\paragraph{}
 %\paragraph{}
