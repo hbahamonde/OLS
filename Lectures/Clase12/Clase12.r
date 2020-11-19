@@ -1,4 +1,4 @@
-# Intervalos de Confianza
+# Intervalos de confianza, error estándar y variance-covariance matrix.
 #################################################################
 cat("\014")
 rm(list=ls())
@@ -13,6 +13,7 @@ dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/cow.dta")
 
 # Estimar modelo lineal: relacion entre crecimiento economico y democracia, controlando por poblacion
 modelo.1 = lm(rgdpch ~ democracy + pop, dat)
+summary(modelo.1)
 
 # (1) Que significa "controlando por"?
 
@@ -67,7 +68,8 @@ coefplot(modelo.1)
 library(effects)
 plot(allEffects(modelo.1))
 
-# (1) Que vemos en este grafico?
+# (1) Que vemos en este grafico? 
+# * DIBUJAR EN LA PIZARRA: CUANDO AVANZO UNA UNIDAD EN X, AVANZO 1179.9 EN DEMOCRACIA.
 # (2) Que notan respecto al grado de incertidumbre?
 
 # OK. Ya sabemos lo que los intervalos de confianza significan, y para que estan.
@@ -156,7 +158,7 @@ sqrt(diag(sigma.2 * inv(t(x) %*% x)))[3] # error std. de pop.
 ### politicas. Dado que no podemos entrevistar a todo el pais (POBLACION), entrevistamos
 ### a una MUESTRA, generalmente, aleatoria. 
 
-### Entonces, el error estandar del coeficiente hace referencia a algo que no conocemos.
+### Entonces, el error estandard del coeficiente hace referencia a algo que no conocemos
 
 ### En ese sentido, es precisamente la informacion que necesitamos para calcular los Intervalos de Confianza (nuestro tema de hoy).
 
@@ -172,6 +174,11 @@ grados.de.libertad # ...veamos.
 ### Formula del intervalo de confianza
 ### coeficiente +/- t * SE del coeficiente.
 
+# Es un calculo "doble":
+### coeficiente + t * SE del coeficiente.
+### coeficiente - t * SE del coeficiente.
+
+
 ### Hasta el momento, sabemos como derivar el coeficiente ( o "beta"). 
 ### Solo recuerda nuestros ej's en matrices:
 ### beta = (x'x)^-1x'y
@@ -181,7 +188,7 @@ grados.de.libertad # ...veamos.
 ### Recuerda, el SE se saca asi:
 ### sqrt(diag(sigma.2 * inv(t(x) %*% x)))
 ### Es decir, la raiz cuadrada del los elementos diagonales de la
-### multiplicacion entre sigma^2 y x'x.
+### multiplicacion entre sigma^2 y x'x (que es el "variance-covariance matrix").
 
 ### Para completar nuestra formula de los intervalos de confianza,
 ### necesitamos un ultimo elemento, "t". 

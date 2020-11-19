@@ -1,4 +1,54 @@
-\documentclass[onesided]{article}
+\documentclass[onesided]{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
 \usepackage[T1]{fontenc}
 \linespread{1.5} % Line spacing - Palatino needs more space between lines
 \usepackage{microtype} % Slightly tweak font spacing for aesthetics
@@ -153,8 +203,7 @@ headpunct=:
 \fancyfoot{} % Blank out the default footer
 \fancyhead[C]{OLS: T\'erminos de Interacci\'on} % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
-
-
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 % DOCUMENT ID
 %----------------------------------------------------------------------------------------
@@ -169,14 +218,7 @@ headpunct=:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % begin knitr stuff
-<<setup, include=FALSE, cache=F>>=
-if (!require("pacman")) install.packages("pacman"); library(pacman)
-p_load(knitr)
-set.seed(2020)
-options(scipen=9999999)
-if (!require("pacman")) install.packages("pacman"); library(pacman) 
 
-@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -286,54 +328,125 @@ Cambiemos de ejemplo, y estimemos un modelo con tres niveles (no dos, como \emph
 Carguemos los datos:
 
 
-<<i:c:1, echo = TRUE, warning = FALSE, message = F, fig.align='center', fig.width=6, fig.height=6,dpi=1000,cache=F, include = TRUE>>=
-p_load(effects)
-data(Duncan)
-summary(Duncan)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{p_load}\hlstd{(effects)}
+\hlkwd{data}\hlstd{(Duncan)}
+\hlkwd{summary}\hlstd{(Duncan)}
+\end{alltt}
+\begin{verbatim}
+##    type        income        education         prestige    
+##  bc  :21   Min.   : 7.00   Min.   :  7.00   Min.   : 3.00  
+##  prof:18   1st Qu.:21.00   1st Qu.: 26.00   1st Qu.:16.00  
+##  wc  : 6   Median :42.00   Median : 45.00   Median :41.00  
+##            Mean   :41.87   Mean   : 52.56   Mean   :47.69  
+##            3rd Qu.:64.00   3rd Qu.: 84.00   3rd Qu.:81.00  
+##            Max.   :81.00   Max.   :100.00   Max.   :97.00
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 Estimemos el modelo. Nota que hemos puesto la multiplicaci\'on, y \texttt{R} ``sabe'' que debe meter los t\'erminos constitutivos.
 
-<<i:c:2, echo = TRUE, warning = FALSE, message = F, fig.align='center', fig.width=6, fig.height=6,dpi=1000,cache=F, include = TRUE>>=
-modelo.1 = lm(prestige ~ income*type, data = Duncan)
-summary(modelo.1)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{modelo.1} \hlkwb{=} \hlkwd{lm}\hlstd{(prestige} \hlopt{~} \hlstd{income}\hlopt{*}\hlstd{type,} \hlkwc{data} \hlstd{= Duncan)}
+\hlkwd{summary}\hlstd{(modelo.1)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = prestige ~ income * type, data = Duncan)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -25.4405  -6.0480  -0.2787   4.7269  28.1950 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value     Pr(>|t|)    
+## (Intercept)       2.6828     3.8182   0.703     0.486450    
+## income            0.8450     0.1289   6.554 0.0000000882 ***
+## typeprof         44.4868    10.3641   4.292     0.000113 ***
+## typewc           14.8531    13.4986   1.100     0.277926    
+## income:typeprof  -0.2909     0.2017  -1.442     0.157148    
+## income:typewc    -0.4674     0.2736  -1.709     0.095466 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 10.44 on 39 degrees of freedom
+## Multiple R-squared:  0.9026,	Adjusted R-squared:  0.8902 
+## F-statistic: 72.31 on 5 and 39 DF,  p-value: < 0.00000000000000022
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 Como explican \textcite{Brambor2006}, las tablas de regresi\'on no nos ayudan a interpretar los modelos interactivos. Debemos proceder interpretando como se se\~nala en \autoref{ef:marg:t:i}. Afortunadamente existe la librer\'ia \texttt{effects}.
 
 
-<<i:c:3, echo = TRUE, warning = FALSE, message = F, fig.align='center', fig.width=6, fig.height=6,dpi=1000,cache=F, include = TRUE>>=
-term.int <- effect("income*type", modelo.1)
-plot(term.int, as.table=T)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{term.int} \hlkwb{<-} \hlkwd{effect}\hlstd{(}\hlstr{"income*type"}\hlstd{, modelo.1)}
+\hlkwd{plot}\hlstd{(term.int,} \hlkwc{as.table}\hlstd{=T)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/i:c:3-1} 
+
+}
+
+
+
+\end{knitrout}
 
 
 Si te das cuenta, los efectos no son los mismos. Las derivadas (en \autoref{ef:marg:t:i}) no tienen por qu\'e dar lo mismo. Es por esto que no debemos mirar la tabla de regresi\'on. En un sentido espacial, un t\'ermino de interacci\'on es el an\'alisis de tres planos. En la \autoref{eq:int:term}: $y$, $x_{1}$, $x_{2}$. 
 
 Veamos de qu\'e se trata:
 
-<<i:c:4, echo = TRUE, warning = FALSE, message = F, fig.align='center', fig.width=6, fig.height=6,dpi=1000,cache=F, include = TRUE>>=
-p_load(scatterplot3d)
-scatterplot3d(Duncan$income, Duncan$type, Duncan$prestige, color = as.numeric(Duncan$type))
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{p_load}\hlstd{(scatterplot3d)}
+\hlkwd{scatterplot3d}\hlstd{(Duncan}\hlopt{$}\hlstd{income, Duncan}\hlopt{$}\hlstd{type, Duncan}\hlopt{$}\hlstd{prestige,} \hlkwc{color} \hlstd{=} \hlkwd{as.numeric}\hlstd{(Duncan}\hlopt{$}\hlstd{type))}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/i:c:4-1} 
+
+}
+
+
+
+\end{knitrout}
 
 Usemos una base de datos donde todas las variables son continuas (no como en el ejemplo donde \emph{hombre} es dicot\'omica):
 
-<<i:c:5, echo = TRUE, warning = FALSE, message = F, fig.align='center', fig.width=6, fig.height=6,dpi=1000,cache=F, include = TRUE>>=
-p_load(car,rgl)
-data(iris)
-sep.l <- iris$Sepal.Length
-sep.w <- iris$Sepal.Width
-pet.l <- iris$Petal.Length
-scatter3d(x = sep.l, y = pet.l, z = sep.w, groups = iris$Species)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{p_load}\hlstd{(car,rgl)}
+\hlkwd{data}\hlstd{(iris)}
+\hlstd{sep.l} \hlkwb{<-} \hlstd{iris}\hlopt{$}\hlstd{Sepal.Length}
+\hlstd{sep.w} \hlkwb{<-} \hlstd{iris}\hlopt{$}\hlstd{Sepal.Width}
+\hlstd{pet.l} \hlkwb{<-} \hlstd{iris}\hlopt{$}\hlstd{Petal.Length}
+\hlkwd{scatter3d}\hlstd{(}\hlkwc{x} \hlstd{= sep.l,} \hlkwc{y} \hlstd{= pet.l,} \hlkwc{z} \hlstd{= sep.w,} \hlkwc{groups} \hlstd{= iris}\hlopt{$}\hlstd{Species)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
 Correr esto \'ultimo en \texttt{R}.
 
-<<output, echo = FALSE, warning = FALSE, message = F, cache=F, include = TRUE>>=
-knitr::purl('Clase_14.Rnw')
-Stangle('Clase_14.Rnw')
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+## [1] "Clase_14.R"
+## Writing to file Clase_14.R
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 %\newpage
 %\paragraph{}
 %\paragraph{}
