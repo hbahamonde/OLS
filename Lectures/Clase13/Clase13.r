@@ -23,7 +23,7 @@ graphics.off()
 # Como hacemos este calculo? Esto esta muy relacionado a los intervalos de confianza. 
 # Para esto, necesitamos hacer tests de hipotesis y CALCULAR
 # CUAN CERCANOS O LEJANOS ESTAMOS DE QUE NUESTROS BETAS SEAN LO QUE NOSOTROS
-# CREEMOS QUE SON. 
+# CREEMOS QUE SON.
 
 
 #################################################################
@@ -59,9 +59,8 @@ summary(modelo.1)
 summary(modelo.1)
 
 ## (3) Checkear normalidad de los residuos.
-plot(modelo.1$residuals, # en el eje Y va el error (los "residuales"): nuestra prediccion.
-     dat$pop # en el eje X va el valor observado: lo que es.
-     ) 
+
+plot(dat$pop, modelo.1$residuals)
 
 ## (4) Checkear significancia estadistica (asunto de hoy).
 summary(modelo.1)
@@ -73,7 +72,7 @@ summary(modelo.1)
 
 ## Significancia: en simple, es la probabilidad de que nuestros betas sean 0.
 ## Es decir, la probabilidad de que, por ej., beta(1) no sea 2345, si no que 0.
-## En este caso, hay un 69,84% de probabildiasd de que el efecto sea 0. 
+## En este caso, hay un 69,84% de probabilidad de que el efecto sea 0. 
 ## Asi mismo, hay un 24.41% de que beta(2) no sea 18707, si no que sea 0.
 
 ## (1) Hasta que punto debieramos rechazar la idea de que b=0? Cual es el 
