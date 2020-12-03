@@ -24,8 +24,6 @@ dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/obama.dta"
 # Resumen
 summary(dat)
 
-# Variables
-
 # En este ej. trabajaremos con la variable "ideology". Nuestra pregunta de investigacion es que hace que la gente tenga la ideologia que tiene?
 hist(dat$ideology)
 
@@ -35,15 +33,32 @@ hist(dat$ideology)
 # Variable independiente 2 (x2): "education".
 # Variable independiente 3 (x3): "age".
 
-# 1. Usando tecnicas de matrices, calcula el intercepto (b0), el coeficiente de "income" (b1), el coeficiente de "education" (b2) y el coeficiente de "age" (b3).
+
+# 1. Usando el comando "lm" estima un modelo lineal con las tres variables independientes. 
 
 
-# 2. Usando el comando "lm" estima un modelo lineal con las tres variables independientes. # 2.1 Interpreta los coeficientes. Que podemos aprender del modelo? usa "summary(modelo)"
-# 2.2 Interpreta la significancia estadistica de los coeficientes.
-# 2.3 Compara lo que estimaste en (# 1). Debieras haber llegado a los mismos resultados que "summary(modelo)". Es asi?
+## 1.1 Interpreta los coeficientes. Que podemos aprender del modelo? usa "summary(modelo)"
 
-# 3. Chequea la normalidad de los residuos.
-## 3.1 Computa el promedio de los residuos. Comenta. Se cumple el supuesto?
-## 3.2 Plotea como se comportan los residuos a distintos valores de la variable dependiente. Comenta. 
+
+
+## 1.2 Interpreta la significancia estadistica de los coeficientes.
+
+
+## 1.3 Chequea la normalidad de los residuos.
+
+
+## 1.4 Computa el promedio de los residuos. Comenta. Se cumple el supuesto?
+
+
+
+
+
+# 2. Terminos de interaccion. 
+
+## 2.1 Estima un nuevo modelo usando un termino de interaccion. El modelo debe ser del tipo" y ~ b0 + b1x1 + b2x2 + b3x3 + b4x1*x2"
+
+
+## 2.2 Usando metodos graficos interpreta b4
+
 
 
