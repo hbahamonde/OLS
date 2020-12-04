@@ -65,7 +65,7 @@ summary(summary(modelo.no.lineal)$residuals)
 
 # grafiquemos los residuos
 library(lattice)
-xyplot(modelo.lineal$residuals ~ Prestige$prestige, type=c("smooth", "p")) # mal.
+xyplot(modelo.lineal$residuals ~ modelo.lineal$fitted.values, type=c("smooth", "p")) # mal.
 xyplot(modelo.no.lineal$residuals ~ Prestige$prestige, type=c("smooth", "p")) # mejor.
 
 # Grafiquemos el "aporte" NO LINEAL de las variables independientes
