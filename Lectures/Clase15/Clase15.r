@@ -109,6 +109,7 @@ summary(modelo.completo) # sin sorpresa, los betas son los mismos que inventamos
 
 plot(modelo.completo$residuals, y) 
 
+
 # Perfecto! No notamos ningun patron.
 # Es decir, vemos una nube desordenada de puntos. 
 # Aqui es cuando VEMOS lo que asumimos: los errores se cancelan entre si.

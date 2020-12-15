@@ -135,10 +135,6 @@ options(scipen = 1000000) # apagar notacion cientifica.
 summary(modelo.entero) # resumen
 summary(modelo.entero)$r.squared # r2
 
-# Si te fijas, los Errores del vector se construyen solamente ocupando la matriz "y"
-# A diferencia de los errores del vector y, los Errores del Modelo
-# incorpororan nuestros betas estimados y la matriz "x".
-
 # Aqui creamos un objeto "x" que sera tipo "matrix". Ponemos todo dentro de 
 # una columna "c", y esa columna, la dividimos en 6 columnas (ncol=6).
 # Pero antes, creamos una fila de 1's para calcular beta0 (intercepto).

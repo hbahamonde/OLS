@@ -35,6 +35,16 @@ options(scipen = 100000)
 modelo.lineal <- lm(prestige ~ income + education + women, data=Prestige) 
 summary(modelo.lineal)
 
+
+# Plotear errores: manera "artesanal"
+plot(Prestige$prestige, modelo.lineal$residuals)
+
+# Con paquete:
+crPlot(modelo.lineal, "income") # Problema.
+crPlot(modelo.lineal, "education") # no es exactamente lineal, pero es tolerable.
+crPlot(modelo.lineal, "women") # no hay relacion. 
+
+
 # (1) El "aporte" de cada variable independiente debe ser lineal, es decir, una 
 # linea recta. Esto es la parte del "componente".
 
@@ -43,16 +53,16 @@ summary(modelo.lineal)
 
 # Veamos. El "componente" es azul, y el "residuo" morado.
 
-crPlot(modelo.lineal, "income") # Problema.
-crPlot(modelo.lineal, "education") # no es exactamente lineal, pero es tolerable.
-crPlot(modelo.lineal, "women") # no hay relacion. 
 
 # Estimemos una regresion no lineal
 modelo.no.lineal = lm(prestige ~ poly(income, 3) + poly(education, 2) + women, data = Prestige)
 summary(modelo.no.lineal)
 
 # crPlot con el polynomial
-crPlot(modelo.no.lineal, "poly(income, 3)") # Problema.
+crPlot(modelo.no.lineal, "poly(income, 3)") # No hay problema con esta variable, pero no hemos mejorado nuestro error total.
+hist(modelo.no.lineal$residuals)
+mean(modelo.no.lineal$residuals)
+
 
 
 # Comparemos los errores
@@ -103,7 +113,7 @@ xyplot(Prestige$prestige ~ Prestige$income.transformado, type=c("smooth", "p")) 
 
 
 # OK. Ahora estimemos un nuevo modelo ocupando nuestro "income" transformado, y
-# veamos si soluciona el problema de fondo (tener varianza constante en los errores).
+# veamos si soluciona el problema de fondo (no tener varianza constante en los errores).
 # Al final del dia, ese es el problema de no tener linearidad entre uno de los Xs y nuestra Y.
 
 # modelo con "ingresos" (income) transformado
