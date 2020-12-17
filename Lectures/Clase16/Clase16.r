@@ -135,34 +135,25 @@ options(scipen = 1000000) # apagar notacion cientifica.
 summary(modelo.entero) # resumen
 summary(modelo.entero)$r.squared # r2
 
-# Aqui creamos un objeto "x" que sera tipo "matrix". Ponemos todo dentro de 
-# una columna "c", y esa columna, la dividimos en 6 columnas (ncol=6).
-# Pero antes, creamos una fila de 1's para calcular beta0 (intercepto).
-unos = rep(1, nrow(dat)) # Esto para sacar el intercepto.
-x = matrix(c(unos, dat$income, dat$education, dat$age, dat$sex, dat$ideology), ncol = 6) 
-head(x) # veamos como queda
-
-# install.packages("matlib")
-library(matlib) # para invertir matrices
-# Como necesitamos los betas para usar nuestra formula de los Errores Cuadrados 
-# del Modelo, es necesario calcular los betas. Ya conocemos esta formula...
-y = dat$Obamafav
-b = inv(t(x) %*% x) %*% t(x)%*%y # formula para sacar betas
-b
-
-
 # Formula del r2 en Matrices
 
 ## 1. Calcular los errores del modelo
-options(scipen = 1000000) # apagar notacion cientifica.
-e.m = y - x %*% b
+
+## (a) Extraer "y" observado.
+y.observado = dat$Obamafav
+
+## (b) Extraer"y" predicho.
+y.predicho = modelo.entero$fitted.values
+
+## Calcular los errores del modelo
+e.m = y.observado - y.predicho
 
 ## 2. Calcular los errores de la variable dependiente (Errores del vector y)
-y.m = y - round(mean(y, trim = 0.5), 10)
+y.m = y.observado - mean(y.observado) # round(mean(y, trim = 0.5), 3)
 
 ## Calcular r2
 ### 1- e'e/y'y
-1 - t(e.m) %*% e.m / t(y.m) %*% y.m
+1 - t(e.m) %*% e.m / t(y.m) %*% y.m # Vemos que es igual a la tabla
 
 # Ahora hagamos lo mismo, pero usando algebra "normal", no de matrices.
 
