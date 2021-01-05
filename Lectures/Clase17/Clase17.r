@@ -42,7 +42,7 @@ plot(Prestige$prestige, modelo.lineal$residuals)
 # Con paquete:
 crPlot(modelo.lineal, "income") # Problema.
 crPlot(modelo.lineal, "education") # no es exactamente lineal, pero es tolerable.
-crPlot(modelo.lineal, "women") # no hay relacion. 
+crPlot(modelo.lineal, "women") # no hay relacion, pero no hay problemas con los residuos.
 
 
 # (1) El "aporte" de cada variable independiente debe ser lineal, es decir, una 
@@ -59,10 +59,10 @@ modelo.no.lineal = lm(prestige ~ poly(income, 3) + poly(education, 2) + women, d
 summary(modelo.no.lineal)
 
 # crPlot con el polynomial
-crPlot(modelo.no.lineal, "poly(income, 3)") # No hay problema con esta variable, pero no hemos mejorado nuestro error total.
+crPlot(modelo.no.lineal, "poly(income, 3)") 
 hist(modelo.no.lineal$residuals)
 mean(modelo.no.lineal$residuals)
-
+# Ahora ya no hay problema con esta variable. Ademas, hemos mejorado nuestro error total.
 
 
 # Comparemos los errores
@@ -71,15 +71,16 @@ mean(modelo.no.lineal$residuals)
 # resumamos los residuos
 summary(summary(modelo.lineal)$residuals)
 summary(summary(modelo.no.lineal)$residuals)
+# Una distribucion normal (como se supone que debieran ser los errores): media = mediana = moda = 0. Y ESTE NO ES EL CASO. (MEDIA ES DIFERENTE DE MEDIANA).
 
 
 # grafiquemos los residuos
 library(lattice)
 xyplot(modelo.lineal$residuals ~ modelo.lineal$fitted.values, type=c("smooth", "p")) # mal.
-xyplot(modelo.no.lineal$residuals ~ Prestige$prestige, type=c("smooth", "p")) # mejor.
+xyplot(modelo.no.lineal$residuals ~ Prestige$prestige, type=c("smooth", "p")) # algo mejor.
 
 # Grafiquemos el "aporte" NO LINEAL de las variables independientes
-p_load(effect)
+library(effects)
 plot(effect("poly(income, 3)", modelo.no.lineal)) # es el menos lineal de todos
 plot(effect("poly(education, 2)", modelo.no.lineal)) # es el mas lineal.
 
@@ -124,8 +125,8 @@ xyplot(modelo.no.lineal.box.tid$residuals ~ Prestige$income.transformado, type=c
 xyplot(modelo.lineal$residuals ~ Prestige$income, type=c("smooth", "p")) # mal.
 
 # Resumen de los residuos: modelo con "income" transformado y normal.
-summary(summary(modelo.no.lineal.box.tid)$residuals)
-summary(summary(modelo.lineal)$residuals)
+summary(summary(modelo.no.lineal.box.tid)$residuals) # Mucho mejor residuos.
+summary(summary(modelo.lineal)$residuals) # No bien.
 
 # graficar la densidad (integral) de los residuos
 library(lattice)
@@ -160,14 +161,14 @@ summary(summary(modelo.lineal)$residuals)
 #################################################################
 
 # Parte del motivo de que algunas veces tenemos varianza no constante en los 
-# residuos, es por la presencia de outliers (observaciones inusuales).
+# residuos, es por la presencia de outliers ("observaciones inusuales").
 
 # Que podemos hacer respecto a esto? 
-## (1) No vale la pena transformar toda la variable por un par de outliers.
+## (1) Borrar los outliers?
 ## (2) Como detectamos los outliers? 
 
 
-# (1) Existen dos tipos de outliers: leverage e influence.
+# Existen dos tipos de outliers: leverage e influence.
 
 #################################################################
 # Influence: observaciones que tiran la linea de regresion hacia arriba/abajo
@@ -176,10 +177,10 @@ summary(summary(modelo.lineal)$residuals)
 # Demostrar ejemplo en la pizarra.
 
 library(foreign) # significa "foraneo"
-load(url("https://github.com/hbahamonde/OLS/raw/master/Lectures/Clase16/data.rdata"))
+load(url("https://github.com/hbahamonde/OLS/raw/master/Datasets/data.rdata"))
 dat = data_reg
 
-# veamos como se ven los datos (esta es la base de datos de la tarea para la casa # 5)
+# veamos como se ven los datos
 head(dat)
 
 # estimemos modelo 3 de la tarea # 5
@@ -221,6 +222,7 @@ dat$residuals = as.vector(m3$residuals)
 
 # Estimemos un modelo con leverage
 autos <- lm(mpg ~ wt, data = mtcars)
+summary(autos)
 
 # ahora, grafiquemos lo que vemos vs. lo que predecimos
 plot(autos$fitted, mtcars$mpg) # Donde esta el problema? 
@@ -241,7 +243,7 @@ data.frame(
         )
 
 #################################################################
-# Errores Estandard Inflados: Multicolinearidad y Multicolinearidad Perfecta
+# Errores Estandard Inflados: Multicolinearidad ("imperfecta") y Multicolinearidad Perfecta
 #################################################################
 
 # Inventemos las variables independientes
