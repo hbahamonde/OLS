@@ -56,7 +56,7 @@ seq(from = 1, to = 10, by=2)
 seq(10, 1, -2)
 ## Fijate que tuvimos que especificar que la secuencia va de 10 a 1, en vez de 1 a 10.
 
-# Esas eran frecuencias. Ahora veamos repeticiones.
+# Esas eran secuencias. Ahora veamos repeticiones.
 ## help(seq) asume que tu sabes que la funcion se llama "seq". Que pasa si no tienes idea?
 ## Pidamos ayuda en general...Lo que necesitamos es "repeat", o "repetition", o "repeated"....Sabemos que empieza con "rep"
 ??rep
@@ -139,7 +139,7 @@ mi.informacion <- list(
   WhatsApp="+569475759"
   )
 
-# accedamos a un elemento por posicion.Posicion "2" (profes)
+# accedamos a un elemento por posicion "2" (profes)
 mi.informacion[[2]]
 
 # accedamos a un elemento por nombre
@@ -154,6 +154,7 @@ mi.informacion$profe[2]
 
 # creemos una matriz, cuyos escalares (numeros) sigan una secuencia del 1 al 6, 1:6, y que tenga dos filas (rows).
 a <- matrix(1:6 , nrow=2)
+a
 
 # row 2 column 3
 a[2,3]
@@ -179,7 +180,8 @@ a>b
 cualquier.cosa = "2001-01-17"
 
 c==cualquier.cosa # compara ambos textos (que son iguales).
-c>cualquier.cosa # ya no funciona porque compara un texto con una fecha.
+c>cualquier.cosa # como detecta que ambos son iguales, esta correcto al establecer que una cantidad NO ES mayor a otra.
+# Sin embargo, siempre es mejor establecer el tipo de objeto que queremos (en este caso, una fecha).
 
 ##################
 ## Tipos de objetos: Dataframes (bases de datos)
