@@ -15,7 +15,8 @@ rm(list=ls())
 install.packages("car") # instalemos la base de datos, que viene en la libreria "car"
 library(car) # ahora, carguemos la base de datos, que viene en la libreria "car"
 
-
+# Cargar DF
+data(Prestige)
 
 ## Resumen del df
 head(Prestige)
@@ -33,13 +34,17 @@ library(dplyr)
 ### que columnas tiene el DF Prestige?
 colnames(Prestige)
 
-### DF1 tendra todo menos "education", "income", "women", "prestige"
-Prestige.drop.1 = select(Prestige,-c(type, census))
+### DF1 tendra todo menos "type" y "census"
+Prestige.drop.1 = dplyr::select(Prestige, -c("type", "census"))
 colnames(Prestige.drop.1)
 
-### DF2 tendra todo menos "income"   "prestige" "census"   "type" 
-Prestige.drop.2 = select(Prestige,-c(education, women))
+### DF2 tendra todo menos "education" y "women"
+Prestige.drop.2 = dplyr::select(Prestige,-c(education, women))
 colnames(Prestige.drop.2)
+
+### DF3 sera solo "education" y "women"
+Prestige.drop.3 = dplyr::select(Prestige, c(education, women))
+colnames(Prestige.drop.3)
 
 ############################################
 # Merging: añadiendo columnas
@@ -67,6 +72,7 @@ table(rev(Prestige.drop.1$income) == Prestige.drop.2$income) # No, no son iguale
 # Fijense como "nestie" (de "nested") varios comandos.
 View(
         data.frame(
+                Profesion = rownames(Prestige),
                 Prestige.drop.1$income,
                 Prestige.drop.2$income,
                 rev(Prestige.drop.1$income),
@@ -80,7 +86,7 @@ View(
 View(Prestige) # Y despues en el "Finder" (buscador), "3485"
 
 ## Manera usando lenguaje de programacion
-Prestige[Prestige$income=="3485",]
+Prestige[Prestige$income=="3485", ]
 
 # Por que es importante saber estas manipulaciones en un curso de "estadistica inferencial"?
 
@@ -100,7 +106,7 @@ Prestige.merge
 
 # Al ver Prestige.merge, comprobamos que aunque los datos esten desordenados, R los pegara.
 
-# Pregunta: como podemos recontra asegurarnos de que estamos pegando ("merging") las columnas adecuadas. Por ejemplo, acabamos de darnos cuenta que "income" estaba (por casualidad) repetido. Como evitar estas situaciones?
+# Pregunta: como podemos recontra asegurarnos de que estamos pegando ("merging") las columnas adecuadas? Por ejemplo, acabamos de darnos cuenta que "income" estaba (por casualidad) repetido. Como evitar estas situaciones?
 
 
 Prestige.merge.recontra.asegurados <- merge(Prestige.drop.1, Prestige.drop.2, by=c("income", "prestige"))
@@ -114,6 +120,7 @@ Prestige.drop.1$income <- rev(Prestige.drop.1$income)
 
 # Mergiemos de nuevo...
 Prestige.merge.recontra.asegurados <- merge(Prestige.drop.1, Prestige.drop.2, by=c("income", "prestige"))
+Prestige.merge.recontra.asegurados
 
 ############################################
 # Appending: añadiendo filas
@@ -151,8 +158,6 @@ Prestige.alto.columnas.desordenadas = data.frame(
 )
 
 # Verifiquemos que las columnas estan desordenadas
-colnames(Prestige.alto) == colnames(Prestige.bajo)
-
 colnames(Prestige.alto) 
 colnames(Prestige.alto.columnas.desordenadas)
 
@@ -160,7 +165,8 @@ colnames(Prestige.alto.columnas.desordenadas)
 # Ahora mergiemos Prestige.bajo (que sigue ordenada, i.e. con "education" primero) con Prestige.alto.columnas.desordenadas (que la "desordenamos" poniendo "education" al final)
 Prestige.nuevo.ordenado.desordenado = rbind(Prestige.bajo, Prestige.alto.columnas.desordenadas)
 
-
+# Lo hizo bien?
+View(Prestige.nuevo.ordenado.desordenado)
 
 ############################################
 # Transformaciones
@@ -178,10 +184,9 @@ hist(Prestige$income, breaks=100) # Veamos esto con mas detalles. Agreguemos mas
 
 # La transformacion mas basica, es el log con base 10.
 
-## 1. Qué es el logaritmo de un numero? 
-## 2. Por qué necesitamos sacarlo?
 log(Prestige$income)
-## 4. Por qué una transformación no afecta un analisis estadístico?
+
+## Por qué una transformación no afecta un analisis estadístico?
 
 # creemos otra variable ("income.log") que sea el logaritmo natural (de base 10), y peguemosla en la base de datos Prestige
 
@@ -202,8 +207,8 @@ log(Prestige$women)
 Prestige$women.mas.uno = Prestige$women+1
 ## Inspeccionemos...
 head(Prestige)
-# 5. Por que esto soluciona nuestro problema?
-# 6. Cual es el log de 1?
+# Por que esto soluciona nuestro problema?
+# Cual es el log de 1?
 Prestige$log.women.mas.uno = log(Prestige$women.mas.uno)
 
 head(Prestige) # Veamos...

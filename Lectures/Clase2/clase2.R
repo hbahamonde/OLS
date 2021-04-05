@@ -200,9 +200,10 @@ head(base.de.datos)
 # describir lo basico de un df: "View"
 View(base.de.datos) # Igual a un Excel
 
-base.de.datos[3,2] # fila 2, columna 3
+base.de.datos[3,2] # fila 3, columna 2
 
-base.de.datos[1:2, "kilos"] # filtrando, pero usando el nombre de la columna. Para las filas, la secuencia de los dos primeros elementos. 
+base.de.datos[1:2, "kilos"] # filtrando, pero usando el nombre de la columna (en vez del numero de columna). Para las filas, la secuencia de los dos primeros elementos. 
+
 base.de.datos[ ,"diabetico"] # todas las filas de la columna "diabetico"
 
 ## Nombres de las Columnas
@@ -211,13 +212,9 @@ colnames(base.de.datos)
 ## Acabas de descubrir un error. No eran kilos, si no que "edad". Cambia el nombre de las columnas.
 colnames(base.de.datos) <- c("diabetico", "edad", "nombre")
 
-base.de.datos
-
-
 ## Comprueba...
-colnames(base.de.datos)
-
 base.de.datos
+colnames(base.de.datos)
 
 ## Resumen del df
 summary(base.de.datos)
@@ -226,11 +223,13 @@ summary(base.de.datos)
 install.packages("car") # instalemos la base, que viene en la libreria "car"
 library(car) # ahora, carguemos la base que viene en la libreria "car"
 
+## Veamos como se ve toda la base
+View(Prestige)
+
 ## Breve inspeccion de la base
 head(Prestige)
 
-## Veamos como se ve toda la base
-View(Prestige)
+
 
 ## Resumen de la base
 summary(Prestige)
@@ -255,26 +254,3 @@ levels(Prestige$type) # que etiquetas tiene?
 install.packages("plyr") 
 library(plyr)
 Prestige$type.2 <- revalue(Prestige$type, c("bc"="Tecnico", "prof"="Profesional", "wc"="Oficinista"))
-
-## Funcion Drop
-install.packages("dplyr") 
-library(dplyr)
-
-## Botemos algunas columnas, y construyamos dos DF's distintos, pero que igual tengan una columna en comun
-
-### que columnas tiene el DF Prestige?
-colnames(Prestige)
-
-### OK. DF1 tendra todo menos type, census, prestige
-Prestige.drop.1 = select(Prestige,-c(type, census, prestige))
-colnames(Prestige.drop.1)
-
-### OK. DF2 tendra todo menos education e income
-Prestige.drop.2 = select(Prestige,-c(education, income))
-colnames(Prestige.drop.2)
-
-### Problema: ahora queremos hacer un "merge" de las dos DF's. El unico elemento en comun, es la variable "women"
-# "Merge" es util cuando queremos combinar dos datasets. Por ej., si estudiamos economia politica, y queremos ver el 
-# el efecto de la democracia en el PIB, probablemente tengamos que buscar una base de datos de ciencia politica (donde este la
-# variable "democracia") y otra base de datos de economia (donde este la variable "PIB"). Ahi hariamos un merge por pais.
-Prestige.merge <- merge(Prestige.drop.1, Prestige.drop.2, by = c("women")) 
