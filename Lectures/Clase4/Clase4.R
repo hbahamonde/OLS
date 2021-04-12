@@ -105,5 +105,5 @@ is(souvenirtimeseries) # "ts" significa "time series", o "series de tiempo"...
 plot.ts(souvenirtimeseries) # El Y-axis esta en notacion cientifica. Apaguemosla subiendo el umbral, poniendo un numero arbitrariamente alto.
 
 
-options(scipen=999)
+options(scipen=9999)
 plot.ts(souvenirtimeseries) # Ahora plotemos de nuevo. Notas la diferencia del Y-axis? ("eje vertical").

@@ -12,7 +12,7 @@ rm(list=ls())
 # Clase 3
 
 ## Prestige
-install.packages("car") # instalemos la base de datos, que viene en la libreria "car"
+# install.packages("car") # instalemos la base de datos, que viene en la libreria "car"
 library(car) # ahora, carguemos la base de datos, que viene en la libreria "car"
 
 # Cargar DF
@@ -26,7 +26,7 @@ head(Prestige)
 ############################################
 
 ## Funcion Drop
-install.packages("dplyr") 
+# install.packages("dplyr") 
 library(dplyr)
 
 ## Botemos algunas columnas, y construyamos dos DF's distintos, pero que igual tengan una columna en comun
@@ -131,7 +131,7 @@ Prestige.merge.recontra.asegurados
 # Pregunta: cuando nosotros podriamos necesitar algo asi?
 
 # OK. Para mostrar como anadir filas, partamos la base Prestige en dos: en las profesiones con "alto" y "bajo" prestigio.
-Prestige$prestige.2 <- ifelse(Prestige$prestige > mean(Prestige$prestige), "alto","bajo")
+Prestige$prestige.2 = ifelse(Prestige$prestige > mean(Prestige$prestige), "alto","bajo")
 
 
 # creemos otro dataframe donde sólo estén las profesiones con el prestigio más altas. Usemos la var que habiamos creado antes ("prestige.2"). 

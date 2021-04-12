@@ -10,14 +10,14 @@ install.packages("ggplot2")
 # cargar libreria
 library(ggplot2)
 
-options(scipen=999) # Apagar notacion cientifica
+options(scipen=9999) # Apagar notacion cientifica
 
 ggplot(midwest, aes(x=area, y=poptotal)) + geom_point() 
 
 ggplot(midwest, aes(x=log(area), y=log(poptotal))) + geom_point() # Logeado 
 
 
-ggplot(midwest, aes(x=log(area), y=log(poptotal))) + geom_point() + geom_smooth(method="lm") # con linea
+ggplot(midwest, aes(x=log(area), y=log(poptotal))) + geom_point() + geom_smooth(method="lm")  # con linea
 # 1. Que significa esta linea?
 
 
@@ -73,7 +73,7 @@ ggplot(data = world) + geom_sf(color = "black", fill = "lightgreen") # pero esta
 # agreguemosle un poco de color...pero con algo mas de significado.
 ggplot(data = world) + geom_sf(aes(fill = pop_est)) + scale_fill_viridis_c(option = "plasma", trans = "sqrt") # poblacion estimada.
 
-# tratemos de plotear el Sudamerica...para eso, cambiamos las coordenadas.
+# tratemos de plotear Sudamerica...para eso, cambiamos las coordenadas.
 ggplot(data = world) + geom_sf() + coord_sf(xlim = c(-84, -35), ylim = c(-55, 12)) 
 
 
