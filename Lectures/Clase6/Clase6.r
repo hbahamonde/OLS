@@ -6,7 +6,6 @@ cat("\014")
 rm(list=ls())
 graphics.off()
 
-# Segundo, un truco. 
 ## Este truco instala el paquete si es que no esta instalado, y lo llama usando "library".
 ## Si NO está instalado, lo instala, y despues lo llama usando "library".
 ## Es, básicamente, un instalador y cargador CONDICIONAL de paquetes.
@@ -77,16 +76,16 @@ round(mean(LL$age), 0) # con 0 decimales.
 # Ventaja: es mas robusta (o resistente) a los valores extremos, si la comparamos con el promedio.
 # Recuerda. Para calcular el promedio, debemos incorporar los valores extremos (los muy altos, y los muy bajos).
 # Y esto afecta el promedio. No asi con la mediana: no cambia si agregamos valores extremos.
-# En la distribucion normal, mediana = media (= moda).
+# En la distribucion normal: mediana = media = moda.
+
+### Primero, ordenemos los numeros de mayor a menor. 
+LL$age
+ll.age.ordenado = sort(LL$age)
+ll.age.ordenado
+
 
 # Calculemos la mediana
 median(LL$age)
-
-## Mas complejo. 
-
-### Primero, ordenemos los numeros de mayor a menor. 
-ll.age.ordenado = sort(LL$age)
-ll.age.ordenado
 
 ### OK. Los valores estan ordenados de menor a mayor. Segundo, veamos que largo tiene este vector (usando el comando "lenght", que significa "largo").
 length(ll.age.ordenado) 
@@ -149,7 +148,7 @@ round(sd(LL$age),0) # 7
 sqrt(var(LL$age)) == sd(LL$age) # Comprobando.
 
 # Qué significa todo esto? 
-## Existe la regla "68-95-99.7" (que aplica sólo) a distribuciones normales (nuestra variable de edad NO es normal...). 
+## Existe la regla "68-95-99.7" que aplica sólo a distribuciones normales (nuestra variable de edad NO es normal...). 
 
 ## 68% de los datos caen dentro del rango de +/- 1 DS  de la media. Es decir: 
 mean(LL$age) - round(sd(LL$age),0) # rango minimo
