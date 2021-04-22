@@ -4,7 +4,6 @@
 # Fecha:
 # Prof. Héctor Bahamonde.
 # Ayudante: Gonzalo Barría.
-# Fecha entrega: 27 de Oct. 5 pm en uCampus (Tareas).
 
 
 
@@ -60,7 +59,7 @@ data(admissions)
 #################################################################
 # 5.
 #################################################################
-#  Transformarciones y creacion de nuevas variables
+#  Transformaciones y creación de nuevas variables
 
 # 5.1. Usando la misma base de datos "admissions" crea una nueva variable que represente el % de personas que son aceptadas en cada "major". Un "major" es una carrera (en EEUU). Tu "major" seria, por ej., "public administration". Sólo que aquí estan puestos como "A", "B", "C", etc. Atencion: esta nueva variable debe ser parte de la base de datos.
 
