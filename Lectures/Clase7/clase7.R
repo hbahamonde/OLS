@@ -19,11 +19,13 @@ options(scipen=9999999)
 # Ocuparemos los comandos de "simulacion" empaquetados en R para ver cómo se ve cada distribución.
 
 ############################################
-# Normal
+# Normal (Standard)
 ############################################
 
 set.seed(123)
 dist.normal = rnorm(100, mean = 0, sd = 1)
+dist.normal
+
 
 hist(dist.normal)
 summary(dist.normal)
@@ -51,10 +53,11 @@ bern=rbern(10, 0.5)
         # 1) numero de observaciones
         # 2) probabilidad de exito del "experimento".
        
-        ## EJ., si pongo 10 observaciones, son 10 monedas que lanzamos de una vez. Si pongo 0.5 de probabilidad (ie 50%), cada 
-        ## moneda dará cara o sello con un 50% de probabilidad.
+        ## EJ., si pongo 10 observaciones, son 10 monedas que lanzamos de una vez. Si pongo 0.5 de probabilidad (ie 50%), cada moneda dará cara o sello con un 50% de probabilidad.
 
-## cambiemos la probabilidad de que salga cara (1), a una probabildiad mas alta
+bern
+
+## cambiemos la probabilidad de que salga cara (1), a una probabilidad mas alta
 set.seed(123)
 rbern(10, 0.9)
 
@@ -80,8 +83,9 @@ rbinom(10, 3, 0.5)
 # 2. numero de "experimentos".
 # 3. probabilidad de exito de cada "experimento". 
 
-# Si es "0.5", la posobilidad de que en estos 10 experimentos salga un "3" es de 50%.
+# Si es "0.5", la posibilidad de que en estos 10 experimentos salga un "3" es de 50%.
 
+plot(rbinom(10, 3, 0.5))
 
 
 ###########################################
@@ -92,11 +96,11 @@ rbinom(10, 3, 0.5)
         # Ejemplos?
 
 set.seed(123)
-rmultinom(10, size = 1, prob = c(0,0.2,0.9))
+rmultinom(10, size = 3, prob = c(0.5,0.5, 0.2))
 
         # numero de experimentos
-        # numero de resultados ("si/no").
         # numero de alternativas ("medios de transporte": "bus", "taxi", "bici")
+        # probabilidad de cada alternativa
 
 
 
@@ -114,6 +118,8 @@ hist(
         rpois(100, 10)        
 )
 
+# media = varianza, si no Neg Binom.
+
 ###########################################
 # Distribucion Exponencial
 ############################################
@@ -130,6 +136,7 @@ hist(
 
 ###########################################
 # Distribucion Lognormal
+############################################
 
 ## Muchos valores bajos, pocos valores altos. Ejemplos?
 
