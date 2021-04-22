@@ -81,6 +81,8 @@ base$beta1 <- c(
 
 base # llamemos al a base.
 
+# Llevar esta base a matrices en OLS.
+
 #######################################################
 # Prediccion
 #######################################################
