@@ -208,10 +208,10 @@
 \textbf{Ingreso (Y)}
 \end{center}
  & \begin{center}
-\textbf{Educacion (X1)}
+\textbf{Educacion (x1)}
 \end{center}
  & \begin{center}
-\textbf{Experiencia (X2)}
+\textbf{Experiencia (x2)}
 \end{center}
  \\
 \hline 
@@ -267,13 +267,13 @@ Diego
 
 \section{Cu\'anto sube mi ingreso si aumento mi educacion? }
 
-\paragraph{}El modelo de regresi\'on lineal esta dado por la siguiente formula:
+\paragraph{}El modelo de regresi\'on lineal est\'a dado por la siguiente formula:
 
 
 \begin{center}
 
 \begin{gather}
-Y_{i} \ =\ \beta 0+\beta 1X1_{i} \ +\ \beta 2X2_{i} +e_{i} \notag\\
+Y_{i} \ =\ \beta 0+\beta 1x1_{i} \ +\ \beta 2x2_{i} +e_{i} \notag\\
  \notag
 \end{gather}
 \end{center}
@@ -282,8 +282,8 @@ Y_{i} \ =\ \beta 0+\beta 1X1_{i} \ +\ \beta 2X2_{i} +e_{i} \notag\\
 
 
 \begin{itemize}
-\item \textbf{Lo que conocemos:} $\displaystyle X$ e $\displaystyle Y$. 
-\item \textbf{Lo que no conocemos, pero debemos estimar}: \ $\displaystyle \beta $ y $\displaystyle \epsilon $.
+\item \textbf{Lo que conocemos:} $\displaystyle {\boldsymbol x}$ e $\displaystyle y$. 
+\item \textbf{Lo que no conocemos, pero debemos estimar}: \ $\displaystyle \boldsymbol{\beta} $ y $\displaystyle \epsilon $.
 \end{itemize}
 
 
@@ -321,29 +321,29 @@ Y\ =\begin{bmatrix}
 3\\
 5\\
 7
-\end{bmatrix} \ =\ \beta 0+\beta 1\begin{bmatrix}
+\end{bmatrix}_{y} \ =\ \beta 0+\beta 1\begin{bmatrix}
 2\\
 7\\
 3
-\end{bmatrix} \ +\ \beta 2\begin{bmatrix}
+\end{bmatrix}_{x1} \ +\ \beta 2\begin{bmatrix}
 2\\
 4\\
 6
-\end{bmatrix} +e_{i}
+\end{bmatrix}_{x2} +e_{i}
 \end{equation*}
 
 
 \begin{itemize}
 \item Es f\'acil ver que:
-\item Debemos multiplicar $\displaystyle \beta 1$ por $\displaystyle X$1 y $\displaystyle \beta 2$ $\displaystyle X$2.
-\item $\displaystyle \beta $0, $\displaystyle \beta $1, $\displaystyle \beta $2 y $\displaystyle \epsilon $ son cantidades desconocidas, pero que debemos estimar.
+\item Debemos multiplicar $\displaystyle \beta 1$ por $\displaystyle x$1 y $\displaystyle \beta 2$ $\displaystyle x$2.
+\item $\displaystyle \beta $0, $\displaystyle \beta $1, $\displaystyle \beta $2 y $\displaystyle \epsilon_{i}$ son cantidades desconocidas, pero que debemos estimar.
 \item $\displaystyle \beta $0, $\displaystyle \beta $1y $\displaystyle \beta $2 son constantes.
 \item El \'unico par\'ametro que est\'a indexado, es $\displaystyle \epsilon _{i}$. Otra clase hablaremos de esto. \textbf{Adelanto}: Pensemos el caso de ``Pedro''. Si por ejemplo $\displaystyle \beta 0\ =\ -3$, $\displaystyle \beta 1\ =\ 1$ y $\displaystyle \beta 2\ =\ 2$, tendremos que $\displaystyle y_{_{\text{Pedro}}} -3\ +\ 1( 2) \ +\ $2(2) = 3. Entonces:
 \end{itemize}
 
 
 \begin{equation*}
-Y_{\text{Pedro}} \ =\ 3\ =\ -3\ +1( 2) \ +2( 2) \ +\ 0
+y_{\text{Pedro}} \ =\ 3\ =\ -3\ +1( 2) \ +2( 2) \ +\ 0
 \end{equation*}
 
 
@@ -361,7 +361,7 @@ Y_{\text{Pedro}} \ =\ 3\ =\ -3\ +1( 2) \ +2( 2) \ +\ 0
 
 
 
-$\displaystyle \beta \ =\ \left( X^{T} X\right)^{-1} X^{T} Y$
+$\displaystyle \beta \ =\ \left( \boldsymbol{X}^{T} \boldsymbol{X}\right)^{-1} \boldsymbol{X}^{T} y$
 
 
 
@@ -369,35 +369,35 @@ $\displaystyle \beta \ =\ \left( X^{T} X\right)^{-1} X^{T} Y$
 
 
 \begin{gather*}
-Y\ =\begin{bmatrix}
+y\ =\begin{bmatrix}
 3\\
 5\\
 7
 \end{bmatrix}\\
 \\
 \\
-\ X=\begin{bmatrix}
+\ \boldsymbol{X}=\begin{bmatrix}
 1 & 2 & 2\\
 1 & 7 & 4\\
 1 & 3 & 6
 \end{bmatrix}\\
 \\
 \\
-X^{T} =\begin{bmatrix}
+\boldsymbol{X}^{T} =\begin{bmatrix}
 1 & 1 & 1\\
 2 & 7 & 3\\
 2 & 4 & 6
 \end{bmatrix}\\
 \\
-X^{T} \times X\ =\ \begin{bmatrix}
+\boldsymbol{X}^{T} \times \boldsymbol{X}\ =\ \begin{bmatrix}
 1 & 1 & 1\\
 2 & 7 & 3\\
 2 & 4 & 6
-\end{bmatrix} \ \times \begin{bmatrix}
+\end{bmatrix}_{\boldsymbol{X}^{T}} \ \times \begin{bmatrix}
 1 & 2 & 2\\
 1 & 7 & 4\\
 1 & 3 & 6
-\end{bmatrix} \ =\ \begin{bmatrix}
+\end{bmatrix}_{\boldsymbol{X}} \ =\ \begin{bmatrix}
 3 & 12 & 12\\
 12 & 62 & 50\\
 12 & 50 & 56
@@ -405,14 +405,14 @@ X^{T} \times X\ =\ \begin{bmatrix}
 \\
 \\
 \\
-\left( X^{T} \times X\right)^{-1} =\frac{1}{\left( X^{T} X\right)} \ =\ \frac{1}{\text{det}\left( X^{T} X\right)} \ \times \ \text{Adj}\left( X^{T} X\right) \ =\ \begin{bmatrix}
+\left( \boldsymbol{X}^{T} \times \boldsymbol{X}\right)^{-1} =\frac{1}{\left( \boldsymbol{X}^{T} \boldsymbol{X}\right)} \ =\ \frac{1}{\text{det}\left( \boldsymbol{X}^{T} \boldsymbol{X}\right)} \ \times \ \text{Adj}\left( \boldsymbol{X}^{T} \boldsymbol{X}\right) \ =\ \begin{bmatrix}
 3 & -0.22 & -0.44\\
 -0.22 & 0.074 & -0.0185\\
 -0.44 & -0.0185 & 0.129
 \end{bmatrix}\\
 \\
 \\
-\beta \ =\ \left( X^{T} X\right)^{-1} X^{T} Y\ =\ \begin{bmatrix}
+\boldsymbol{\beta} \ =\ \left( \boldsymbol{X}^{T} \boldsymbol{X}\right)^{-1} \boldsymbol{X}^{T} y\ =\ \begin{bmatrix}
 3 & -0.22 & -0.44\\
 -0.22 & 0.074 & -0.0185\\
 -0.44 & -0.0185 & 0.129
@@ -426,11 +426,11 @@ X^{T} \times X\ =\ \begin{bmatrix}
 7
 \end{bmatrix} \ \\
 \\
-\beta =\ \begin{bmatrix}
+\boldsymbol{\beta} =\ \begin{bmatrix}
 1\\
 0\\
 1
-\end{bmatrix}\\
+\end{bmatrix}_{\boldsymbol{\beta}}\\
 \end{gather*}
 Esto quiere decir que $\displaystyle \beta 0\ =\ 1,\ \beta 1\ =\ 0$ y $\displaystyle \beta 2\ =\ 1$. Volvamos a re-escribir nuestra formula:
 
@@ -438,37 +438,37 @@ Esto quiere decir que $\displaystyle \beta 0\ =\ 1,\ \beta 1\ =\ 0$ y $\displays
 
 
 \begin{gather*}
-\beta \ =\ \left( X^{T} X\right)^{-1} X^{T} Y\ =\ \begin{bmatrix}
+\boldsymbol{\beta} \ =\ \left( \boldsymbol{X}^{T} \boldsymbol{X}\right)^{-1} \boldsymbol{X}^{T} y\ =\ \begin{bmatrix}
 1\\
 0\\
 1
-\end{bmatrix}\\
-\ \text{La formula que teniamos antes: }\begin{bmatrix}
+\end{bmatrix}_{\boldsymbol{\beta}}\\
+\ \text{La formula que ten\'iamos antes: }\begin{bmatrix}
 3\\
 5\\
 7
-\end{bmatrix} \ =\ \beta 0+\beta 1\begin{bmatrix}
+\end{bmatrix}_{y} \ =\ \beta 0+\beta 1\begin{bmatrix}
 2\\
 7\\
 3
-\end{bmatrix} \ +\ \beta 2\begin{bmatrix}
+\end{bmatrix}_{x1} \ +\ \beta 2\begin{bmatrix}
 2\\
 4\\
 6
-\end{bmatrix} +e_{i}\\
+\end{bmatrix}_{x2} +e_{i}\\
 \\
 \text{Los resultados que tenemos ahora:} \ \begin{bmatrix}
 3\\
 5\\
 7
-\end{bmatrix} \ =\ 1+0\begin{bmatrix}
+\end{bmatrix}_{y} \ =\ 1+0\begin{bmatrix}
 2\\
 7\\
 3
-\end{bmatrix} \ +\ 1\begin{bmatrix}
+\end{bmatrix}_{x1} \ +\ 1\begin{bmatrix}
 2\\
 4\\
 6
-\end{bmatrix} +e_{i}\\
+\end{bmatrix}_{x2} +e_{i}\\
 \end{gather*}
 \end{document}

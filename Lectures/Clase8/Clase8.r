@@ -42,7 +42,7 @@ predict(modelo)
 
 # Discutir: Es esto "suficientemente bueno"?
 
-# El concepto de "error". La diferencia entre lo que observamos y lo que modelamos. Derivar algeibraicamente.
+# El concepto de "error". La diferencia entre lo que observamos y lo que modelamos. Derivar algeibraicamente abajo.
 
 #######################################################
 # Modelo OLS en matriz.
@@ -60,6 +60,8 @@ base$error <- c(
         base$prestigio[2] - as.numeric(modelo$coefficients[1]) - (base$educacion[2] * as.numeric(modelo$coefficients[2])),
         base$prestigio[3] - as.numeric(modelo$coefficients[1]) - (base$educacion[3] * as.numeric(modelo$coefficients[2]))
         )
+
+base
 
 # Comprobemos que esta correcto
 base$error

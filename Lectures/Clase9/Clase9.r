@@ -11,6 +11,7 @@ x = matrix(
   ncol = 3
   )
 
+x
 
 # definir y
 y = matrix(
@@ -19,6 +20,7 @@ y = matrix(
   ncol = 1
 )
 
+y
 ###########################
 # transponer x con comando "t"
 ###########################
@@ -56,5 +58,7 @@ data = data.frame(
         x=x[,2:3],
         y=y
         )
+
+data
 
 lm(y ~ x.1 + x.2, data) # "lineal model"
