@@ -94,9 +94,13 @@ x=base$educacion # crea objeto
 y=base$prestigio  # crea objeto
 
 lm.out <- lm(y ~ x) # estima modelo de nuevo. el mismo modelo.
+
 newx = seq(min(x),max(x),by = 1) # crea sequencia de numeros para el rango X del grafico
-conf_interval <- predict(lm.out, newdata=data.frame(x=newx), interval="confidence",
-                         level = 0.95) # usando el modelo estimado, predice (a) distintos valores de educacion NO OBSERVADOS (fit), y el 95% de intervalo de confianza, con "lower bound" o "lwr" (parte de ABAJO del intervalo), y "upper bound" o "upr" (parte de ARRIBA del intervalo).
+
+conf_interval <- predict(lm.out, newdata=data.frame(x=newx), interval="confidence", level = 0.95) 
+
+# usando el modelo estimado, predice (a) distintos valores de educacion NO OBSERVADOS (fit), y el 95% de intervalo de confianza, con "lower bound" o "lwr" (parte de ABAJO del intervalo), y "upper bound" o "upr" (parte de ARRIBA del intervalo).
+
 plot(x, y, xlab="Educ", ylab="Prest", main="Regression", ylim = c(30,90)) # ploteamos
 abline(lm.out, col="lightblue") # agregamos linea "fit"
 lines(newx, conf_interval[,2], col="blue", lty=2) # lower bound
