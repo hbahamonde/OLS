@@ -53,6 +53,9 @@ solve(t(x)%*%x)
 options(scipen=99)
 solve(t(x) %*% x)%*%t(x)%*%y # beta
 
+b = round(solve(t(x) %*% x)%*%t(x)%*%y, 0)
+b
+
 # Usando el comando "lm"
 data = data.frame(
         x=x[,2:3],
@@ -61,4 +64,5 @@ data = data.frame(
 
 data
 
-lm(y ~ x.1 + x.2, data) # "lineal model"
+modelo = lm(y ~ x.1 + x.2, data) # "lineal model"
+summary(modelo)

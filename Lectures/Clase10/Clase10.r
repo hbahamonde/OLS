@@ -36,11 +36,11 @@ graphics.off()
 ## educacion <- prestigio # No!
 
 ## Esto significa que,
-## Prestigio = b0 + b1Educacion + e
+## Prestigio = b0 + b1*Educacion + e
 
 ## Recuerda que todo esta indexado, menos los betas. Es decir, la formula real
 ## es asi:
-## Prestigio_{i} = b0 + b1Educacion_{i} + e_{i}
+## Prestigio_{i} = b0 + b1*Educacion_{i} + e_{i}
 ## "i" significa "individuo". Y representa a cada observacion. 
 ## Esto significa que Pedro, Juan y Diego tienen, cada uno,
 ## sus propios niveles de prestigio,
