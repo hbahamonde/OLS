@@ -16,16 +16,16 @@ graphics.off()
 # Quienes reprimen mas, paises democraticos o dictatoriales? Para responder,
 # deberemos volver a pensar en beta1.
 
-# Abramos la base de datos. Los formatos ".dta" son de STATA. Esa es otra
-# ventaja de R: R puede abrir bases de datos de STATA (pero STATA no puede
-# abrir bases de datos de R, ni de nada mas que no sea STATA).
+# Abramos la base de datos. Los formatos ".dta" son de Stata. Esa es otra
+# ventaja de R: R puede abrir bases de datos de Stata (pero Stata no puede
+# abrir bases de datos de R, ni de nada mas que no sea Stata).
 
 # Cargar Pacman
 if (!require("pacman")) install.packages("pacman"); library(pacman)
 
 # Cargar paquete para cargar bases que no son de R.
 # install.packages("foreign")
-library(foreign) # significa "foraneo"
+p_load(foreign) # significa "foraneo"
 options(scipen = 1000000) # apagar notacion cientifica.
 dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/cow.dta")
 
@@ -61,8 +61,8 @@ summary(reg.bivariada) # Hoy solo miraremos los coeficientes. Otro dia veremos e
 
 # Veamos la guia en el pdf.
 
-# Calculando el error. El error es la diferencia entre lo que predecimos
-# y lo que vemos. Es decir entre "y" (niveles reales de repression) 
+# Calculando el error. El error es la diferencia entre lo que vemos y lo que predecimos. 
+# Es decir entre "y" (niveles reales de repression) 
 # y "y'" (y prima), (niveles predecidos de represion). 
 
 # Primero, calculemos y'
@@ -70,6 +70,9 @@ dat$repression.prima = predict.lm(reg.bivariada)
 
 # Segundo, calculemos el error:
 dat$error = dat$repression-dat$repression.prima
+
+# Recordemos que el objeto que sale de "lm" ya contiene los residuos.
+as.numeric(reg.bivariada$residuals)
 
 # Veamos...
 head(dat)
@@ -91,7 +94,7 @@ summary(dat$error) # Que promedio tiene el error?
 
 # Comparemos el error que computamos nosotros, con el descriptivo del error que calcula R
 round(median(dat$error),4) == round(median(reg.bivariada$residuals),4)
-## Noten que R nos hace el trabajo facil, y podemos acceder a los residuos que "viven" dentro del objeto del modelo.
+
 
 # Puntos importantes:
 # (1.1) Siempre se dice que "los errores se cancelan mutuamente"
@@ -102,7 +105,7 @@ round(median(dat$error),4) == round(median(reg.bivariada$residuals),4)
 # Una manera grafica de ver el error, es ver un scatter plot
 # entre el error y el valor real.
 
-plot(dat$error, dat$repression)
+plot(reg.bivariada$residuals, reg.bivariada$fitted.values)
 
 # (1) Como seria un grafico donde no hay error? 
 # (2) Como pensar en la "normalidad" del error graficamente?
@@ -278,7 +281,7 @@ summary(reg.multivariada) # Hoy solo miraremos los coeficientes. Otro dia veremo
 dat$repression.prima2 = predict.lm(reg.multivariada)
 
 # Segundo, calculemos el error:
-dat$error2 = dat$repression-dat$repression.prima2 # error es la resta entre 
+dat$error2 = reg.multivariada$residuals
 # lo que predecimos (predict.lm(reg.multivariada)) y lo que observamos (dat$repression).
 
 # Veamos...
