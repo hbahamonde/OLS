@@ -107,7 +107,7 @@ round(median(dat$error),4) == round(median(reg.bivariada$residuals),4)
 
 plot(reg.bivariada$residuals, reg.bivariada$fitted.values)
 
-# (1) Como seria un grafico donde no hay error? 
+# (1) Como seria un grafico donde hay error? 
 # (2) Como pensar en la "normalidad" del error graficamente?
 
 # (3.1) Un "buen" error "no tiene patrones claros".
@@ -125,7 +125,7 @@ plot(reg.bivariada$residuals, reg.bivariada$fitted.values)
 # Pensemos en la idea de que una variable sea "independiente".
 # Para ello, pensemos en nuestra ecuacion lineal de nuevo.
 
-# y = b0 + b1x1 + e (esta es bivariada: un solo "x")
+# y = b0 + b1x1 + e (esta es bivariada: una "x")
 # y = b0 + b1x1 + b2x2 + b3x3 + e ("multivariada" o "multiple").
 
 
