@@ -28,7 +28,7 @@ confint(modelo.1, level = 0.99) # 99% de confianza
 # "EL 95%", Y DE POR QUE VEMOS LOS NUMEROS "2.5%" Y "97.5%"
 # EN NUESTRA TABLA DE "CONFINT".
 
-# Fijate que el intervalo de confianza de "democracia" va de ~9 a ~12
+# Fijate que el intervalo de confianza de "democracia" va de ~1179 a ~2097
 ## "~" significa "aproximadamente". Esos valores representan, nuevamente,
 ## valores de nuestra "y" (es decir, "crecimiento economico", segun lo
 ## estimamos en nuestro "modelo.1".)
@@ -208,16 +208,16 @@ t = qt(1-.05/2, grados.de.libertad) # valores criticos de t, a un 95% de confian
 # confianza a ambos lados de la distribucion.
 
 # 
-10631.611789 + t * sqrt(diag(sigma.2 * inv(t(x) %*% x)))[1]  # (Intercept)  #  12127.13117506
 10631.611789 - t * sqrt(diag(sigma.2 * inv(t(x) %*% x)))[1]  # (Intercept)  #  9136.09240230
+10631.611789 + t * sqrt(diag(sigma.2 * inv(t(x) %*% x)))[1]  # (Intercept)  #  12127.13117506
 
 #
-1638.874546  + t * sqrt(diag(sigma.2 * inv(t(x) %*% x)))[2]  # democracy  # 2097.753
 1638.874546  - t * sqrt(diag(sigma.2 * inv(t(x) %*% x)))[2]  # democracy  # 1179.996
+1638.874546  + t * sqrt(diag(sigma.2 * inv(t(x) %*% x)))[2]  # democracy  # 2097.753
 
 #
-0.002947     + t * sqrt(diag(sigma.2 * inv(t(x) %*% x)))[3]  # pop 
 0.002947     - t * sqrt(diag(sigma.2 * inv(t(x) %*% x)))[3]  # pop 
+0.002947     + t * sqrt(diag(sigma.2 * inv(t(x) %*% x)))[3]  # pop 
 
 
 # Pero nuevamente, siempre hay un camino mas corto.

@@ -107,13 +107,12 @@ round(median(dat$error),4) == round(median(reg.bivariada$residuals),4)
 
 plot(reg.bivariada$residuals, reg.bivariada$fitted.values)
 
-# (1) Como seria un grafico donde hay error? 
-# (2) Como pensar en la "normalidad" del error graficamente?
+# Residuos deben ser HOMOESQUEDASTICOS (VARIANZA CONSTANTE).
 
+# (1) Como seria un grafico donde hay problemas? 
+# (2) Como pensar en la "normalidad" del error graficamente?
 # (3.1) Un "buen" error "no tiene patrones claros".
 # Dibujar un ejemplo.
-
-
 # (4) Razones por las que incrementa nuestro error? 
 
 ########################
@@ -252,7 +251,7 @@ det(m2) # mismo problema. |m2| = 0, o "la determinante de m2 es cero,
 # (1) En que casos REALES podemos tener problemas de 
 # colinearidad perfecta?
 
-# (2) Por que es MUY COMUN tener problemas de colinearidad "imperfecta"
+# (2) Por que es MUY COMUN tener problemas de colinearidad "imperfecta" (o "multicolinearidad")
 # en ciencias sociales?
 
 # OK, sigamos.
@@ -269,7 +268,7 @@ colnames(dat) # "column names)
 
 
 
-reg.multivariada = lm(repression ~ democracy +, dat) # Completar
+reg.multivariada = lm(repression ~ democracy + pop + vdiss, dat) # Completar
 
 
 summary(reg.multivariada) # Hoy solo miraremos los coeficientes. Otro dia veremos el error std.
@@ -287,9 +286,16 @@ dat$error2 = reg.multivariada$residuals
 # Veamos...
 head(dat)
 
-# Graficando el error
+# Graficando el error: Densidad
 p_load(lattice) # Para graficos
 densityplot(dat$error2)
+
+# Ves un pastron o algo "inusual"?
+plot(dat$repression.prima2, dat$error2)
+
+# Funcion (que veremos mas adelante) para plotear diagnosticos. 
+plot(reg.multivariada)
+
 
 # Summary ("Resumen")
 summary(dat$error2)

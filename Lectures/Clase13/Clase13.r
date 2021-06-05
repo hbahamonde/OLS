@@ -1,4 +1,4 @@
-# Test de hipótesis (t test), errores Tipo I y II, significación estadística (p-values).
+# Test de hipótesis (t test), errores Tipo I y II, significancia estadística (p-values).
 #################################################################
 cat("\014")
 rm(list=ls())
@@ -58,9 +58,8 @@ summary(modelo.1)
 ## (2) Observar los errores estandard.
 summary(modelo.1)
 
-## (3) Checkear normalidad de los residuos.
-
-plot(dat$pop, modelo.1$residuals)
+## (3) Checkear normalidad de los residuos: y' con residuos.
+plot(modelo.1$fitted.values, modelo.1$residuals)
 
 ## (4) Checkear significancia estadistica (asunto de hoy).
 summary(modelo.1)
@@ -75,16 +74,16 @@ summary(modelo.1)
 ## En este caso, hay un 69,84% de probabilidad de que el efecto sea 0. 
 ## Asi mismo, hay un 24.41% de que beta(2) no sea 18707, si no que sea 0.
 
-## (1) Hasta que punto debieramos rechazar la idea de que b=0? Cual es el 
-## % magico que nos diga "ok, estoy casi segur@ de que b1=0 y que b1=2345?
+## (1) Hasta que punto debieramos rechazar la idea de que b1=0? Cual es el 
+## % "magico" que nos diga "ok, estoy segur@ de que b1=0 y no b1=2345?
 
 ## Estrellas denotan significancia. 
-### * = la probabildiad de que el beta sea 0 es igual/menor al 1%
-### ** = la probabildiad de que el beta sea 0 es igual/menor al 0.1%
-### *** = la probabildiad de que el beta sea 0 es igual a 0%
+### * = la probabilidad de que el beta sea 0 es igual/menor al 1%
+### ** = la probabilidad de que el beta sea 0 es igual/menor al 0.1%
+### *** = la probabilidad de que el beta sea 0 es igual a 0%
 
 ## Otros niveles:
-### . = la probabildiad de que el beta sea 0 es igual al 5%
+### . = la probabilidad de que el beta sea 0 es igual al 5%
 
 ## (4) Checkear significancia estadistica: 
 ### Que podemos decir de la significancia estadistica de nuestros coeficientes?
@@ -119,6 +118,16 @@ confint(modelo.1, strict = T)
 library(effects)
 plot(allEffects(modelo.1))
 
+# otro ejemplo
+options(scipen = 999999) # apagar notacion cientifica.
+library(ggeffects)
+mydf <- ggpredict(modelo.1)
+
+mydf # ve los resultados.
+
+plot(mydf$democracy)
+plot(mydf$repression)
+
 # (3) Que podemos concluir? 
 
 #################################################################
@@ -146,13 +155,11 @@ summary(modelo.1)
 # que es nuestra probabilidad de que nuestro efecto sea falso/cero, es mayor a 5%,
 # concluimos que el efecto es "realmente" cero. Ahora, si el p-value es menor 
 # a 5%, consideramos que la probabilidad de que sea falso es chica, y podemos
-# creer que nuestro efecto en realidad es verdadero/no-cero. 
+# creer que nuestro efecto en realidad es "verdadero" o mas bien "no-cero" o "no falso".
 
 
 # Recuerda: 5% significa 5/100=0.05. Entonces, un p-value menor a 0.05 indica que 
-# nuestro efecto es verdadero/no-falso, y un p-value mayor a 0.05 indica que nuestro 
-# efecto es falso/0. Es por esto que los p-values de los coeficientes que son 
-# menores a 0.05 tienen estrellas, y los que que son mayores no tienen. 
+# nuestro efecto es verdadero o "no-falso", y un p-value mayor a 0.05 indica que nuestro efecto es falso/0. Es por esto que los p-values de los coeficientes que son iguales o menores a 0.05 tienen estrellas, y los que son mayores no tienen. 
 
 
 #################################################################
@@ -166,7 +173,7 @@ summary(modelo.1)
 2345/6036
 18707/15973
 
-# Esto significa que cuando el el error estandard es grande (lo que es "malo"), 
+# Esto significa que cuando el error estandard es grande (lo que es "malo"), 
 # t value se vuelve mas chico. Nosotros queremos lo contrario. Ojala t values
 # que son cercanos a dos. En general, esos t values tienen un p-value < 0.05.
 
@@ -179,17 +186,16 @@ summary(modelo.1)
 # hemos tratado de minimizar nuestros Errores Tipo 1 y 2.
 #################################################################
 
-# Sesgo en ciencias sociales: en favor de la "hipotesis nula" (es decir, no hay efecto).
-# El p-value es el humbral en el que rechazamos la "hipotesis nula". Matematicamente,
-# una "hipotesis nula" significa que nuestro beta = 0. Es decir, "no hay efecto".
+# La logica en investigacion en ciencias sociales tiene que ver con la idea de 
+# ver si hay suficiente evidencia en contra de la "hipotesis nula" (es decir, no hay efecto). En otras palabras, un@ no trata de buscar "verdades" (o estimaciones estadisticamente
+# significativas). Un@ trabaja con estimaciones que son hasta 5% falsas (o 95% verdaderas).
 
-# (1) Por que? 
-
+# En concreto, un@ trata de minimizar la posibildiad del error "Tipo 1".
 
 # Error Tipo 2: falsos negativos.
 # Error Tipo 1: falsos positivos.
 
-# (2) Definir ambos.
+# Definir ambos.
 
 
 #################################################################
@@ -202,12 +208,18 @@ summary(modelo.1)
 ## (1) Criticas al p-value. Por que 5% y no 3% por ejemplo?
 ## (2) Comunicando resultados: tablas con CI en vez de estrellas.
 
+
+# install.packages("texreg")
+library(texreg)
+screenreg(modelo.1, ci.force = F)
+
+
 ### Tabla que incorpora estas criticas
 # install.packages("texreg")
 library(texreg)
 screenreg(modelo.1, ci.force = T) # nuestro paquete "screenreg" que ya conocemos,
 # pero ahora, forzando los intervalos de confianza ("confidence intervals"), por 
-# eso, "ci.force = T" ("T" por "true" o "verdad" o "si").
+# eso, "ci.force = T" ("T" por "true").
 
 
 
@@ -223,9 +235,13 @@ screenreg(modelo.1, ci.force = T) # nuestro paquete "screenreg" que ya conocemos
 
 
 #### (1) Mientras mas datos tenemos, nuestras distribuciones se ponen mas perfectas, 
-#### delgadas, y precisas. Eso hace que encontremos independencia estadistica mas seguido.
+#### delgadas, y precisas. Eso hace que encontremos independencia estadistica mas facil.
 #### (2) Falsos positivos! 
-## Tabla convencional
-library("texreg")
-screenreg(modelo.1, ci.force = F) # notan la diferencia?
+
+hist(rnorm(10,0,1))
+hist(rnorm(50,0,1))
+hist(rnorm(250,0,1))
+hist(rnorm(2500000,0,1))
+
+
 
