@@ -26,7 +26,7 @@ graphics.off()
 # (2) El error tiene varianza constante: idem.
 # (3) El error no esta correlacionado (los errores son independientes entre si): idem.
 # (4) El error esta normalmente distribiuido: idem.
-# (5) Las X's estan medidos sin error, y son independientes del error.
+# (5) Las X's estan medidas sin error, y son independientes del error.
 # (6) Las X's no son invariables, es decir, las X's son variables, no constantes.
 
 # (*) Punto sobre la diferencia entre ERROR y RESIDUO:
@@ -52,9 +52,9 @@ graphics.off()
 # la diferencia entre la MATRIZ QUE CONTIENE TODOS LOS BETAS CORRECTOS,
 # Y LA MATRIZ QUE NOSOTROS TENEMOS ACCESO (O POODEMOS OCUPAR) ES CERO.
 
-# (1) Punto del modelo "real"
-# (2) Punto del epsilon y la letra "e"
-# (3) Punto del beta y la letra "b"
+# (1) Punto del modelo "real" ("true model").
+# (2) Punto del epsilon (error) y la letra "e" (residuo).
+# (3) Punto del beta y la letra "b".
 
 # Son diferencias filosoficas. Importantes...pero filosoficas.
 
@@ -65,7 +65,7 @@ graphics.off()
 
 
 #################################################################
-# Sesgo de Variable Omitida
+# Sesgo de Variable Omitida: "omitted variable bias"
 #################################################################
 
 # Todos los supuestos de OLS operan bajo otro supuesto: el modelo que 
@@ -84,9 +84,11 @@ graphics.off()
 
 # Inventemos las variables independientes
 set.seed(2020)
-x1 = rnorm(1000, 10) # como nunca, conocemos que el promedio REAL de esta variable es 10
-x2 = rnorm(1000, 20) # como nunca, conocemos que el promedio REAL de esta variable es 20
-x3 = rnorm(1000, 30) # como nunca, conocemos que el promedio REAL de esta variable es 30
+x1 = rnorm(1000, mean=0, sd=1) # como nunca, conocemos que el promedio REAL de esta variable es 0
+x2 = rnorm(1000, mean=2, sd=2) # como nunca, conocemos que el promedio REAL de esta variable es 2
+x3 = rnorm(1000, mean=1, sd=3) # como nunca, conocemos que el promedio REAL de esta variable es 1
+x4 = x1*x2
+
 
 # Definamos que, como debiera ser, el error tiene promedio cero.
 e = rnorm(1000, 0)
@@ -94,20 +96,23 @@ e = rnorm(1000, 0)
 # Establecer el valor real de los betas: conocemos con exactitud los valores,
 # porque nosotros los creamos!
 b1 = 1
-b2 = -100
-b3 = 500
+b2 = -1
+b3 = 5
+b4 = -2
 
 # El "VERDADERO MODELO": "y" es una combinacion lineal de todas las variables.
-y = b1*x1 + b2*x2 + b3*x3 + e
+y = b1*x1 + b2*x2 + b3*x3 + b4*x4 + e # true model
+
+hist(y)
 
 # Hagamos una regresion.
-modelo.completo = lm(y ~ x1 + x2 + x3)
+modelo.completo = lm(y ~ x1 + x2 + x3 + x4)
 summary(modelo.completo) # sin sorpresa, los betas son los mismos que inventamos nosotros.
 
 # (1) La tabla de "Residuals" dice que la mediana es 0. Eso es genial. Pero sin sorpresas, nosotros inventamos todo, asi que obvio que resulta bien.
 # (2) Plotiemos los errores
 
-plot(modelo.completo$residuals, y) 
+plot(modelo.completo$fitted.values, modelo.completo$residuals) 
 
 
 # Perfecto! No notamos ningun patron.
@@ -126,11 +131,15 @@ summary(modelo.segado) # Ya los resultados son muy diferentes.
 # (1) Mediana de los residuos? 
 # (2) Plotiemos los errores?
 
-plot(modelo.segado$residuals, y) 
+plot(modelo.segado$fitted.values, modelo.segado$residuals) 
 
-## Uff...vemos un patron clarisimo, y ya nuestra nube desaparecio. 
-## (1) Cual es el patron? 
 
+# Promediemos el error
+options(scipen = 1000000) # apagar notacion cientifica.
+mean(modelo.segado$residuals)
+
+# Que vemos aqui?
+# Que implica?
 
 #################################################################
 # Atencion
