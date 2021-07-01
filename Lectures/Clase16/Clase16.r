@@ -27,7 +27,7 @@ graphics.off()
 # r2: Definicion y Significado
 #################################################################
 
-# El r-cuadrado es un porcentage, que obviamente va de 0 a 1. Mientras 
+# El r-cuadrado es un porcentaje, que obviamente va de 0 a 1. Mientras 
 # mas cercano a 1, nuestro modelo mejora. 
 
 # Usualmente, se interpreta como el % de la varianza que es explicada
@@ -40,7 +40,7 @@ graphics.off()
 
 # Por que es importante el r2? Bueno, asi podemos comparar que modelo
 # explica mas la realidad. Imaginate que tenemos dos modelos, m1 y m2.
-# Si el r2(m1) > al r2(m2), debieramos quedarnos con el m1. Por que?
+# Si r2(m1) > r2(m2), debieramos quedarnos con el m1. Por que?
 # Porque el set de variables de m1 explica mas varianza (mas datos)
 # al compararlo con el m2.
 
@@ -86,7 +86,7 @@ summary(modelo.mediocre)$r.squared # Pesimo...
 
 # (1) Que podemos concluir de los r2 respectivos de "modelo.entero" y "modelo.parcial"?
 # (2) Con que modelo nos quedamos? Costo-beneficio, teniendo en cuenta la parsimonia.
-# (*) Este es el tipo de decisiones que podemos tomar usando el estadiatico del r2.
+# (*) Este es el tipo de decisiones que podemos tomar usando el estadiatico r2.
 
 
 
@@ -142,11 +142,15 @@ summary(modelo.entero)$r.squared # r2
 ## (a) Extraer "y" observado.
 y.observado = dat$Obamafav
 
-## (b) Extraer"y" predicho.
+## (b) Extraer "y" predicho.
 y.predicho = modelo.entero$fitted.values
 
 ## Calcular los errores del modelo
 e.m = y.observado - y.predicho
+
+### BONUS: Comparalo con el que esta dentro del objeto del modelo.
+table(round(as.numeric(modelo.entero$residuals),8) == round(as.numeric(e.m), 8))
+
 
 ## 2. Calcular los errores de la variable dependiente (Errores del vector y)
 y.m = y.observado - mean(y.observado) # round(mean(y, trim = 0.5), 3)
@@ -159,8 +163,14 @@ y.m = y.observado - mean(y.observado) # round(mean(y, trim = 0.5), 3)
 
 # Formula Estadistica
 y_fit <- modelo.entero$fitted.values # Fitted es lo que predecimos
-SSE <- sum((y_fit - y)^2) # Aqui restamos lo que predecimos ("y_fit") menos lo que observamos ("y), y despues sacamos el cuadrado de esos numeros, y despues sumamos todas esas diferencias cuadradas. Esta cantidad se llama "Sum Square Error", y es eso: la suma de todos los errores cuadrados. 
-SST <- sum((y - mean(y))^2) # Despues calculamos el "Sum Square Total". Estos son los "errores" o desviaciones que tiene nuestra matriz "y", y tiene que ver con cuanto cada elemento en "y" se desvia del promedio de "y".
+
+# Sum Square Error
+SSE <- sum((y_fit - y.observado)^2) # Aqui restamos lo que predecimos ("y_fit") menos lo que observamos ("y), y despues sacamos el cuadrado de esos numeros, y despues sumamos todas esas diferencias cuadradas. Esta cantidad se llama "Sum Square Error", y es eso: la suma de todos los errores cuadrados. 
+
+# Sum Square Total
+SST <- sum((y.observado - mean(y.observado))^2) # Despues calculamos el "Sum Square Total". Estos son los "errores" o desviaciones que tiene nuestra matriz "y", y tiene que ver con cuanto cada elemento en "y" se desvia del promedio de "y".
+
+# r2
 1-SSE/SST  # R^2, que es 1 menos SSE/SST 
 summary(modelo.entero)$r.squared # r2// Y que es esto mismo.
 
@@ -172,7 +182,7 @@ summary(modelo.entero)$r.squared # r2// Y que es esto mismo.
 # Como dice King, el r2 es una funcion de los parametros (variables independientes).
 # Mientras mas variables (o x's), mejor nuestro r2. Es por esto que 
 # es muy comun "mentir" en estadisticas: pones un monton de x's, y mejoras
-# tu r2. Mas acerca de esto, al final de la clase.
+# tu r2. Esto se ha llamado "kitchen-sink regression".
 
 # Una manera de "arreglar" esto, es no mirar el r2, si no que el r2-ajustado.
 # Este estadistico nos dice lo mismo que el r2, pero "ajusta" por el numero
@@ -201,6 +211,7 @@ summary(modelo.mediocre)$adj.r.squared
 
 # (1) Que tendriamos que hacer para lograr un r2 = 1?
 # (2) Es realmente bueno/posible?
+# (3) Si no es el r2, que otra alternativa tenemos (paper de King)?
 
 
 

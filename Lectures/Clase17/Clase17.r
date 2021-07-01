@@ -9,8 +9,8 @@ graphics.off()
 #################################################################
 # Motivacion
 #################################################################
-# (1) Los modelos lineales deben ser...lineales. Es decir, 
-# OLS asume que la relacion entre "x" e "y" puede ser representada
+# (1) Los modelos lineales deben ser...bueno, "lineales." Es decir, 
+# OLS asume que la relacion entre "X" e "Y" puede ser representada
 # por una linea recta. Podemos "desafiar" este concepto de "linea recta"?
 
 # (2) Los modelos lineales asumen "varianza constante entre los errores". 
@@ -24,6 +24,7 @@ graphics.off()
 # (4) Por que el aporte de una variable independiente en la dependiente
 # podria NO SER lineal, es decir, curvilinea? Este punto es importante. Que cosas
 # en la sociedad NO SON LINEALES?
+
 #################################################################
 # Linearidad y no Linearidad
 #################################################################
@@ -37,21 +38,24 @@ summary(modelo.lineal)
 
 
 # Plotear errores: manera "artesanal"
-plot(Prestige$prestige, modelo.lineal$residuals)
+plot(modelo.lineal$fitted.values, modelo.lineal$residuals)
 
-# Con paquete:
+# Plotiemos los betas (uno por uno), y veamos:
+## (1) Cuanto error aportan al modelo.
+## (2) Cuan lineal es la relacion existe entre X e Y.
+
+
 crPlot(modelo.lineal, "income") # Problema.
-crPlot(modelo.lineal, "education") # no es exactamente lineal, pero es tolerable.
+crPlot(modelo.lineal, "education") # no es exactamente lineal, pero es super tolerable.
 crPlot(modelo.lineal, "women") # no hay relacion, pero no hay problemas con los residuos.
 
-
 # (1) El "aporte" de cada variable independiente debe ser lineal, es decir, una 
-# linea recta. Esto es la parte del "componente".
+# linea recta. Esto es la parte del "componente" (en azul).
 
-# (2) El error de cada parte del "componente", debe ser lineal y normalmente
-# distribuido. Esta es la parte del "residuo".
+# (2) El error de cada parte del "componente" debe ser lineal y normalmente
+# distribuido. Esta es la parte del "residuo" (en morado).
 
-# Veamos. El "componente" es azul, y el "residuo" morado.
+
 
 
 # Estimemos una regresion no lineal
@@ -114,7 +118,7 @@ xyplot(Prestige$prestige ~ Prestige$income.transformado, type=c("smooth", "p")) 
 
 
 # OK. Ahora estimemos un nuevo modelo ocupando nuestro "income" transformado, y
-# veamos si soluciona el problema de fondo (no tener varianza constante en los errores).
+# veamos si soluciona el problema de fondo (es decir, no tener varianza constante en los errores).
 # Al final del dia, ese es el problema de no tener linearidad entre uno de los Xs y nuestra Y.
 
 # modelo con "ingresos" (income) transformado
@@ -210,6 +214,7 @@ ols_plot_cooksd_chart(m3)
 
 # Ver el error
 dat$residuals = as.vector(m3$residuals)
+dat
 
 # El punto de quiebre es 4/n. 
 4/nrow(dat) # Lo que esta arriba de 0.3636364 (arriba de la linea roja, es influence).
@@ -229,7 +234,7 @@ plot(autos$fitted, mtcars$mpg) # Donde esta el problema?
 
 # Dado que SI tenemos un problema, nuestro error debiera seguir algun patron.
 # Es decir, debieramos NO ver una nube dispersa, y la linea debiera ser curva. Veamos.
-xyplot(autos$residuals ~ mtcars$wt, type=c("smooth", "p")) # residuos no tienen varianza constante.
+xyplot(autos$residuals ~ autos$fitted.values, type=c("smooth", "p")) # residuos no tienen varianza constante.
 
 # Ocupemos una funcion de R para detectar observaciones con leverage.
 ols_plot_resid_stud_fit(autos) # OK. Son las mismas 3 observaciones que habiamos visto (17, 18 y 20)
@@ -246,11 +251,14 @@ data.frame(
 # Errores Estandard Inflados: Multicolinearidad ("imperfecta") y Multicolinearidad Perfecta
 #################################################################
 
+# Apagar not scient.
+options(scipen = 100000)
+
 # Inventemos las variables independientes
 set.seed(2020)
 x1 = rnorm(1000, 10)
 x2 = rnorm(1000, 20) 
-x3 = (x2*x2)/1000 # x3 es una combinacion linear de x2
+x3 = (x2*x2)/1000 # x3 es una combinacion lineal de x2
 
 # Definamos que, como debiera ser, el error tiene promedio cero.
 e = rnorm(1000, 0)
