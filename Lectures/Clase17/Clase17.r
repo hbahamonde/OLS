@@ -58,6 +58,8 @@ crPlot(modelo.lineal, "women") # no hay relacion, pero no hay problemas con los 
 
 
 
+
+
 # Estimemos una regresion no lineal
 modelo.no.lineal = lm(prestige ~ poly(income, 3) + poly(education, 2) + women, data = Prestige)
 summary(modelo.no.lineal)
@@ -124,6 +126,10 @@ xyplot(Prestige$prestige ~ Prestige$income.transformado, type=c("smooth", "p")) 
 
 # modelo con "ingresos" (income) transformado
 modelo.no.lineal.box.tid = lm(prestige ~ income.transformado + education + women, data=Prestige) 
+
+# interpretacion
+plot(effect("income.transformado", modelo.no.lineal.box.tid)) # es el menos lineal de todos
+
 
 # Hagamos un scatter entre los residuos y cada una de las x (transformada y normal)
 xyplot(modelo.no.lineal.box.tid$residuals ~ modelo.no.lineal.box.tid$fitted.values, type=c("smooth", "p")) # bien.
