@@ -90,6 +90,7 @@ plot(effect("poly(education, 2)", modelo.no.lineal)) # es el mas lineal.
 
 
 # El punto es que nuestros modelos estan disenados para ser LINEALES.
+# Aunque hemos usado polinomios para calzar mejor los datos, seguimos teniendo residuos heteroesquedasticos.
 # La manera en que podemos solucionar este tipo de problemas, es recurriendo
 # a transformaciones. 
 
@@ -125,8 +126,8 @@ xyplot(Prestige$prestige ~ Prestige$income.transformado, type=c("smooth", "p")) 
 modelo.no.lineal.box.tid = lm(prestige ~ income.transformado + education + women, data=Prestige) 
 
 # Hagamos un scatter entre los residuos y cada una de las x (transformada y normal)
-xyplot(modelo.no.lineal.box.tid$residuals ~ Prestige$income.transformado, type=c("smooth", "p")) # bien.
-xyplot(modelo.lineal$residuals ~ Prestige$income, type=c("smooth", "p")) # mal.
+xyplot(modelo.no.lineal.box.tid$residuals ~ modelo.no.lineal.box.tid$fitted.values, type=c("smooth", "p")) # bien.
+xyplot(modelo.lineal$residuals ~ modelo.lineal$fitted.values, type=c("smooth", "p")) # mal.
 
 # Resumen de los residuos: modelo con "income" transformado y normal.
 summary(summary(modelo.no.lineal.box.tid)$residuals) # Mucho mejor residuos.
@@ -153,12 +154,12 @@ summary(modelo.log.income)
 # (1) Como interpretamos este tipo de modelos (con una X logeada)?
 
 # Hagamos un scatter entre los residuos y cada una de las x (transformada y normal)
-xyplot(modelo.log.income$residuals ~ Prestige$income.transformado, type=c("smooth", "p")) # bien.
-xyplot(modelo.lineal$residuals ~ Prestige$income, type=c("smooth", "p")) # muy mal.
+xyplot(modelo.log.income$residuals ~ modelo.log.income$fitted.values, type=c("smooth", "p")) # bien.
+xyplot(modelo.lineal$residuals ~ modelo.lineal$fitted.values, type=c("smooth", "p")) # mal.
 
 # Resumen de los residuos: modelo con "income" transformado y normal.
-summary(summary(modelo.no.lineal.box.tid)$residuals)
-summary(summary(modelo.lineal)$residuals)
+summary(summary(modelo.log.income)$residuals)
+summary(summary(modelo.lineal)$residuals) # OK---hemos mejorado algo.
 
 #################################################################
 # Outliers
@@ -192,7 +193,7 @@ m3 = lm(y3 ~ x3, dat)
 
 # veamos como se ven los problemas de "influence"
 library(lattice)
-xyplot(m3$residuals ~ dat$x3, type=c("smooth", "p")) # residuos no tienen varianza constante.
+xyplot(m3$residuals ~ m3$fitted.values, type=c("smooth", "p")) # residuos no tienen varianza constante.
 # Pero en especial, hay un punto con mucha "influencia"
 
 # Una ruta es la inspeccion visual. Tratemos de hacer algo mas sistematico. 
