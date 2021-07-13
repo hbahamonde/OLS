@@ -1,0 +1,33 @@
+Dataset:  clinton1.dat
+
+Source: U.S. Census Bureau
+
+Description: County level results for percent voting for Bill Clinton
+in 1992 Presidential Election and Demographic variables.
+
+Variables/Columns
+
+County Name  nombre del condado
+Percent voting for Clinton in 1992   
+Median Age    media de la edad
+Mean Savings   media de los ahorros
+PerCapita Income  ingreso per   
+Percent in Poverty    73-77 
+Percent Veterans  81-85       
+Percent Female        89-94   
+Population Density    98-105     
+Percent in Nursing Homes   109-114      
+Crime Index (Per capita)   118-123 
+
+
+county    nombre del condado
+clinton_vote  porcentaje de votos por clinton
+median_age	edad media del condado
+mean_savings	media de ahorros
+income_pc	ingreso per capita
+poverty_rate	 taza de pobreza
+veterans_rate	  taza de veteranos de guerra
+percent_female	 porcentaje de mujeres
+population_density	 densidad poblacional
+nursing_homes	numero de casas especializadas en el cuidado de ancianos
+crime_index     indice de crímenes violentos

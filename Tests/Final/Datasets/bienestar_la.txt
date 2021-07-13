@@ -1,0 +1,15 @@
+
+Stephens, J. D. (2006). Politics and inequality in Latin America and the Caribbean. American Sociological Review, 71(6), 943-963 donde se estiman los determinantes de la desigualdad en los países de América Latina y el Caribe.
+
+gini_slc - coeficiente de gini (desigualdad)
+    Dualismosectorial (refiere a la la coexistencia de un sector tradicional de baja productividad y un sector moderno de alta productividad) - s_dualism
+    PBI - rgdpch
+    Inversión Extranjera Directa (ingresos netos - % del PIB) - fdiingdp
+    Diversidad étnica (variable dummy codificada 1 cuando al menos el 20 %, pero no más del 80 % de la población es étnicamente diversa) - ethnicdicot
+    Democracia (tipo de régimen) - demrss
+    Gasto en educación (como porcentaje del PBI) - cseduc
+    Gasto en salud (comoporcentaje del PBI) - cshlth
+    Gasto en seguridad social (comoporcentaje del PBI) - csssw
+    Balance legislativo - legbal
+    AutoritarismoRepresivo - repressauthor
+
