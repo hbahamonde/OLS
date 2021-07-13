@@ -1,0 +1,14 @@
+# Registra resultados en elecciones parlamentarias japonesas, entre '96 y '09.
+
+# Las variables son las siguientes:
+
+# year = año
+# party = partido
+# name = nombre
+# age = edad
+# status: incumbente, challenger o zombie (una suerte de incumbente subpar,
+## debido al sistema Proporcional de japon de Japón)
+# veteran: si participó en las Fuerzas de Autodefensa (simulada)
+# exp: gasto electoral (en yenes)
+# voteshare: resultado, en términos de % de votos en su distrito
+

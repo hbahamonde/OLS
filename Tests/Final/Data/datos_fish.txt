@@ -1,0 +1,8 @@
+# fhrev: Freedom house invertido 
+# muslim: Tradición religiosa musulmana
+# income: PIB per capita ("Desarrollo económico")
+# elf: Fraccionamiento étnico-lingüístico ("División sociocultural")
+# growth: Crecimiento anual ("Desempeño económico")
+# britcol: Herencia colonial británica
+# postcom: Herencia comunista
+# opec: Miembro de la OPEP

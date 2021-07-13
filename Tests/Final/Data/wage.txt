@@ -1,0 +1,22 @@
+''National Longitudinal Survey of Young Men, Aged 28-38 in 1980, 935 cases''
+
+
+
+wage  ingresos mensuales
+hours  hora de trabajo promedio
+iq   puntaje en un test de cociente intelectual
+kww  puntaje en un test de inteligencia KWW 'Knowledge of World of Work'
+educ Años de educación
+exper  Años de experiencia trabajando
+tenure  Años con el mismo empleador actual
+age   edad en años
+married   1 si estas casado 0 si no
+black   1 si eres afroamericano 0 si no
+south   1 si vives en el sur 0 si no
+urban   1 si vives en un area metropolitana 0 si no
+sibs    numero de hijos
+brthord   si tuviste hermanos, en que posición naciste. Si naciste primero 1, segundo 2 y así
+meduc  años de educación de la madre
+feduc  años de educación del padre
+
+ ''El IQ va abarca un rango entre 50-145''

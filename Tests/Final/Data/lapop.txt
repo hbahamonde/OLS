@@ -1,0 +1,12 @@
+del: Variable dicotómica que mide el nivel de justificación de golpes de estado militares en el país del encuestado frente a mucha delincuencia. Basada en la pregunta “jc10” de Encuesta LAPOP.
+ pdte: Variable dicotómica que mide el nivel de justificación de cierre del congreso en situaciones difíciles por parte del presidente. Basada en la pregunta “jc15a” de Encuesta LAPOP.
+ trib: Mide en una escala del 1 al 7 el nivel de confianza en los tribunales del país del encuestado. Basada en la pregunta “b1” de Encuesta LAPOP.
+inst: Mide en una escala del 1 al 7 el nivel de respeto por las instituciones políticas del país del encuestado. Basada en la pregunta “b2” de Encuesta LAPOP.
+ confcon: Mide en una escala del 1 al 7 el nivel de confianza en el Congreso Nacional (poder legislativo) del país del encuestado. Basada en la pregunta “b13” de Encuesta LAPOP.
+confpdte: Mide en una escala del 1 al 7 el nivel de confianza en el presidente (poder ejecutivo) del país del encuestado. Basada en la pregunta “b21a” de Encuesta LAPOP.
+ confpp: Mide en una escala del 1 al 7 el nivel de confianza en los partidos políticos del país del encuestado. Basada en la pregunta “b21” de Encuesta LAPOP.
+ confmedia: Mide en una escala del 1 al 7 el nivel de confianza en los medios de comunicación del país del encuestado. Basada en la pregunta “b37” de Encuesta LAPOP. 
+ confelec: Mide en una escala del 1 al 7 el nivel de confianza en las elecciones del país del encuestado. Basada en la pregunta “b47a” de Encuesta LAPOP.
+satdem: Variable dicotómica que mide el nivel de satisfacción con la democracia tienen los encuestados. Basada en la pregunta “pn4” de Encuesta LAPOP.
+ dervoto: Mide en una escala del 1 al 7 la satisfacción con la idea de que aquellos que se encuentren en contra del gobierno de turno puedan ejercer el voto en las elecciones del país del encuestado. Basada en la pregunta “d1” de Encuesta LAPOP.
+derman: Mide en una escala del 1 al 7 la satisfacción con la idea de que aquellos que se encuentren en contra del gobierno de turno puedan llevar a cabo manifestaciones pacíficas para expresar su punto de vista. Basada en la pregunta “d2” de Encuesta LAPOP.

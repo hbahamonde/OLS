@@ -1,0 +1,11 @@
+nombre
+periodo	
+mujer 1 si es mujer 0 si es hombre	
+partido	
+grupo	posicion politica
+seniority	numero de periodos en el congreso
+nacimiento	fecha	
+educacion	nivel educacional
+n_distrito	numero de distrito
+ruralidad	porcentaje de ruralidad
+n_mociones      numero de mociones presentadas en el congreso a favor de leyes "pro-mujer"
