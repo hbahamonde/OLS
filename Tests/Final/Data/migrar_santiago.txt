@@ -1,7 +1,0 @@
-ypch ingreso per capita del hogar
-mreg decision de migrar 1 si 0 no
-esc	escolaridad en años
-edad	edad
-sexm	sexo
-ecivilt	estado civil, casado o en acuerdo union civil es 1, soltero es 0
-zonaru si vive en zona rural es 1 urbano es 0
