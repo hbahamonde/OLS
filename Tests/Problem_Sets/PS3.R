@@ -15,6 +15,10 @@ library(foreign)
 dat = read.csv("https://github.com/hbahamonde/OLS/raw/master/Datasets/saurus.csv", header=F) 
 
 
+#################
+# Introduccion
+#################
+
 # En este ej tendras la oportunidad de trabajar en dos bases de datos ("anscombe" y "dat"). Armado/a con todo lo que tengas para analizar un modelo, quiero que veas si los cinco modelos que estimaras cumplen con los supuestos de la regresion lineal (Gauss-Markov). 
 
 # Usa todas las herramientas que TU creas convenientes!
@@ -27,8 +31,11 @@ dat = read.csv("https://github.com/hbahamonde/OLS/raw/master/Datasets/saurus.csv
 # d. El error esta normalmente distribiuido?
 # e. Las X's no son invariables, es decir, las X's son variables, no constantes?
 
+#################
+# Preguntas
+#################
 
-# Modelos
+# 1. Modelos
 
 ### Usando la base "anscombe", estima los siguientes modelos usando el comando "lm"
 ## modelo.1 = y1 ~ x1
@@ -40,12 +47,12 @@ dat = read.csv("https://github.com/hbahamonde/OLS/raw/master/Datasets/saurus.csv
 ## modelo.5 = V2 ~ V1
 
 
-# Muestra tus resultados en una tabla. 
+### 2. Muestra tus resultados en una tabla. 
 # library(texreg)
 # screenreg(list(modelo.1, modelo.2, modelo.3, modelo.4, modelo.5))
 
 
-# 3. Post-estimation checklist:
+### 3. Post-estimation checklist:
 # 3.1 El error tiene promedio cero?
 # 3.2 El error tiene varianza constante?
 # 3.3 El error no esta correlacionado?
