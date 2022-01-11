@@ -52,7 +52,7 @@
 \usepackage[sc,osf]{mathpazo}
 
 % Set your name here
-\def\name{M\'etodos Cuantitativos I - ICE3201}
+\def\name{Quantitative Module}
 
 % Replace this with a link to your CV if you like, or set it empty
 % (as in \def\footerlink{}) to remove the link in the footer:
@@ -99,23 +99,6 @@
 }
 
 
-% email input begin
-\newread\fid
-\newcommand{\readfile}[1]% #1 = filename
-{\bgroup
-  \endlinechar=-1
-  \openin\fid=#1
-  \read\fid to\filetext
-  \loop\ifx\empty\filetext\relax% skip over comments
-    \read\fid to\filetext
-  \repeat
-  \closein\fid
-  \global\let\filetext=\filetext
-\egroup}
-\readfile{/Users/hectorbahamonde/Bibliografia_PoliSci/email.txt}
-% email input end
-
-
 %%% bib begin
 \usepackage[american]{babel}
 \usepackage{csquotes}
@@ -155,17 +138,17 @@
 \vspace{0.25in}
 
 \begin{minipage}{0.45\linewidth}
- Universidad de O$'$Higgins \\
-  Instituto de Ciencias Sociales \\
-  Rancagua, Chile\\
+ University of Turku \\
+  Faculty of Social Sciences \\
+  Turku, Finland\\
   \\
   \\
 
 \end{minipage}
 \hspace{4cm}\begin{minipage}{0.45\linewidth}
   \begin{tabular}{ll}
-{\bf \'Ultima actualizaci\'on}: \today. \\
- {\bf Descarga la \'ultima versi\'on} \href{https://github.com/hbahamonde/OLS/raw/master/Bahamonde_OLS.pdf}{aqu\'i}.%\\
+{\bf Last updated}: \today. \\
+ {\bf Download last version} \href{https://github.com/hbahamonde/OLS/raw/master/Bahamonde_OLS.pdf}{here}.%\\
    %{\bf {\color{red}{\scriptsize Not intended as a definitive version}}} %\\
     \\
     \\
@@ -175,67 +158,69 @@
   \end{tabular}
 \end{minipage}
 
-\subsection*{Aspectos Log\'isticos}
+\subsection*{Admin}
 
 
 \vspace{1mm}
-{\bf Profesor}: H\'ector Bahamonde, PhD.\\
-\texttt{e:}\href{mailto:hector.bahamonde@uoh.cl}{\texttt{hector.bahamonde@uoh.cl}}\\
+{\bf Professor}: H\'ector Bahamonde, PhD.\\
+\texttt{e:}\href{mailto:hibano@utu.fi}{\texttt{hibano@utu.fi}}\\
 \texttt{w:}\href{http://www.hectorbahamonde.com}{\texttt{www.HectorBahamonde.com}}\\
-\texttt{Zoom ID:} \href{https://us02web.zoom.us/j/9513261038?pwd=S3BSWXQxZW11NC9CRjRoMmd0TkpEZz09}{\texttt{951-326-1038}}.\\
-{\bf Office Hours (Zoom)}: Toma una hora \href{https://calendly.com/bahamonde/officehours}{\texttt{aqu\'i}}.
-
-
-\vspace{5mm}
-{\bf Hora de c\'atedra}: Lunes 12:00---13:30, Jueves 14:30---16:00.\\
-{\bf Lugar de c\'atedra}: Zoom (no hay clases presenciales este semestre).\\
-
-{\bf Acceso a materiales del curso}: \href{https://ucampus.uoh.cl/uoh/2021/1/ICE3201/1/}{\texttt{aqu\'i}}.
+{\bf Zoom Office Hours}: \href{https://calendly.com/bahamonde/zoom_officehours}{\texttt{here}}.\\
+{\bf In-person Office Hours}: \href{https://calendly.com/bahamonde/in_person_office_hours}{\texttt{here}}.\\
 
 \vspace{5mm}
-{\bf Ayudante de c\'atedra (TA)}: Gonzalo Barr\'ia (Mg.).\\
-\texttt{e:}\href{mailto:gonzalo.barria@uoh.cl}{\texttt{gonzalo.barria@uoh.cl}}\\
-\texttt{Zoom ID:} 988-891-7227.\\
-{\bf TA Bio}: Gonzalo Barr\'ia es Cientista Pol\'itico (PUC) y Mag\'ister en Ciencia Pol\'itica (PUC).\\
+{\bf Place}: TBA.\\
+{\bf Time}: TBA.\\
+
+{\bf Course website}: \href{http://www.hectorbahamonde.com}{TBA}.
+
+\vspace{5mm}
+{\bf (TA)}: TBA.\\
+\texttt{e:}: TBA.\\
+{\bf TA Bio}: TBA.\\
 {\bf Hora de ayudant\'ia}: \emph{TBA}.\\
-{\bf Lugar de ayudant\'ia}: Zoom (no hay ayudant\'ias presenciales este semestre).\\
 
 
 \vspace{5mm}
-{\bf Carrera}:  Ingenier\'ia Comercial (Econom\'ia).\\
-%{\bf Eje de Formaci\'on}: {\color{red}PENDIENTE}.\\
-{\bf Semestre}: Quinto Semestre.\\
-%{\bf Pre-requisitos}: {\color{red}PENDIENTE}.\\
-{\bf SCT}: 6.\\
-{\bf Horas semanales}: C\'atedra (3), Ayudant\'ia  (1). \\
-%{\bf Semanas}:  12.
+{\bf Program}:  Master of Social Sciences, University of Turku.\\
+{\bf Semester}: Spring.\\
+{\bf Credits}: 2.\\
+{\bf Timing}: 4 modules of 3 hours each. \\
 
 
 
 
-\subsection*{Motivaci\'on: ¿Por qu\'e tomar este curso?}
 
-\emph{¿Qu\'e efecto tiene la educaci\'on sobre los ingresos? ¿C\'omo podemos evaluar los efectos de una reforma educacional? ¿La legalizaci\'on de las drogas aumenta su consumo? ¿Qu\'e candidato/a ganar\'ia la elecci\'on presidencial si \'esta fuera ma\~nana?} 
+\subsection*{Motivation: Why take this course?}
+
+\emph{What's the effect of education on income? How can we evaluate a public policy? Does legalizing some drug increase consumption? Which political candidate will win the election?} 
 \\
 \\
-Las entidades p\'ublicas gu\'ian sus decisiones estrat\'egicas en base a informaci\'on cuantificable, i.e. datos. Esto ha tomado incluso m\'as importancia en la actualidad, donde ha habido una digitalizaci\'on de los datos sociales. Es fundamental que los cientistas sociales en general sepan c\'omo usar estos datos. A\'un m\'as, el quehacer social en general, est\'a constantemente produciendo datos. Cada vez que usas \emph{Twitter}, pides un \emph{Uber}, env\'ias un e-mail, votas, respondes una encuesta, est\'as produciendo datos sociales. Piensa en lo siguiente: si bien es cierto que hace unos diez a\~nos atr\'as \emph{faltaban} datos, hoy en d\'ia los datos \emph{sobran}. El desaf\'io actual consiste en saber c\'omo analizarlos correctamente, y as\'i ayudar a los tomadores de decisiones. Esto es importante. Ma\~nana tu podr\'ias ser un/a analista en una de las decenas de Departamentos de Estudios repartidas en la administraci\'on del Estado. {\bf Este curso te prepara para ese mundo} (incluyendo el mundo de la consultor\'ia).
+Public entities guide their strategic decisions based on quantifiable information, i.e., data. This decision-making process has taken even much more relevance nowadays where there has been a wave of data digitization, making available much more quality data. This is fundamental for social scientists like us, putting heavy pressures for us to learn how to analyze those data. If ten years ago we complained that there was not enough data, our problem now is different: there are so much data that we need to learn how to analyze it.
 \\
 \\
-Aunque lo que aprenderemos es altamente num\'erico y matem\'atico, no te confundas. Estos m\'etodos no son infalibles, y no nos contar\'an ``la verdad'' (si es que algo as\'i existiera). A\'un necesitas ser muy critico(a). Como ver\'as, {\bf la \emph{estad\'istica inferencial} (que es el objeto de este curso) es un \emph{arte}, no una \emph{ciencia}}. Los n\'umeros nos sugerir\'an ciertas ideas, pero aun as\'i nuestro trabajo ser\'a \emph{interpretar} estos resultados. {\bf No seas obediente. Se cr\'itico/a y auto-cr\'itico/a. Sospecha de tus propios resultados y de los resultados de los dem\'as}. Mal que mal, estaremos haciendo {\bf inferencias} estad\'isticas (no ``\emph{certezas}''). Como veremos, el fantasma de este semestre se llamar\'a \emph{incertidumbre}. 
+Though what we will learn this semester is highly mathematical and numeric, don't get confused: these methods are not ``bullet-proof,'' they will \emph{never} ``proof'' anything at all. During the semester I need you to exercise your criticism skills all the time. As we will see, you will need to \emph{suspect} everything we do, particularly, because we will learn \emph{inferential statistics}, that is, we will do \emph{inferences}, not ``proofs.'' On top of that, everything we do will come with some degree of \emph{\bf uncertainty} and hard-to-check \emph{\bf assumptions}, probably the most-used words throughout the semester. 
 \\
 \\
-Este curso considera un \'enfasis especial en la \emph{causalidad}. La \emph{inferencia causal} ha llegado para quedarse en las ciencias sociales. \emph{¿Bajo qu\'e condiciones podemos decir que X \underline{causa} Y?} M\'as que una cuesti\'on matem\'atica, la causalidad toca en muchos aspectos la filosof\'ia de las ciencias. Este semestre aprenderemos qu\'e relaci\'on tiene la experimentaci\'on con la causalidad, c\'omo podemos hacer experimentos en ciencias sociales, y c\'omo podemos emular un experimento (usando ciertos m\'etodos estad\'isticos) cuando no \emph{podemos} (ni \emph{debemos}!) hacer uno.
+Depending on our progress during the semester, we will pay special attention to an issue that is absolutely relevant nowadays in applied social sciences: \emph{causal inference}. For those matters, we will discuss why the methods we will learn this semester are not causal, i.e., we cannot derive a causal statement from our results. However, when certain conditions apply, we might get \emph{quasi-causal} statements. What are those ``conditions''? We shall see...
 \\
 \\
-Honestamente, espero que este curso cautive tu atenci\'on, y simiente tu curiosidad intelectual, sobre todo, mostr\'andote que nuestro objeto de estudio (la sociedad) es apasionante. 
-\\
-\\
-\emph{Bienvenid$@$s!}
+Honestly, I hope this course captivates your enthusiasm, and gets you interested and curious about ways to study social phenomena, \emph{tervetuloa}!
 
 
-\subsection*{Prop\'osito Formativo}
+\subsection*{Description}
 
-El objetivo de este curso es introducir al/la alumno/a a los m\'etodos econom\'etricos b\'asicos para el an\'alisis de datos. El curso avanza progresivamente en distintos t\'opicos en regresi\'on lineal y m\'etodos no lineales. La principal caracter\'istica es la introducci\'on a modelos de regresi\'on lineal para que en cursos m\'as avanzados puedas estudiar otro tipo de estimaciones.
+Enrolled students will acquire a basic inferential statistics toolkit. The course will pay special attention to Ordinary Least Square regression (OLS) and a selection of Generalised Linear Models (such as logit/probit, multinomial, ordered models and/or rare events data generating processes)---the workhorses of quantitative social sciences. This course is very hands-on, and while some statistical theory will be covered, the core of it will be on data analyses and programming in \texttt{R}. 
+\\
+\\
+Overall, this course is an opportunity for students to make progress on their Master theses, particularly on the data analyses portion of it. For those matters, the actual content of the course will follow the students' research questions and data structure. Thus, during the course, students will perform real analyses on their own data (if they have those data already available), otherwise students will perform replications. 
+\\
+\\
+\begin{itemize}
+  \item The course will be taught in English in the computer lab as 4 sessions of 3 hours each.
+  \item We will meet between early March and early May at the end of the week (Wed, Thu and/or Fri) starting at 11.00 AM. Exact dates will be confirmed later.
+\end{itemize}
+
 
 
 \subsection*{Objetivos Generales del Curso}
@@ -349,7 +334,7 @@ En un formato muy parecido a una conferencia acad\'emica (virtual, no presencial
 
 %\\
 %\\
-Les recomiendo ``verme'' (v\'ia Zoom) en \href{https://calendly.com/bahamonde/officehours}{mis office hours} \emph{antes} del plazo de entrega. Si quieres, \href{mailto:\filetext}{env\'iame un email} con tu borrador, y yo te devolver\'e comentarios. V\'elo como una pre-correcci\'on. Esto es voluntario. Tambi\'en puedes contactar al/la TA. {\bf No se procesar\'an preguntas durante fines de semana, y/o festivos}.
+Les recomiendo ``verme'' (v\'ia Zoom) en \href{https://calendly.com/bahamonde/officehours}{mis office hours} \emph{antes} del plazo de entrega. Si quieres, SEND ME AN EMAIL con tu borrador, y yo te devolver\'e comentarios. V\'elo como una pre-correcci\'on. Esto es voluntario. Tambi\'en puedes contactar al/la TA. {\bf No se procesar\'an preguntas durante fines de semana, y/o festivos}.
 
 
 \end{enumerate}
