@@ -1,4 +1,4 @@
-# Visualización de datos (II): plots más complejos (por categorías), mapas.
+# Data visualization (II): plots más complejos (por categorías), mapas.
 
 ############################################
 # Scatters: pero ahora en GGPLOT
