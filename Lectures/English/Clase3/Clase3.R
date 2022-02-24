@@ -1,6 +1,5 @@
-# Cargando bases de datos (II): transformaciones, creación de nuevas variables.
-# Manipulando bases de datos: generación de matrices y dataframes, merge, append. Logs.
-
+# Loading datasets (II): transformations (logs), creating new variables.
+# Manipulating datasets: generating matrices and data.frames, merge, append.
 
 ############################## 
 # Cleaning
@@ -9,218 +8,139 @@ cat("\014")
 rm(list=ls())
 
 
-# Clase 3
+# Class 3
 
 ## Prestige
-# install.packages("car") # instalemos la base de datos, que viene en la libreria "car"
-library(car) # ahora, carguemos la base de datos, que viene en la libreria "car"
+# install.packages("car") 
+library(car) 
 
-# Cargar DF
+# Load data.frame
 data(Prestige)
 
-## Resumen del df
+## Lets summarize the dataset
 head(Prestige)
 
 ############################################
-# Droping: botando variables/columnas
+# Dropping variables/columns
 ############################################
 
-## Funcion Drop
+# Why would you need to do this?
+
+## Drop function
 # install.packages("dplyr") 
 library(dplyr)
 
-## Botemos algunas columnas, y construyamos dos DF's distintos, pero que igual tengan una columna en comun
+# Let's drop some columns, and let's build three distinct data.frames that share two columns.
 
-### que columnas tiene el DF Prestige?
+# Let's check what columns we already have in the Prestige data.frame.
 colnames(Prestige)
 
-### DF1 tendra todo menos "type" y "census"
+### DF1 will have all except for "type" and "census"
 Prestige.drop.1 = dplyr::select(Prestige, -c("type", "census"))
 colnames(Prestige.drop.1)
 
-### DF2 tendra todo menos "education" y "women"
+### DF2 will have everything but "education" y "women"
 Prestige.drop.2 = dplyr::select(Prestige,-c(education, women))
 colnames(Prestige.drop.2)
 
-### DF3 sera solo "education" y "women"
+### DF3 will be just "education" and "women"
 Prestige.drop.3 = dplyr::select(Prestige, c(education, women))
 colnames(Prestige.drop.3)
 
 ############################################
-# Merging: añadiendo columnas
+# Merging: combining two data.frames (adding columns)
 ############################################
 
-### Problema: ahora queremos hacer un "merge" (*pegar columnas*) de las dos DF's. El unico elemento en comun, es la variable "income".
+# Why would you need to do this?
 
-# Antes habiamos "merged" usando la "woman" (%, es numerica). 
+# To merge, you need at least one column in common. 
+# And that column should have--hopefully--a continuous variable. But why?
 
-# Pregunta: Cual es el riesgo de "mergiar" ocupando una variable categorica?
+# Let's merge Prestige.drop.1 with Prestige.drop.2 using "income" and "prestige".
+# They are the columns in common
+colnames(Prestige.drop.1)
+colnames(Prestige.drop.2)
 
-# OK, volvamos al merge con variable numerica. Para hacer merge con variable numerica, tenemos que asegurarnos que la variable en comun sea exactamente igual. (En este caso, sabemos que es asi, porque nosotros acabamos de partir la base en dos; pero en otras situaciones, no lo sabremos. Suponiendo que la base de datos es GIGANTE, y que no podemos ir revisando fila por fila, La unica manera de solucionarlo es la siguiente:
-Prestige.drop.1$income == Prestige.drop.2$income # Ambas columnas son iguales.
-
-# Esto funciona si tenemos poquitas obs. Pero si tenemos muchas, es mejor organizar el resultado en una tabla.
-# Para eso, metemos el mismo comando de arriba, pero en la funcion "table" (tabla en espanol).
-table(Prestige.drop.1$income == Prestige.drop.2$income)
-
-# Que pasaria si revertimos el orden de una columna (usando la funcion "rev" de reverse), entendera R que en verdad hablamos de lo mismo? Veamos
-rev(Prestige.drop.1$income) == Prestige.drop.2$income # No, no son iguales. 
-
-# Veamoslo con una tabla
-table(rev(Prestige.drop.1$income) == Prestige.drop.2$income) # No, no son iguales. Pero, atencion, hay dos observaciones que por CASUALIDAD son iguales! Veamos cuales son. 
-
-# Fijense como "nestie" (de "nested") varios comandos.
-View(
-        data.frame(
-                Profesion = rownames(Prestige),
-                Prestige.drop.1$income,
-                Prestige.drop.2$income,
-                rev(Prestige.drop.1$income),
-                c(rev(Prestige.drop.1$income) == Prestige.drop.2$income)
-        )
-)
-
-# OK. Dos profesiones ganan 3485. Veamos cuales son.
-
-## Manera facil (usando "View" y despues filtrando):
-View(Prestige) # Y despues en el "Finder" (buscador), "3485"
-
-## Manera usando lenguaje de programacion
-Prestige[Prestige$income=="3485", ]
-
-# Por que es importante saber estas manipulaciones en un curso de "estadistica inferencial"?
-
-# OK, volvamos al merge numerico.
-
-# En situaciones reales, nunca los datos estaran ordenados. Esta vez haremos un "merge desordenado".
-# Primero, desordenemos "Prestige.drop.1$income". Ocuparemos un comando para hacer un "reverse", y poner todo al reves.
-Prestige.drop.1$income = rev(Prestige.drop.1$income) # "rev" de "reverse"
-
-# Veamos que hicimos...
-View(data.frame(Prestige.drop.1$income, Prestige.drop.2$income))
-
-# Ahora que sabemos que la columna "income" del DF Prestige.drop.1 esta desordenada, tratemos de "mergiar"
-Prestige.merge <- merge(Prestige.drop.1, Prestige.drop.2, by=c("income"))
-
+Prestige.merge <- merge(Prestige.drop.1, Prestige.drop.2, by=c("income", "prestige"))
 Prestige.merge
 
-# Al ver Prestige.merge, comprobamos que aunque los datos esten desordenados, R los pegara.
-
-# Pregunta: como podemos recontra asegurarnos de que estamos pegando ("merging") las columnas adecuadas? Por ejemplo, acabamos de darnos cuenta que "income" estaba (por casualidad) repetido. Como evitar estas situaciones?
-
-
-Prestige.merge.recontra.asegurados <- merge(Prestige.drop.1, Prestige.drop.2, by=c("income", "prestige"))
-# Fijense que ahora solo tenemos dos observaciones...veamos...
-
-nrow(Prestige.merge.recontra.asegurados) # use el comando "nrow" que es "number of rows"...o "numero de filas"
-
-# Solo tenemos dos porque ya con dos variables, R empieza a fijarse en el orden. Recuerden que habiamos puesto "income" en Prestige.drop.1 en reversa...Reversemos esa reversa (dejemoslo bien)...
-
-Prestige.drop.1$income <- rev(Prestige.drop.1$income)
-
-# Mergiemos de nuevo...
-Prestige.merge.recontra.asegurados <- merge(Prestige.drop.1, Prestige.drop.2, by=c("income", "prestige"))
-Prestige.merge.recontra.asegurados
-
 ############################################
-# Appending: añadiendo filas
+# Appending: adding rows
 ############################################
 
-# En el ej anterior, anadimos columnas. Ahora anadamos filas. Es decir, alarguemos (hacia abajo) nuestra base datos.
+# Why would you need to do this?
 
-# Pregunta: cuando nosotros podriamos necesitar algo asi?
+# Let's first split the Prestige data in halves.
+# To do this, we will do some recoding: occupations with "high" and "low" prestige.
 
-# OK. Para mostrar como anadir filas, partamos la base Prestige en dos: en las profesiones con "alto" y "bajo" prestigio.
-Prestige$prestige.2 = ifelse(Prestige$prestige > mean(Prestige$prestige), "alto","bajo")
+Prestige$prestige.2 = ifelse(Prestige$prestige > mean(Prestige$prestige), "high","low")
 
+# let's create another data.frame with just the "high" prestige occupations
+Prestige.high <- Prestige[(Prestige$prestige.2=="high"),]
 
-# creemos otro dataframe donde sólo estén las profesiones con el prestigio más altas. Usemos la var que habiamos creado antes ("prestige.2"). 
-Prestige.alto <- Prestige[(Prestige$prestige.2=="alto"),]
+# now let's create another data.frame with just the "low" prestige occupations.
+Prestige.low <- Prestige[(Prestige$prestige.2=="low"),]
 
-# creemos otro dataframe donde sólo estén las profesiones con el prestigio más bajo.
-Prestige.bajo <- Prestige[(Prestige$prestige.2=="bajo"),]
-
-## Hemos partido el DF "Prestige" en dos. Ahora, volvamos a juntar ambas. Usemos las funcion "rbind" (por "row bind", que "pegador de filas")
-Prestige.nuevo = rbind(Prestige.alto, Prestige.bajo)
-
-# Necesitan estar las columnas ordenadas?
-
-Prestige.alto.columnas.desordenadas = data.frame(
-        # Me salto "education" que es primero, y la pongo al final
-        income = Prestige.alto$income, # 2
-        women = Prestige.alto$women, # 3
-        prestige = Prestige.alto$prestige, # 4
-        census = Prestige.alto$census, # 5
-        type = Prestige.alto$type, # 6
-        prestige.2 = Prestige.alto$prestige.2, # 7, siendo esta la variable que inventamos recien.
-        education = Prestige.alto$education # 1, siendo esta variable la que va primero en Prestige.alto y Prestige.bajo
-        
-)
-
-# Verifiquemos que las columnas estan desordenadas
-colnames(Prestige.alto) 
-colnames(Prestige.alto.columnas.desordenadas)
-
-
-# Ahora mergiemos Prestige.bajo (que sigue ordenada, i.e. con "education" primero) con Prestige.alto.columnas.desordenadas (que la "desordenamos" poniendo "education" al final)
-Prestige.nuevo.ordenado.desordenado = rbind(Prestige.bajo, Prestige.alto.columnas.desordenadas)
-
-# Lo hizo bien?
-View(Prestige.nuevo.ordenado.desordenado)
+# now, let's put the two halves back together...this requires to have the SAME column names
+Prestige.nuevo = rbind(Prestige.high, Prestige.low)
 
 ############################################
-# Transformaciones
+# Transformations
 ############################################
 
-hist(Prestige$income) # Grafico Basico: "histograma". Plotiemos el income de las distintas profesiones. Notas algo raro? 
+# par(mar=c(1,1,1,1))
+# install.packages("latice")
+library(lattice)
 
-hist(Prestige$income, breaks=100) # Veamos esto con mas detalles. Agreguemos mas breaks (cortes, en columnas). Notas algo raro? 
+lattice::histogram(Prestige$income) 
+lattice::histogram(Prestige$income, breaks=100) 
 
-# Debido a este problema, tendremos que calcular el log de la variable "income".
-# Este proceso se llama "transformacion" y se usa para "normalizar" los datos que presentan mucha dispersion. 
+# What can we say about this distribution? 
 
-# Por que es importante "normalizar" una variable con mucha "dispersion"?
-# Pista: "income" y "GDP" son usualmente transformadas.
-
-# La transformacion mas basica, es el log con base 10.
+# Because of this issue, we will have to "transform" this variable.
+# Notice that income (and all things related to money!) behave usually this way. Why?
+# The kind of transformation (logs) will normalize our distribution.
+# What we achieve with normalization is to reduce the "dispersion" of the distribution. Why do we need that? 
 
 log(Prestige$income)
 
-## Por qué una transformación no afecta un analisis estadístico?
+# Are we cheating?
+# Does this change our variable, and if so, in what way?
 
-# creemos otra variable ("income.log") que sea el logaritmo natural (de base 10), y peguemosla en la base de datos Prestige
-
+# let's create another column with the transformed variable.
 Prestige$income.log = log(Prestige$income)
 
-hist(Prestige$income, main="Antes", breaks=10)
-hist(Prestige$income.log, main="Despues", breaks=10)
+lattice::histogram(Prestige$income, main="Before", breaks=10)
+lattice::histogram(Prestige$income.log, main="After", breaks=10)
 
-# Hemos solucionado un poco el problema.
+# It looks pretty good to me, does it look good to you?
 
-# Ahora veamos el log de "women"
-
+# let's transform the "women" variable
 log(Prestige$women)
 
-# Notas algo raro?
+# Anything interesting you've noticed?
 
-# Debenmos solucionar nuestro problema. Sumemos 1 a la variable women
-Prestige$women.mas.uno = Prestige$women+1
-## Inspeccionemos...
+# What's the log of 0?
+
+# Let's fix this
+Prestige$plus.one = Prestige$women+1
+
+## Let's check...
 head(Prestige)
-# Por que esto soluciona nuestro problema?
-# Cual es el log de 1?
-Prestige$log.women.mas.uno = log(Prestige$women.mas.uno)
 
-head(Prestige) # Veamos...
+# Why does that fix our problem?
 
-hist(Prestige$log.women.mas.uno, breaks = 10) # Ahora grafiquemos de nuevo, y veamos si el problema se resuelve.
+# What's the log of 1?
+Prestige$log.plus.one = log(Prestige$plus.one)
+
+head(Prestige) # Let's check...
+
+# before transforming
+lattice::histogram(Prestige$women, breaks = 10)
+
+# after transforming
+lattice::histogram(Prestige$log.plus.one, breaks = 10)
 
 
-hist(Prestige$women, breaks = 5) # Comparemos con antes
-
-# 7. Qué ganamos y que perdemos al sacar el log de una variable?
-
-# Resumen de hoy
-# 1. Vimos algunos problemas con "merge" (metodo para pegar columnas).
-# 2. Vimos como pegar filas usando "rbind" (metodo para pegar filas).
-# 3. Vimos como "transformar variables".
+# What do we win when we do this?
+# What do we lose when we do this?
