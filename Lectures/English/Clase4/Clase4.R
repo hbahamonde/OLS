@@ -1,4 +1,4 @@
-# Visualización de datos (I): bar plots (variable categórica/continua, categórica/categórica),scatter plots, histogramas, time series plots.
+# Data Visualization (I): bar plots (cat/cont and cat/cat variables), scatter plots, histograms and time-series plots.
 
 cat("\014")
 rm(list=ls())
@@ -6,104 +6,123 @@ graphics.off()
 
 
 ## Prestige
-install.packages("car") # instalemos la base, que viene en la libreria "car"
-library(car) # ahora, carguemos la base, que viene en la libreria "car"
+install.packages("car")
+library(car)
 
 ############################################
-# Histogramas: dos variables categoricas.
+# Histogram: two categorical variables.
 ############################################
 
+# Let's create a variable that tells us if income is "high" or "low"
+Prestige$income.categorical <- ifelse(Prestige$income > mean(Prestige$income), "high.income","low.income")
 
-## Creemos una variable que diga si el sueldo ('income") es "alto" o "bajo"
-Prestige$income.categorical <- ifelse(Prestige$income > mean(Prestige$income), "alto.sueldo","bajo.sueldo")
+# Now let's plot categorical (or qualitative) variables. 
+# These are usually "factor" variables in R (like "pear", "apple", and "banana"). 
+# Now let's convert that variable to "factor"...and then plot.
+Prestige$income.categorical = as.factor(Prestige$income.categorical )
+plot(as.factor(Prestige$income.categorical)) 
 
-## Grafiquemos variables categoricas o cualitativas (o "factors" en lenguaje R). Son todos sinonimos: categoricas = cualitativas = factors.
-plot(Prestige$income.categorical) 
+# What can we learn about this plot?
 
-# Ups..error. R no entiende porque "alto" y "bajo" son textos. Añadamos "levels" (o "etiquetas" que R pueda entender).
-Prestige$income.categorical = as.factor(Prestige$income.categorical)
-Prestige$income.categorical #  Fijate que abajo dice "Levels...". Ok, problema solucionado.
+# Now let's think about the gender and income relationship...
 
-# Ahora si, grafiquemos.
-plot(Prestige$income.categorical)# Ok, este HISTOGRAMA dice que tenemos mas sueldos bajos. 
+# First, let's create a variable that classifies whether certain occupations have "high" or "low" female participation.
+Prestige$women.categorical <- ifelse(Prestige$women > mean(Prestige$women), "high.women","low.women")
 
-# Hay alguna relacion entre genero y sueldo? Veamos...
+# What type of variable have we just created? Let's ask R...
+is(Prestige$women.categorical) # "Character", and that won't plot. 
 
-## Primero, creemos una variable donde si cierta profesion tiene mas mujeres que el promedio, es "alto." Si no, es "bajo"
-Prestige$women.categorical <- ifelse(Prestige$women > mean(Prestige$women), "alto.mujer","bajo.mujer")
-
-## Que tipo de variable acabamos de crear?
-is(Prestige$women.categorical) # "Character", es decir, texto. No nos sirve para hacer analisis.
-
-## Convirtamos esta nueva variable en categorica
+# Let's transform it to "factor."
 Prestige$women.categorical = as.factor(Prestige$women.categorical)
 
-## Plotiemos
-plot(Prestige$income.categorical, Prestige$women.categorical) # Que podemos concluir?
+# Let's plot it...
+plot(Prestige$income.categorical, Prestige$women.categorical) 
+
+# What can we learn about this distribution?
 
 ############################################
-# Boxplot: una variable categorica, la otra continua
+# Boxplot: one cat., another continuous
 ############################################
 
+# This is a boxplot:
+plot(Prestige$income.categorical, Prestige$women)
 
-## Este es un grafico histograma entre dos variables categoricas (o "factors").
-## Que hubiera pasado si hubieramos ploteado una categorica (income/sueldo) con la version numerica de women? Veamos...
-plot(Prestige$income.categorical, Prestige$women) # Este es un boxplot..."grafico de cajas". 
+# It shows the first quartile (25%), the median or second quartile (50%), and the third quartile (74%).
+# In addition, it shows the minimum and the maximim, plus the outliers...a lot of information!
 
-## Muestra: la mediana (50%), primer (25%) y tercer cuartil (75%). La caja muestra el 50% de la distribucion. La minima y la maxima. Outliers. 
-## Que podemos concluir?
-
+# What does this particular plot show?
 
 ############################################
-# Scatterplot: dos variables continuas (numericas)
+# Scatterplot: two continuous ("numeric") variables.
 ############################################
 
-# Cual es la relación entre prestigio y educacion? Veamos...
+# What's the relationship between prestige and income? Let's see...
 
-plot(Prestige$prestige, Prestige$income) # Que podemos concluir? 
+plot(Prestige$prestige, Prestige$income) 
 
+# What can be concluded from the plot?
 
 ############################################
 # Density Plots
 ############################################
-install.packages("dslabs")
+
+# Remember "integrals" from your math classes? It's like scooping a box of ice cream :)
+# If you could scoop the whole box, you'd have a density of 1 (the whole box in your spoon).
+
+# Densities are useful to see how the distribution behaves.
+
+# install.packages("dslabs")
 library("dslabs")
-
-install.packages("ggplot2")
-library(ggplot2)
-
 data("heights")
+
+# install.packages("ggplot2")
+library(ggplot2)
 
 ggplot(heights, aes(height, fill=sex)) + geom_density(alpha = 0.2)
 
-# 1. Que es una "densidad"?
+# What can be concluded from this plot?
 
-# 2. Que podemos concluir de este grafico de densidad?
+# Where is the mean in a normally-distributed density?
 
 ############################################
-# Time series plots // Trabajando con tiempo...
+# Time series plots // Working with time...
 ############################################
 
-## Veamos las ventas mensuales de una tienda de regalos en un hotel en Australia. 
+# Let's see the monthly sales of a gift store in a hotel in Austrialia
 
-## Los datos van de 1987 hasta 1993. 
-souvenir <- scan("http://robjhyndman.com/tsdldata/data/fancy.dat") # R permite cargar bases de datos directamente de Internet.
+# The date goes from 1987 to 1993. 
+souvenir <- scan("http://robjhyndman.com/tsdldata/data/fancy.dat") 
+# Yes! R allows loading data directly from the Internet.
 
-# Declarar que el objeto "souvenir" (que no es nada mas q una secuencia de numeros, es un objeto de series de tiempo.
+souvenir
+
+# Ok, this is just a sequence of numbers...let's make this array of information more tractable...
+# Let's declare that the object "souvenir" as a time-series object.
 souvenirtimeseries <- ts(souvenir, frequency=12, start=c(1987,1)) 
-# El intervalo es 12 meses al año, comienza en Enero de 1987)
+# 12 is the interval (12 months per year), which begins the month number 1 of the year 1987.
 
 souvenirtimeseries
 
-## Inspeccionemos la "base datos"
-summary(souvenirtimeseries) # que tipo de objeto sera este?
+# Ok, this makes much more sense.
 
-is(souvenirtimeseries) # "ts" significa "time series", o "series de tiempo"...
-### OK. No tiene una estructura de dataframe. De hecho, si van al panel de "Environment", "souvenir" esta en "Values" no en "Data".
+# Let's summarize this information
+summary(souvenirtimeseries) 
+# Is this helpful?
 
-# Plotiemos
-plot.ts(souvenirtimeseries) # El Y-axis esta en notacion cientifica. Apaguemosla subiendo el umbral, poniendo un numero arbitrariamente alto.
+# What kind of object is this? 
 
+is(souvenirtimeseries) 
+# "ts" means "time series."
 
+# Let's plot it.
+plot.ts(souvenirtimeseries) 
+
+# The Y-axis is in scientific notation.
+# Let's turn that off increasing the threshold for R to activate it. 
+# Let's put an arbitrarely "large" number. 
 options(scipen=9999)
-plot.ts(souvenirtimeseries) # Ahora plotemos de nuevo. Notas la diferencia del Y-axis? ("eje vertical").
+
+# And let's plot it again.
+plot.ts(souvenirtimeseries)
+
+# What can be learned from this plot?
