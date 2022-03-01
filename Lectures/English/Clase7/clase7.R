@@ -1,4 +1,4 @@
-# Estadística descriptiva (II): binomial, normal, otras; simulación.
+# Descriptive Stats (II): binomial, normal, others; simulation.
 
 cat("\014")
 rm(list=ls())
@@ -7,42 +7,43 @@ options(scipen=9999999)
 
 
 ############################################
-# Tipos de Distribuciones
+# Types of Distributions
 ############################################
 
-# Objetivos: 
-        # 1) Existen mas distribuciones que la distribucion normal.
-        # 2) Las distribuciones se ven distintas.
-        # 3) Cada una de ellas tienen una manera intuitiva de reconocerlas.
-        # 4) Los metodos que ocuparemos desde la proxima clase, estaran orientados solo a modelar distribuciones normales.
+# Objectives: 
+        # 1) There are many more distributions than the normal one.
+        # 2) Distributions "look different"!
+        # 3) Each one of them has a distinctive way of recognizing them.
+        # 4) Most of the methods we will learn this semester are suited for studying normal distributions only.
 
-# Ocuparemos los comandos de "simulacion" empaquetados en R para ver cómo se ve cada distribución.
+# We will use simulations methods to learn how different these distributions look alike.
 
 ############################################
 # Normal (Standard)
 ############################################
 
-set.seed(123)
+
+set.seed(123) # lets set a pattern for the random-generating process.
 dist.normal = rnorm(100, mean = 0, sd = 1)
 dist.normal
 
 
-hist(dist.normal)
-summary(dist.normal)
+hist(dist.normal) # plot
+summary(dist.normal) # plot
 
-# Caracteristicas de la Dist. Normal.
-        # 1) - inf a + inf
-        # 2) moda = mediana = media ("promedio")
-        # 3) Números continuos (no "discretos"). Qué significa?
+# Properties
+        # 1) - inf to + inf
+        # 2) Mode = Median = Mean ("average").
+        # 3) Continuous numbers (no "discrete").
 
+# Can you know think of an example of this distribution? Think of something "social" or "political" or even "economic".
 
 ############################################
-# Bernoulli
+# Bernoulli Distribution
 ############################################
 
-        ## Dos resultados: 0's o 1's.
-        ## Ejemplos? 
-        ## Es continua o discreta?
+        ## Two outcomes: Yes/No, 1/0.
+        ## Examples? "Are you Left/Right"? "Did you Vote" (Yes/No), etc. 
 
 
 install.packages("LaplacesDemon")
@@ -50,14 +51,15 @@ library(LaplacesDemon)
 
 set.seed(123)
 bern=rbern(10, 0.5)
-        # 1) numero de observaciones
-        # 2) probabilidad de exito del "experimento".
-       
-        ## EJ., si pongo 10 observaciones, son 10 monedas que lanzamos de una vez. Si pongo 0.5 de probabilidad (ie 50%), cada moneda dará cara o sello con un 50% de probabilidad.
+        # Arguments:
+        # 1) Number of observations.
+        # 2) Probability of "success" of each "experiment."
 
+# In this example, I'll have 10 coins which will be tossed once each. The probability of head is 0.5. 
+       
 bern
 
-## cambiemos la probabilidad de que salga cara (1), a una probabilidad mas alta
+# Now let's rise the probability of head.
 set.seed(123)
 rbern(10, 0.9)
 
@@ -65,142 +67,97 @@ rbern(10, 0.9)
 # Binomial
 ############################################
 
-# Es como la Bernoulli, pero para varios experimentos. Imaginate, 24 sets de 10 monedas 
-# que lanzamos; un set a la vez. Aqui tenemos "24 experimentos".
+# It's lile Bernoulli, but for several "experiments." Let's imagine 24 sets of 10 coins each. 
+# What we toss is a set at a time. Here we have 24 sets (or "experiments").
 
 set.seed(123)
 rbinom(10, 24, 1)
-        # 1. numero de observaciones.
-        # 2. numero de "experimentos".
-        # 3. probabilidad de exito de cada "experimento". 
+        # Arguments:
+        # 1. Number of observations.
+        # 2. Number of "experiments."
+        # 3. Probability of "success" of each experiment.
 
-        ## Ej., si el numero de experimentos es "24", y la probabilidad especificada es 1, los 
-        ## 24 experimentos daran 1.
+# For instance, if the number of experiment is 24, and the probability is 1, all 24 coins will be head (i.e. 1, summing 24 each time).
+
+# For instance, if the prob is 0.5, and we run 3 experiments,
+# the probability of having three "stacked" 1's (i.e. totalizing 3) is 50%.
 
 set.seed(123)
 rbinom(10, 3, 0.5)
-# 1. numero de observaciones.
-# 2. numero de "experimentos".
-# 3. probabilidad de exito de cada "experimento". 
-
-# Si es "0.5", la posibilidad de que en estos 10 experimentos salga un "3" es de 50%.
-
 plot(rbinom(10, 3, 0.5))
 
+# Can you know think of an example of this distribution? Think of something "social" or "political."
 
 ###########################################
-# Distribucion Multinomial
+# Multinomial Distribution
 ############################################
 
-        # Extension de la Binomial, pero para mas de un tipo de resultado. 
-        # Ejemplos?
+# It's an extension of the Binomial, but for more than binary outcomes.
+# So, if before we had only 1's and 0's, or Yes's and No's, now we might have
+# for example, types of fruits you like (apple, orange, pineapple).
+
+# Can you know think of an example of this distribution? Think of something "social" or "political."
 
 set.seed(123)
 rmultinom(10, size = 3, prob = c(0.5,0.5, 0.2))
 
-        # numero de experimentos
-        # numero de alternativas ("medios de transporte": "bus", "taxi", "bici")
-        # probabilidad de cada alternativa
+# Arguments:
 
+# Number of experiments.
+# Number of alternatives (i.e., pieces of fruit you like or maybe means of transportation).
+# Probability of each success: e.g. probability of "eating" that particular piece of fruit, or "using" those particular means of transportation.
 
+# Can you know think of an example of this distribution? Think of something "social" or "political."
 
 ###########################################
 # Poisson
 ############################################
 
-## Cuentas.
+# This one is for counts. 
+# For example, "How many children do you have?"
 
 set.seed(123)
 rpois(100, 10)
 
-set.seed(123)
-hist(
-        rpois(100, 10)        
-)
+# Arguments: to find out, ask R for help using the "help()" function.
+# What does the "lambda" parameter do?
 
-# media = varianza, si no Neg Binom.
+# Important assumption about the Poisson distribution:
+# (Conditional) mean = (Conditional) variance. 
+# If your (conditional) distribution has different (conditional) mean and (conditional) variance,
+# you should never think that the "data generating process" is Poisson.
+
+# What is a "data generating process"?
+
+# If you have counts and (conditional) variance is different from (conditional) mean, 
+# you should think that the "data generating process" is rather a Negative-binomial.
+
+# Can you know think of an example of the Poisson distribution? Think of something "social" or "political."
+
 
 ###########################################
-# Distribucion Exponencial
+# Exponential Distribution
 ############################################
 
 set.seed(123)
 rexp(100)
 
-hist(
-        rexp(100)
-        )
+hist(rexp(100))
 
-## Ejemplos?
-
+# Can you know think of an example of this distribution? Think of something "social" or "political."
+# Hint: what good gives you more money at the beginning, but as long as you start consuming more, you don't earn as much more?
 
 ###########################################
-# Distribucion Lognormal
+# Lognormal Distribution
 ############################################
 
-## Muchos valores bajos, pocos valores altos. Ejemplos?
+# Lot's of small numbers, but just a few large numbers.
 
 set.seed(123)
 rlnorm(100, meanlog = 0, sdlog = 1)
 
 set.seed(123)
-plot(
-        density(
-                rlnorm(100, meanlog = 0, sdlog = 1)
-        )
-)
+plot(density(rlnorm(100, meanlog = 0, sdlog = 1)))
 
-
-###########################################
-# CASOS ESPECIALES
-###########################################
-
-# Ahora, solo para conocimiento gral., veremos otras distribuciones.
-# El punto importante, mas alla de saber (o no) programar esto, es que veas 
-# que las distribuciones son realizaciones de cuestiones cotidianas que
-# se ven en las ciencias sociales en general.
-
-
-
-
-
-###########################################
-# Distribucion Logistica
-###########################################
-
-## Ejemplos?
-
-
-
-set.seed(123)
-rlogis(100)
-
-
-cdf=function(x,mu,s){
-        k=(x-mu)/s
-        return(1/(1+exp(-k)))
-}
-
-x=seq(-10,13,0.01)
-
-plot(x,cdf(x,-1,1),type="l")
-
-
-###########################################
-# Chi Cuadrado
-###########################################
-
-## Es la distribucion que sigue la suma de los cuadrados minimos.
-
-
-set.seed(123)
-rchisq(10000, 2)
-
-set.seed(123)
-plot(
-        density(
-                rchisq(10000, 2)
-                )
-        )
-
-
+# Can you know think of an example of this distribution? Think of something "economical."
+# Hint: it has to do with earnings.

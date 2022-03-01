@@ -250,10 +250,10 @@
 %           DOCUMENT ID
 % % % % % % % % % % % % % % %
 
-\title{Clase 8}
+\title{Class 8}
 
 \author[shortname]{H\'ector Bahamonde}
-\institute[shortinst]{Universidad de O$'$Higgins}
+\institute[shortinst]{Univerisity of Turku}
 \date{\today}
 
 %to to see shadows of previous blocks
@@ -279,23 +279,27 @@
 
 
 
-\begin{frame}{Organizaci\'on}
+\begin{frame}{Organization}
   \begin{itemize}
-    \item Qu\'e es OLS? Por qu\'e importa? Para qu\'e sirve?
+    \item What's OLS? Why does it matter? What can you do with it? 
   \end{itemize}
 \end{frame}
 
 
 \begin{frame}{Wooldridge}
   \begin{itemize}
-    \item ``Modelo de regresion simple'' ({\color{red}{\bf?}}).\pause
+    \item ``OLS Model'' ({\color{red}{\bf?}}).\pause
 
       \begin{itemize}
-        \item ``explicar $y$ en t\'erminos de $x$''.\pause
-        \item ``estudiar c\'omo var\'ia $y$ cuando var\'ia $x$''\pause
+        \item ``to explain $y$ in terms of $x$.''\pause
+        \item ``to study how $y$ varies when $x$ varies.''\pause
       \end{itemize}
 
-    \item OLS: ``ordinary least squares'' ({\color{red}{\bf?}}).
+    \item OLS: ``ordinary least squares'' ({\color{red}{\bf?}}).\pause
+    \item Let's think about the relationship between \emph{Prestige} and \emph{Schooling}. \\
+    What explains what here and why does it matter{\color{red}?} \pause
+    \item OK, so when \emph{Schooling} goes up, \emph{Prestige} goes up too. The important question is {\bf how much}. Let's quantify this a little bit...
+
   \end{itemize}
 \end{frame}
 
@@ -307,7 +311,7 @@
 
 
 \begin{frame}{OLS}
-\huge\centering $\text{Prestigio}_{i}=\beta_{0}+\beta_{1}\text{Educaci\'on}_{i}+e_{i}$
+\huge\centering $\text{Prestige}_{i}=\beta_{0}+\beta_{1}\text{Schooling}_{i}+e_{i}$
 
 \large
 $\begin{bmatrix} 64\\53\\67\end{bmatrix}$ = $\beta_{0}$+$\beta_{1}$ $\times$ $\begin{bmatrix} 57\\50\\61 \end{bmatrix}$ +  $\begin{bmatrix} 1.3\\-0.49\\-0.86\end{bmatrix} $
@@ -319,7 +323,7 @@ $\begin{bmatrix} 64\\53\\67\end{bmatrix}$ = $\beta_{0}$+$\beta_{1}$ $\times$ $\b
 
 
 \begin{frame}{OLS}
-\huge\centering Todo depende de $\beta_{1}$. C\'omo lo calculamos?
+\huge\centering It looks like everything depends on $\beta_{1}$. Then the one million Euro question is: How do we get $\beta_{1}$?
 \end{frame}
 
 

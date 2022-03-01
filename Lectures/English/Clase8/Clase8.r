@@ -9,107 +9,143 @@ options(scipen=9999999)
 # Cual es la relacion entre educacion y prestigio? 
 #######################################################
 
-# Creemos una base de datos imaginaria
-base = data.frame(
-        nombre = c("Pedro", "Juan", "Diego"),
-        educacion = c(57,50,61), # vector de educacion
-        prestigio = c(64,53,67)
-        )
-
-base # veamos como se ve nuestra base de datos.
-
-# ahora veamos la relacion que existe entre ambas variables. 
-plot(base$educacion,base$prestigio) # Que tipo de relacion es esta? Positiva? Negativa?
-
-# Ahora creemos un modelo, es decir, estimemos beta_1
-modelo = lm(prestigio ~ educacion, data = base)
-
-summary(modelo) # veamos que nos dice nuestro "modelo"
-# interpretacion: Siempre partimos con nuestra X. Por cada unidad que subimos nuestra x (educacion), subimos la cantidad establecida en beta_1 (educacion) en nuestra y (prestigio). Supongamos que educacion esta medido en meses y prestigio en puntos. Esta sera nuestra unidad de medida. Es decir, si subo un mes de educacion, subo en prestigio 1.306 puntos. (Y ahi esta nuestra relacion positiva).
-
-
-# a) Por que se llama "modelo"? Pista: esta es la parte mas "artistica" de la estadistica. 
-# b) Analogia del mapa.
-
-# cuan bien funciona nuestro modelo? Ocupemos el comando "predict" ("predecir" en espanol).
-predict(modelo)
-# Aqui vemos lo siguiente
-
-# Lo que observamos:
-# Pedro tenia 64, pero nuestro modelo predice 62.63
-# Juan tenia 53, pero nuestro modelo predice 53.49
-# Diego tenia 67, pero nuestro modelo predice 67.85
-
-# Discutir: Es esto "suficientemente bueno"?
-
-# El concepto de "error". La diferencia entre lo que observamos y lo que modelamos. Derivar algeibraicamente abajo.
-
-#######################################################
-# Modelo OLS en matriz.
-#######################################################
-
-# vector para el error. Algebra simple...pero con comandos.
-# Volvamos a la ecuacion de OLS: 
-# y = b0 + b1*x1 + e
-# Reordenando los terminos, tenemos que e=
-# e = y-beta0-beta1*x
-# Hagamoslo con R...y metamos esos numeros en una nueva variable "error" dentro de nuestro objeto "base"
-
-base$error <- c(
-        base$prestigio[1] - as.numeric(modelo$coefficients[1]) - (base$educacion[1] * as.numeric(modelo$coefficients[2])),
-        base$prestigio[2] - as.numeric(modelo$coefficients[1]) - (base$educacion[2] * as.numeric(modelo$coefficients[2])),
-        base$prestigio[3] - as.numeric(modelo$coefficients[1]) - (base$educacion[3] * as.numeric(modelo$coefficients[2]))
-        )
-
-base
-
-# Comprobemos que esta correcto
-base$error
-modelo$residuals
-
-# vector para el intercepto. Ojo: es un intercepto para todos. Por eso no esta indexado.
-base$intercepto <- c(
-        as.numeric(
-                modelo$coefficients[1]
-                )
-        )
-
-# vector para el beta. Ojo: es un beta para todos. Por eso no esta indexado.
-base$beta1 <- c(
-        as.numeric(
-                modelo$coefficients[2]
-        )
+# Let's create a toy dataset.
+data = data.frame(
+  name = c("Alfred", "Brandon", "Charly"),
+  schooling = c(57,50,61), # vector de educacion
+  prestige = c(64,53,67)
 )
 
-base # llamemos al a base.
+# let's check the data
+data
 
-# Llevar esta base a matrices en OLS.
+# let's (visually) inspect the relationship between both variables 
+plot(data$schooling,data$prestige) 
+
+# What kind of relationship is this? "Positive" or "negative"?
+
+# Let's now "model" this relationship. 
+# What's a "model" anyways? (Hint: map).
+model = lm(prestige ~ schooling, data = data)
+
+# Let's analyze beta1 in our model.
+summary(model)
+
+# Interpretation: We always begin with our X.
+# "For every additional unit in X, Y moves up/down in [beta]."
+# ALWAYS, all betas, are expressed in units of the dependent variavle (Y).
+# They are NEVER probabilities! 
+# If your dependent variable (y) is "prestige", beta1 is "units of prestige".
+# If your dependent variable (y) is "GDP", your betas (all of them!) will represent "GDP".
+
+# OK, now we know how to quantify the relationship between
+# Prestige and Schooling. But, is this a "good" model? How can we know that?
+
+
+# Let's make a prediction. 
+predict(model)
+
+# "A prediction is a prediction" :)
+# This means we could come up with any number (a new row, or observation, for instance)
+# and plug it into our equation. It's a prediction because I am saying something
+# about a data point that wasn't there before. 
+
+# In any case, predicting pretty much tells you about the 
+# performance of your model. 
+# Consider this: if you observed a "57" in your X, but your model predicts a "120"
+# your model is not performing well. I'll teach you ways to think about this soon.
+
+# In more detail,
+
+# What we see :
+# Alfred had a 64, but our model predicts 62.63
+# Brandon had a 53, but our model predicts 53.49
+# Charly had a 67, but our model predicts 67.85
+
+# Discuss: Are those departures big or small?
+
+# These departures are called "error," and it's the difference
+# between what we observe and what we estimate: the better the model,
+# the less "errors," which kind of makes sense. 
+
+# Let's use the whiteboard. 
+# Take the regression equation, and plug in the numbers.
 
 #######################################################
-# Prediccion
+# OLS models in matrix form
 #######################################################
 
-x=base$educacion # crea objeto
+# Let's go back to our equation:
+# y = b0 + b1*x1 + e
+# If we rearrange the terms respect to "e", we will have that,
+# e = y-beta0-beta1*x
+# Let's now do the same with R.
 
-y=base$prestigio  # crea objeto
 
-lm.out <- lm(y ~ x) # estima modelo de nuevo. el mismo modelo.
+data$error <- c(
+  data$prestige[1] - as.numeric(model$coefficients[1]) - (data$schooling[1] * as.numeric(model$coefficients[2])),
+  data$prestige[2] - as.numeric(model$coefficients[1]) - (data$schooling[2] * as.numeric(model$coefficients[2])),
+  data$prestige[3] - as.numeric(model$coefficients[1]) - (data$schooling[3] * as.numeric(model$coefficients[2]))
+)
 
-newx = seq(min(x),max(x),by = 1) # crea sequencia de numeros para el rango X del grafico
+data
 
+# Let's check we did it right...
+data$error # manual way.
+model$residuals # "automatic" way.
+
+# Let's create the vector for the intercept.
+# Notice: it's the same number for everyone, that's why they call it "constant."
+
+data$intercept <- c(
+  as.numeric(
+    model$coefficients[1]
+  )
+)
+
+# vector for the beta. The beta is a "scalar" (a single number).
+# That's why it is not sub-indexed.
+
+data$beta1 <- c(
+  as.numeric(
+    model$coefficients[2]
+  )
+)
+
+# let's check the data
+data
+
+# Let's show the same in the whiteboard.
+
+#######################################################
+# Some more about predicting
+#######################################################
+
+# let's create X
+x=data$schooling
+
+# let's create Y
+y=data$prestige  
+
+# let's estimate the model
+lm.out <- lm(y ~ x)
+
+# Now, let's create a sequence within a certain range of X.
+newx = seq(min(x),max(x),by = 1) 
+
+# Let's predict for the new sequence of numbers of X
 conf_interval <- predict(lm.out, newdata=data.frame(x=newx), interval="confidence", level = 0.95) 
 
-# usando el modelo estimado, predice (a) distintos valores de educacion NO OBSERVADOS (fit), y el 95% de intervalo de confianza, con "lower bound" o "lwr" (parte de ABAJO del intervalo), y "upper bound" o "upr" (parte de ARRIBA del intervalo).
-
-plot(x, y, xlab="Educ", ylab="Prest", main="Regression", ylim = c(30,90)) # ploteamos
-abline(lm.out, col="lightblue") # agregamos linea "fit"
+# Let's plot the relationship between Schooling and Prestige.
+plot(x, y, xlab="Schooline", ylab="Prestige", main="Regression", ylim = c(30,90))
+abline(lm.out, col="lightblue")
 lines(newx, conf_interval[,2], col="blue", lty=2) # lower bound
 lines(newx, conf_interval[,3], col="blue", lty=2) # upper bound
 
 
 
-#######################################################
-# Por que "least squares" ("cuadrados menores"?)
-#######################################################
+#################################################################
+# This method is called OLS, for "ordinary least square", why?
+#################################################################
 
-# los betas estimados, minimizan la suma de los "errores cuadrados".
+# Because the estimated betas minimize the sum of the "squared errors."

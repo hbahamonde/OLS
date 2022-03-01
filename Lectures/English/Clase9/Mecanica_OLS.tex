@@ -42,7 +42,7 @@
 \pagestyle{fancy} % All pages have headers and footers
 \fancyhead{} % Blank out the default header
 \fancyfoot{} % Blank out the default footer
-\fancyhead[C]{Mec\'anica del OLS} % Custom header text
+\fancyhead[C]{Mechanics of OLS} % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
 %----------------------------------------------------------------------------------------
@@ -187,14 +187,16 @@
 %\graphicspath{
 %{/Users/hectorbahamonde/RU/Term5/Experiments_Redlawsk/Experiment/Data/}
 %}
-\hspace{-5mm}{\bf Profesor}: H\'ector Bahamonde.\\
-\texttt{e:}\href{mailto:hector.bahamonde@uoh.cl}{\texttt{hector.bahamonde@uoh.cl}}\\
+\hspace{-5mm}{\bf Professor}: H\'ector Bahamonde.\\
+\texttt{e:}\href{mailto:hibano@utu.fi}{\texttt{hibano@utu.fi}}\\
 \texttt{w:}\href{http://www.hectorbahamonde.com}{\texttt{www.hectorbahamonde.com}}\\
-{\bf Curso}: OLS.
+{\bf Course}: OLS.
 
 
-\paragraph{La Mec\'anica detras del OLS} Pensemos en la relaci\'on entre \emph{educaci\'on} e \emph{ingreso}, ``controlando por'' \emph{a\~nos de experiencia laboral}. Supongamos que tenemos la siguiente base de datos:
-
+\paragraph{The ``Mechanic'' behind OLS} Let's think about the relationship \emph{schooling} and \emph{earnings}, \emph{controlling} for \emph{experience}. What does it mean ``to control for'' something in this context? 
+\\
+\\
+Now, let's suppose we have the following data,
 
 \begin{table}[!h]
         \centering
@@ -202,21 +204,21 @@
 \begin{tabular}{|p{0.16\textwidth}|p{0.20\textwidth}|p{0.25\textwidth}|p{0.39\textwidth}|}
 \hline 
  \begin{center}
-\textbf{Nombre (i)}
+\textbf{Name (i)}
 \end{center}
  & \begin{center}
-\textbf{Ingreso (Y)}
+\textbf{Earnings (Y)}
 \end{center}
  & \begin{center}
-\textbf{Educacion (x1)}
+\textbf{Education (x1)}
 \end{center}
  & \begin{center}
-\textbf{Experiencia (x2)}
+\textbf{Experience (x2)}
 \end{center}
  \\
 \hline 
  \begin{center}
-Pedro
+Alfred
 \end{center}
  & \begin{center}
 3
@@ -230,7 +232,7 @@ Pedro
  \\
 \hline 
  \begin{center}
-Juan
+Brandon
 \end{center}
  & \begin{center}
 5
@@ -244,7 +246,7 @@ Juan
  \\
 \hline 
  \begin{center}
-Diego
+Charly
 \end{center}
  & \begin{center}
 7
@@ -262,37 +264,37 @@ Diego
         \end{table}
 
 
-\paragraph{Hypotesis:} ``A m\'as educaci\'on, m\'as ingreso, para el promedio de a\~nos de experiencia laboral''. {\color{red}A que se refiere ``para el promedio de a\~nos''?}
+\paragraph{Hypothesis:} ``The more education, the higher earnings,'' for the  average level of experience (And what do I mean by ``for the  average level of experience'' and \emph{Why does it matter?}) 
 
 
-\section{Cu\'anto sube mi ingreso si aumento mi educacion? }
 
-\paragraph{}El modelo de regresi\'on lineal est\'a dado por la siguiente formula:
+\section{By how much do my earnings rise if my schooling goes up?}
+
+\paragraph{}The linear model is given by the next formula,
 
 
-\begin{center}
 
-\begin{gather}
-Y_{i} \ =\ \beta 0+\beta 1x1_{i} \ +\ \beta 2x2_{i} +e_{i} \notag\\
- \notag
-\end{gather}
-\end{center}
+\begin{gather*}
+ \text{Earnings}_{i} = \beta 0+\beta_{1}\text{Education}_{i} \ +\ \beta_{2}\text{Experience}_{i} + e_{i}\\\notag
+Y_{i} = \beta 0+\beta_{1}x1_{i} \ +\ \beta 2x2_{i} +e_{i} \notag
+\end{gather*}
+
 
 
 
 
 \begin{itemize}
-\item \textbf{Lo que conocemos:} $\displaystyle {\boldsymbol x}$ e $\displaystyle y$. 
-\item \textbf{Lo que no conocemos, pero debemos estimar}: \ $\displaystyle \boldsymbol{\beta} $ y $\displaystyle \epsilon $.
+\item \textbf{What we observe:} $\displaystyle {\boldsymbol x}$ and $\displaystyle y$. 
+\item \textbf{What we don't observe, but should estimate}: \ $\displaystyle \boldsymbol{\beta} $ and $\displaystyle \epsilon $.
 \end{itemize}
 
 
 
-\paragraph{}{\Large \textbf{Volvamos a repensar la formula del modelo de regresi\'on, pero en t\'erminos de matrices:}}
+\paragraph{}{\Large \textbf{Let's revisit the formula, but this time in matrix form:}}
 
 
 
-\paragraph{}Definamos lo que conocemos:
+\paragraph{}Let's define what we know:
 
 
 \begin{gather*}
@@ -313,7 +315,7 @@ Y\ =\begin{bmatrix}
 \end{equation*}
 
 
-\paragraph{}...y veamos c\'omo se ve OLS pero con matrices:
+\paragraph{}...and see how OLS looks like but in matrix form:
 
 
 \begin{equation*}
@@ -332,26 +334,32 @@ Y\ =\begin{bmatrix}
 \end{bmatrix}_{x2} +e_{i}
 \end{equation*}
 
+It's easy to see that:
 
 \begin{itemize}
-\item Es f\'acil ver que:
-\item Debemos multiplicar $\displaystyle \beta 1$ por $\displaystyle x$1 y $\displaystyle \beta 2$ por $\displaystyle x$2.
-\item $\displaystyle \beta $0, $\displaystyle \beta $1, $\displaystyle \beta $2 y $\displaystyle \epsilon_{i}$ son cantidades desconocidas, pero que debemos estimar.
-\item $\displaystyle \beta $0, $\displaystyle \beta $1y $\displaystyle \beta $2 son escalares constantes, donde $\boldsymbol{\beta} \ =\ \begin{bmatrix} \beta_{0}\\\beta_{1}\\\beta_{2}\end{bmatrix}_{\boldsymbol{\beta}}$
-\item El \'unico par\'ametro que est\'a indexado, es $\displaystyle \epsilon _{i}$. Otra clase hablaremos de esto. \textbf{Adelanto}: Pensemos el caso de ``Pedro''. Si por ejemplo $\displaystyle \beta 0\ =\ -3$, $\displaystyle \beta 1\ =\ 1$ y $\displaystyle \beta 2\ =\ 2$, tendremos que $\displaystyle y_{_{\text{Pedro}}} -3\ +\ 1( 2) \ +\ $2(2) = 3. Entonces:
+\item We should multiply $\displaystyle \beta 1$ times $\displaystyle x$1 and $\displaystyle \beta 2$ times $\displaystyle x$2.
+
+\item $\displaystyle \beta $0, $\displaystyle \beta $1, $\displaystyle \beta $2 and $\displaystyle \epsilon_{i}$ unknown quantities. Hence, we should infer/estimate that (this is \emph{inferential} statistics!). 
+
+\item $\displaystyle \beta $0, $\displaystyle \beta $1 and $\displaystyle \beta $2 are scalars (single numbers and constants), where the vector containing all estimations is defined as, $\boldsymbol{\beta} \ =\ \begin{bmatrix} \beta_{0}\\\beta_{1}\\\beta_{2}\end{bmatrix}_{\boldsymbol{\beta}}$
+
+\item The only parameter that's indexed (i.e. one row per observation or ``individual,'' hence the tiny ``\emph{i}'') is $\displaystyle \epsilon _{i}$. We will address this in another class. But basically, it's the ``error'' or ``residual.'' 
+\\
+\\
+Let's think about the case of ``Aldred.''  If $\displaystyle \beta 0\ =\ -3$, $\displaystyle \beta 1\ =\ 1$ and $\displaystyle \beta 2\ =\ 2$, we have that $\displaystyle y_{_{\text{Alfred}}} -3\ +\ 1( 2) \ +\ $2(2) = 3. Thus:
 \end{itemize}
 
 
 \begin{equation*}
-y_{\text{Pedro}} \ =\ 3\ =\ -3\ +1( 2) \ +2( 2) \ +\ 0
+y_{\text{Alfred}} \ =\ 3\ =\ -3\ +1( 2) \ +2( 2) \ +\ 0
 \end{equation*}
 
 
-\paragraph{}Aqu\'i $\displaystyle \epsilon _{\text{Pedro}}$=0. En ese sentido, $\displaystyle e_{i}$ es la diferencia entre lo que estimamos y lo que observamos. ``Filosoficamente'', significa otra cosa.
+\paragraph{}Here, $\displaystyle \epsilon _{\text{Alfred}}$=0. In this sense, $\displaystyle e_{i}$ is just the difference between what we observe and what estimate in the model. ``Philosophically'' it means more than that, but we'll talk about this soon.
 
 
 
-\paragraph{}Continuemos.
+\paragraph{}Let's continue...
 
 
 
