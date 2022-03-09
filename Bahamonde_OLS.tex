@@ -228,13 +228,14 @@ In terms of contents, this course will address four general topics.
 	\item Basic functions in \texttt{R}.
 	\item Descriptive statistics in \texttt{R}.
 	\item Introduction to lineal models in \texttt{R}.
- 	\item Causal inference in \texttt{R}.
+ 	\item Causal inference in \texttt{R}---time permitting.
+  \item MLE for GLMs in \texttt{R}---time permitting (not included in this syllabus).
 \end{enumerate}
 
 
 \subsection*{Programming}
 
-We will learn to program in \texttt{R}, the most-used programming language in social sciences. There are several advantages. \texttt{R} is free and runs on all platforms. Second, it's an object-oriented language. This implies---third---that \texttt{R} forces the student to think hard about what s/he is doing. Unlike other statistical packages such as \texttt{Stata} or \texttt{SPSS}, where the user ``clicks and points,'' you have to tell \texttt{R} specifically \emph{what} you need and \emph{how} you need it. Fourth, if you know \texttt{R}, you can easily learn about other pieces of software.
+We will learn to program in \texttt{R}, the most-used programming language in social sciences. There are many things to like about this software. \texttt{R} is free and runs on all platforms. Second, it's an object-oriented language. This implies---third---that \texttt{R} forces the student to think hard about what s/he is doing. Unlike other statistical packages such as \texttt{Stata} or \texttt{SPSS}, where the user ``clicks and points,'' you have to tell \texttt{R} specifically \emph{what} you need and \emph{how} you need it. Fourth, if you know \texttt{R}, you can easily learn about other pieces of software.
 \\
 \\
 {\bf Installing \texttt{R}}. First, \href{https://cloud.r-project.org}{download} \texttt{R}. Then select which version of \texttt{R} you will need depending on your OS (i.e., Windows, Mac, Ubuntu). \texttt{R} will start downloading. Once it's all done, install \texttt{R}. Now, \href{https://www.rstudio.com}{download} \texttt{R Studio}, the most-used interphase to ``talk'' to \texttt{R}. Click on \emph{Download R-Studio} and make sure you select \emph{FREE}. Also, select the version that works according to your OS.
@@ -246,7 +247,7 @@ I expect nothing but the best out of my students.
 
 \begin{itemize}
      \item[$\circ$] I expect students to do their reading \emph{before} class.
-     \item[$\circ$] Practical exercises should also be done \emph{before} class. 
+     \item[$\circ$] Practical exercises should be turned it \emph{before} class. 
      \item[$\circ$] If you need to see me, plan your time accordingly. It's best to assume that my office hours will get busier before tests and submissions. Ask your TA or myself when in doubt. 
 
   \item[$\circ$] I usually don't answer emails during weekends. 
@@ -276,11 +277,11 @@ Another advantage of \texttt{R} is that it has a really engaged community of sof
 	\item {\bf \emph{Quizzes}}: 5\% each, 10\% in total.
 	\\
   \\
-   There will be two quizzes. {\bf The first one is due at the beginning of the second session!} Both are due in hard copy (i.e. paper). Pen and paper is fine, but \LaTeX\; is best. {\bf All problems sets are due the following week \emph{before} class}.
+   There will be two quizzes. {\bf The first one is due at the beginning of the second session!} Both are due in hard copy (i.e. paper). Pen and paper is fine, but \LaTeX\; is best.
 
 	\item {\bf \emph{Problem Sets}}: 10\% each, 40\% in total.
 
-The \emph{problem sets} are hands-on programming exercises. Some times, you may expect some epistemology-type questions for which I expect epistemology-type answers (one well-crafted paragraph will do). For the programming ones, I will give you an \texttt{R} script with a dataset. You'll have to answer the questions within the same \texttt{R} script, and then turn that file in. The TA and myself will be available to answer questions if needed. {\bf All problems sets are due the following week \emph{before} class}.
+The \emph{problem sets} are hands-on programming exercises. Some times, you may expect some epistemology-type questions for which I expect epistemology-type answers (one well-crafted paragraph will do). For the programming ones, I will give you an \texttt{R} script with a dataset. You'll have to answer the questions within the same \texttt{R} script, and then turn that file in. The TA and myself will be available to answer questions if needed. {\bf All problems sets are due the following week \emph{before} class}. 
 
 \begin{itemize}
 		\item[$\diamond$] While it shouldn't be necessary, you \emph{may} use resources on the Internet to answer the questions.
@@ -303,13 +304,18 @@ This is the core of course. You'll have to give a 20 minutes presentation, very 
   \item[$\diamond$] {\bf Conclusion}: What are the main conclusions you can derive from your work? What are your suggestions for future research? (1 minute).
 \end{itemize}
 
-Life isn't perfect. Thus, you might not have the data ready by the time we need them for the class. In those cases, you will conduct a replication. A replication consists of obtaining someone else's data and performing the exact same data analyses published in the paper (models, tables and plots). \emph{The idea is to obtain the exact same results!} The data must come from a well-published paper. To obtain those data, you will need to contact the actual authors by sending them a \emph{very} nice email. I'll ask you to see me before sending that email. Since replications take time, you will need to gather the data of your replication ASAP. In any case, {\bf you will need to have the data ready from our second meeting}. {\bf \color{blue}Failure to obtain the replication data will negatively impact your grade tremendously}.
-\\
-\\
+\begin{itemize}
+  \item[{\color{red}\Pointinghand}] Life isn't perfect. Thus, you might not have the data ready by the time we need them for the class. In those cases, you will conduct a replication. A replication consists of obtaining someone else's data and performing the exact same data analyses published in the paper (models, tables and plots). \emph{The idea is to obtain the exact same results!} The data must come from a well-published paper. To obtain those data, you will need to contact the actual authors by sending them a \emph{very} nice email. I'll ask you to see me before sending that email. Since replications take time, you will need to gather the data of your replication ASAP. In any case, {\bf you will need to have the data ready from our second meeting}. 
+
+  \item[{\color{red}\Pointinghand}] If the above isn't doable either, I'll provide a dataset and a set of questions that you'll need to answer. You'll also need to present your results in the final ``conference.''
+
+  \item[{\color{red}\Pointinghand}] {\bf \color{blue}Failure to do the research project will negatively impact your grade tremendously}.
+\end{itemize}
+
 Regardless, either you have your own data ready or you're conducting a replication, you'll have to:
 
 \begin{itemize}
-  \item[$\diamond$] {\bf Email/meet me one week before this module begins} so we work out a plan. We will discuss whether you having your Master thesis dataset is possible at all, otherwise, which paper you will replicate. Hopefully is a paper that either addresses a similar problem of your thesis, or it's a paper you consider the best paper in your area. 
+  \item[$\diamond$] {\bf Email/meet me one week before this module begins} so we work out a plan. We will discuss whether you having your Master thesis dataset is possible at all, otherwise, which paper/data you will replicate/analyze. Hopefully is a paper that either addresses a similar problem of your thesis, or it's a paper you consider the best paper in your area. 
   \item[$\diamond$] Turn in an \texttt{R} script with \emph{all} data manipulations.
   \item[$\diamond$] Give the 20-minutes presentation at the end of the module.
 \end{itemize}
@@ -347,7 +353,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
   \item[$\bullet$] \fullcite{Wooldridge2002}.
   \item[$\bullet$] \fullcite{Namboodiri1984}.
   \item[$\bullet$] \fullcite{Gill:2006wp}.
-  \item[$\bullet$] \fullcite{Fox:2010vc}
+  \item[$\bullet$] \fullcite{Fox2011a}
 
 \end{itemize}
 
@@ -396,7 +402,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 					\item[$\circ$] Working with data.frames (I): format, labels, types of variables, basic description. % ch 2 fox r companion, Monogan2015 Ch 2, https://stats.idre.ucla.edu/stat/data/intro_r/intro_r.html#(12)
 					\item[$\circ$] {\bf Reading(s)}: 
 					\begin{itemize}
-						\item[$\diamond$] \textcite{Fox:2010vc}: 1.1.
+						\item[$\diamond$] \textcite{Fox2011a}: 1.1.
 					\end{itemize}
 				\end{itemize}
 			\end{itemize}
@@ -412,7 +418,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
         \item[$\circ$] {\bf Reading(s)}: 
           \begin{itemize}
             \item[$\diamond$] \textcite{Gill:2006wp}: 1.7.
-            \item[$\diamond$] \textcite{Fox:2010vc}: 2.3 and 3.4.
+            \item[$\diamond$] \textcite{Fox2011a}: 2.3 and 3.4.
           \end{itemize}
 					\end{itemize}
 					% Monogan2015 Ch 2, 
@@ -427,7 +433,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 						\item[$\circ$] Data visualization (I): bar plots, scatter plots, histograms, time series plots. % fox Applied: ch. 3, fox companion ch's 3.1-3.3, Monogan2015 Ch 3
 						\item[$\circ$] {\bf Reading(s)}:
 							\begin{itemize}
-								\item[$\diamond$] \textcite{Fox:2010vc}: 3.2.
+								\item[$\diamond$] \textcite{Fox2011a}: 3.2.
 							\end{itemize}
 					\end{itemize}
 			\end{itemize}
@@ -441,7 +447,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 				% Monogan2015 Ch 3, fox ch 3
 			%	\item[$\circ$] {\bf Reading(s)}: 
 			%		\begin{itemize}
-			%			\item[$\diamond$] \textcite{Fox:2010vc}: 7.3.
+			%			\item[$\diamond$] \textcite{Fox2011a}: 7.3.
 			%		\end{itemize}
 			%		\end{itemize}
 			%\end{itemize}
@@ -526,7 +532,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 						\item[$\circ$] {\bf Reading(s)}: 
 							\begin{itemize}
 								\item[$\diamond$] \textcite{Wooldridge2002}: 3.1---3.2.
-                \item[$\diamond$] \textcite{Fox:2010vc}: 4.3 till p. 177.
+                \item[$\diamond$] \textcite{Fox2011a}: 4.3 till p. 177.
 								% como interpretar los coeficientes, fox & weisberg 4.3 till p 177
 							\end{itemize}
 					\end{itemize}
@@ -549,7 +555,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 						\item[$\circ$] {\bf Reading(s)}: 
 							\begin{itemize}
 								\item[$\diamond$] \textcite{Wooldridge2002}: 4.3.
-                \item[$\diamond$] \textcite{Fox:2010vc}: 4.3.1.
+                \item[$\diamond$] \textcite{Fox2011a}: 4.3.1.
 								% Fox & weisberg 4.3.1, fox 6.1.3, montgomery 2.4
 							\end{itemize}
 					\end{itemize}
@@ -570,23 +576,23 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 
 
 
-			%\begin{itemize} 
-			%	\item[$\bullet$] {\bf Lesson \\#14}
-			%		\begin{itemize} 
-			%			\item[$\circ$] Interaction terms. Motivation. Estimation. Interpretation.  
-			%			\item[$\circ$] {\bf Reading(s)}: 
-			%				\begin{itemize}
-			%					\item[$\diamond$] \textcite{Wooldridge2002}: 7.4.
-			%					\item[$\diamond$] \fullcite{Brambor2006}.
-			%				\end{itemize}
-			%		\end{itemize}
-			%\end{itemize}
+			\begin{itemize} 
+				\item[$\bullet$] {\bf Lesson \#12}
+					\begin{itemize} 
+						\item[$\circ$] Interaction terms. Motivation. Estimation. Interpretation.  
+						\item[$\circ$] {\bf Reading(s)}: 
+							\begin{itemize}
+								\item[$\diamond$] \textcite{Wooldridge2002}: 7.4.
+								\item[$\diamond$] \fullcite{Brambor2006}.
+							\end{itemize}
+					\end{itemize}
+			\end{itemize}
 
 %\item[{\color{red}\Pointinghand}] Problem set \#2. Turn it in next class.
 
 
 			\begin{itemize} 
-				\item[$\bullet$] {\bf Lesson \# 12} % original Lesson \#15
+				\item[$\bullet$] {\bf Lesson \# 13} % original Lesson \#15
 					\begin{itemize} 
 						\item[$\circ$] Numeric properties of OLS, Gauss-Markov, omitted variable bias. % sy_1 W10
 						\item[$\circ$] {\bf Reading(s)}: 
@@ -599,7 +605,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 
 
 			\begin{itemize} 
-				\item[$\bullet$] {\bf Lesson \# 13} % original Lesson \#16
+				\item[$\bullet$] {\bf Lesson \# 14} % original Lesson \#16
 					\begin{itemize} 
 						\item[$\circ$] Goodness of fit, coefficient of determination (r$^2$), prediction ($\hat y$). 
 						\item[$\circ$] {\bf Reading(s)}:
@@ -614,7 +620,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 
 
 			\begin{itemize} 
-				\item[$\bullet$] {\bf Lesson \# 14} % original Lesson \#17
+				\item[$\bullet$] {\bf Lesson \# 15} % original Lesson \#17
 					\begin{itemize} 
 						\item[$\circ$] Issues and post-estimation: perfect multicollinearity and variance inflation, heteroskedasticity, non-linearity, outliers, non-normality of residuals and auto-correlation. % sy_1 W14, W15, explicar que multicol causa VARIANCE INFLATION (matrix form),
 						\item[$\circ$] {\bf Reading(s)}: 
@@ -645,7 +651,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 
 
       \begin{itemize} 
-        \item[$\bullet$] {\bf Lesson \# 15} % original Lesson \#18
+        \item[$\bullet$] {\bf Lesson \# 16} % original Lesson \#18
           \begin{itemize} 
             \item[$\circ$] Causal Inference: The Fundamental Problem of Causal Inference, the ignorability assumption, and the Potential Outcomes Framework.
             \item[$\circ$] {\bf Reading(s)}: 
@@ -660,7 +666,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 
 
       \begin{itemize} 
-        \item[$\bullet$] {\bf Lesson \# 16} % original Lesson \#19
+        \item[$\bullet$] {\bf Lesson \# 17} % original Lesson \#19
           \begin{itemize} 
             \item[$\circ$] Instrumental Variables and the Two-Stage Least Squares Regression.
             \item[$\circ$] {\bf Reading(s)}: 
@@ -675,7 +681,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 
 
       \begin{itemize} 
-        \item[$\bullet$] {\bf Lesson \# 17} % original Lesson \#20
+        \item[$\bullet$] {\bf Lesson \# 18} % original Lesson \#20
           \begin{itemize} 
             \item[$\circ$] Regression Discontinuity Designs (RDD): \emph{Sharp Designs}.
             \item[$\circ$] {\bf Reading(s)}: 
@@ -687,7 +693,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 
 
       \begin{itemize} 
-        \item[$\bullet$] {\bf Lesson \# 18} % original Lesson \#21
+        \item[$\bullet$] {\bf Lesson \# 19} % original Lesson \#21
           \begin{itemize} 
             \item[$\circ$] Regression Discontinuity Designs (RDD): \emph{Fuzzy Designs}.
             \item[$\circ$] {\bf Reading(s)}: 
@@ -699,7 +705,7 @@ Final Presentation												 & 20\% 	 	 & 100\% \\
 
 
       \begin{itemize} 
-        \item[$\bullet$] {\bf Lesson \# 19} % original Lesson \#22
+        \item[$\bullet$] {\bf Lesson \# 20} % original Lesson \#22
           \begin{itemize} 
             \item[$\circ$] Incorporating the Time Element: Fixed Effects (FE), Differences-in-Differences (DID).
             \item[$\circ$] {\bf Reading(s)}: 
