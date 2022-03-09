@@ -1,59 +1,56 @@
-# Coeficientes
+# Coefficients
 #################################################################
 cat("\014")
 rm(list=ls())
 graphics.off()
 
-## Tu estaras a cargo en esta clase. Siguiendo este script, haras una regresion
-## lineal usando las tecnicas de algebra de matrices. 
+# Now we're going to another OLS model using matrix algebra techniques.
 
-## Aunque hemos visto en clases lo que un coeficiente es, el enfasis hasta ahora 
-## ha sido puesto en que los coeficientes son simples numeros. Lo son. Pero ya 
-## la proxima clase veremos mas en detalle por que es importante entender 
-## lo que ellos representan. 
+# While we've seen in class that coefficients are numbers, the emphasis 
+# has been on just that. Yes, coefficients are numbers, but the important 
+# issue is, What do these numbers mean? What should I do with them? Why are they
+# important in quantitative social science?
 
-## Por el momento, recuerda (para siempre) la formula de beta. 
-## b = (x'x)^-1x'y
+# For now, remember (hopefully forever) the formula to derive the betas
+# b = (x'x)^-1x'y
 
-## Tambien recuerda la forma de la ecuacion de la regresion lineal:
-## y = b0 + b1x1 + e
+# Also, remember (hopefully forever) the formula to derive the lineal model
+# y = b0 + b1x1 + e
 
+# Using the formula for the betas, today we will calculate b0 (the intercept)
+# and beta1 (coefficient).
 
-## Usando la formula para sacar betas, hoy calcularas beta0 (intercepto) y 
-## beta1 (coeficiente).
+# In this class we will think about the relationship between schooling and 
+# prestige. 
 
+# Question for you Is this relationship "positive" or "negative"? 
+# To answer this question you should calculate b0 and b1. 
 
-## En esta clase, pensaremos en la relacion que hay entre 'educacion' y 
-## 'prestigio'. Sera positiva? Negativa? Para responder esta pregunta,
-## debes calcular beta1. Creo que estaremos de acuerdo en que la 
-## variable independiente ('x', o 'la causa') es 'educacion', y la dependiente
-## ('y', o 'el efecto') es 'prestigio'. Seria raro pensar que "el prestigio
-## causa la educacion", no? Cuanto sube mi prestigio cuando aumenta una unidad
-## de educacion? Eso es precisamente lo que significa un coeficiente.
+# Another question for you: what's the dependent variable? What's the independent variable?
+# What "causes" what? (It's NOT a causal model, but we will say "cause" just for pedagogical purposes).
 
-## Recuerda...
-## prestigio <- educacion # Si
-## educacion <- prestigio # No!
+# Which one is it? And why?
+# Schooling = Prestige ?
+# Prestige = Schooling ?
 
-## Esto significa que,
-## Prestigio = b0 + b1*Educacion + e
+# Ok---a coefficient, then, it's just the amount of change of one variable when the other changes. 
 
-## Recuerda que todo esta indexado, menos los betas. Es decir, la formula real
-## es asi:
-## Prestigio_{i} = b0 + b1*Educacion_{i} + e_{i}
-## "i" significa "individuo". Y representa a cada observacion. 
-## Esto significa que Pedro, Juan y Diego tienen, cada uno,
-## sus propios niveles de prestigio,
-## sus propios niveles de educacion,
-## y su propio error. Recuerda, el error es la diferencia entre lo que 
-## predecimos (beta0 y beta1) y lo que observamos para Pedro, Juan y Diego.
-## Es decir, si tenemos esto:
+# This means that
+# Prestige = b0 + b1*Schooling + e
 
-## Nombre    Educacion (x)    Prestigio (y)   beta0      Beta1     Error
+# Remember, everything is "indexed", e.g. one value or number per observation (or person, in this example).
+# Thus, the real equation is rather this one:
+# Prestige_{i} = b0 + b1*Schooling_{i} + e_{i}
+# where "i" in this case means "individual."
+# Thus, every "i" has its own prestige and schooling levels (as well as the "e"rror level...we'll talk about that later...)
+
+# So, this means we've got the following...
+
+## Name    Schooling (x)    Prestige (y)   beta0      Beta1     Error
 # -----------------------------------------------------------------------
-## Pedro        10                15            1         2         -6
-## Juan         5                 10            1         2         ?
-## Diego        2                 8             1         2         ?
+## A        10                15            1         2         -6
+## B        5                 10            1         2         ?
+## C        2                 8             1         2         ?
 
 ## Recuerda (1): son los mismos betas para todos.
 ## Recuerda (2): Por ej., para el caso de Pedro, la formula 
