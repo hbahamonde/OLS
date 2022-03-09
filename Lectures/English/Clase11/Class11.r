@@ -1,35 +1,35 @@
-# Error, residual y e.
+# Error, residual and e.
 #################################################################
 cat("\014")
 rm(list=ls())
 graphics.off()
 
+# In this class we will work with a famous dataset called 
+# "Correlates of War." This data is widely used to study war. 
 
+# Today, we are going to think about the following question: What's the relationship
+# between Political Repression and Democracy. 
 
+# Do we have an idea about what this relationship could look like, and why?
 
-# En esta clase, trabajaremos con una base famosa que se llama 
-# "Correlates of War". Es ampliamente usada para estudiar conflicto armado,
-# uno de los temas que estudia la ciencia politica. 
+# OK---The unit of analysis is the country. Our research question is:
+# Which kind of country represses more, democratic ones or dictatorships? To
+# answer this question, we will estimate a linear model. Particularly,
+# we will look at beta1.
 
-# En esta clase pensaremos en la siguiente pregunta: cual es la relacion entre 
-# represion politica y democracia. La unidad de analisis es el pais. 
-# Quienes reprimen mas, paises democraticos o dictatoriales? Para responder,
-# deberemos volver a pensar en beta1.
+# Let's open the dataset. Files in .dta format are Stata data files. This is
+# one of the many advantages of R: R will read Stata files, but Stata WILL NOT
+# read R files. 
 
-# Abramos la base de datos. Los formatos ".dta" son de Stata. Esa es otra
-# ventaja de R: R puede abrir bases de datos de Stata (pero Stata no puede
-# abrir bases de datos de R, ni de nada mas que no sea Stata).
-
-# Cargar Pacman
+# Load pacman
 if (!require("pacman")) install.packages("pacman"); library(pacman)
 
-# Cargar paquete para cargar bases que no son de R.
-# install.packages("foreign")
-p_load(foreign) # significa "foraneo"
+# Load the package to load dataset that aren't R datasets.
+p_load(foreign) 
 options(scipen = 1000000) # apagar notacion cientifica.
 dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/cow.dta")
 
-# Siempre inspeccionar base
+# Always inspect the dataset
 head(dat)
 
 # country Country Name
@@ -40,86 +40,91 @@ head(dat)
 # vdiss: Violent dissent based on terrorist events and fatalities.
 # repression: Violations of physical integrity rights.
 
-# Otro truco: graficar la base entera.
+# Another trick: plot the entire dataset.
 plot(dat)
 
 ########################
-# Regresion Simple
+# Simple OLS model
 ########################
 
-# Corramos una regresion bivariada, es decir, una sola variable independiente.
-# Es "bi"-variada porque inspecciona la relacion solo entre DOS variables:
-# la dependiente y la independiente.
+# Let's estimate a simple "bivariate" model, that is, just one independent variable (X).
+# Notice that there is ALWAYS just ONE dependent variable (Y).
 
-reg.bivariada = lm(repression ~ democracy, dat)
-summary(reg.bivariada) # Hoy solo miraremos los coeficientes. Otro dia veremos el error std.
+biv.model = lm(repression ~ democracy, dat)
+summary(biv.model) 
 
+# Today we're just looking at the coefficients (betas). We will soon look at the std. errors.
 
-# (1) Como podriamos interpretar esto? 
-# (2) Como podriamos escribir esto en forma de ecuacion?
-# (3) Como podriamos escribir esto en forma de matrix?
+# (1) How can we interpret these results?
+# (2) How can we write this relationship in mathematical notation?
+# (3) How can we write this in matrix form?
 
-# Veamos la guia en el pdf.
+# Let's check the PDF guide. 
 
-# Calculando el error. El error es la diferencia entre lo que vemos y lo que predecimos. 
-# Es decir entre "y" (niveles reales de repression) 
-# y "y'" (y prima), (niveles predecidos de represion). 
+# Let's calculate the error. That's the difference between what we estimate (y')
+# and what we observe (y). 
 
-# Primero, calculemos y'
-dat$repression.prima = predict.lm(reg.bivariada)
+# First, let's calculate y' ("predicted y"=="y prime"=="y hat").
+dat$repression.prime = predict.lm(biv.model)
 
-# Segundo, calculemos el error:
-dat$error = dat$repression-dat$repression.prima
+# Second, let's calculate the error manually
+dat$error = dat$repression-dat$repression.prime
 
-# Recordemos que el objeto que sale de "lm" ya contiene los residuos.
-as.numeric(reg.bivariada$residuals)
+# Luckily, the object "biv.model" already has that vector in it.
+as.numeric(biv.model$residuals)
 
-# Veamos...
+# Let's see...
 head(dat)
 
-# Ok. Esto implica lo siguiente:
-## (1) Hay mejores modelos que otros. Los mejores, son los que tienen menos error.
-## (2) El error representa todo lo que no podemos conocer ni medir apropiadamente. Ejemplos?
-## (3) El error esta normalmente distribuido y debe tener promedio 0.
-  ## (3.1) Filosoficamente: lo que no conocemos, no es sistematico (es al azar).
-  ## (3.2) Matematicamente: lo que no conocemos, debe tener promedio 0.
+# OK, all these imply that:
+# 1. There are better models than others. The "best" models are the ones with less error.
+# 2. The error represents all the things we cannot, should not or cannot afford to measure, examples?
+# 3. The error is normally distributed, and it should have mean 0.
+# 4. Philosophically: what we don't know (our ignorance), is not systematic (e.g., we make mistakes at random).
+# 5. Mathematically: what we we don't know (our ignorance), has zero effect on our model (e.g. its mean is 0).
 
-# Graficando el error
-p_load(lattice) # Paquete para graficos
+# Deep stuff right here...
+
+# Let's think harder about these questions:
+# Some qualitative researchers criticize quantitative models because OLS models have "errors."
+# 1) Is it possible to have perfect model, e.g. without error?
+# 2) Is it too bad if we have errors?
+# 3) Many people say "errors cancel each other out"...they're right. But what does it mean?
+
+# Let's plot the error
+p_load(lattice) # Library for plots
 densityplot(dat$error)
-# Muy cerca del 0.
+# OK---good. Very close to 0.
 
-# Veamos mas en detalle:
-summary(dat$error) # Que promedio tiene el error? 
+# Let's see it in more detail:
+summary(dat$error) # What's the mean? 
 
-# Comparemos el error que computamos nosotros, con el descriptivo del error que calcula R
-round(median(dat$error),4) == round(median(reg.bivariada$residuals),4)
+# Let's compare the error we computed manually with the one R gives us.
+round(median(dat$error),4) == round(median(biv.model$residuals),4)
 
+# It's always good to plot your errors: ALWAYS INSPECT THEM VISUALLY.
+# Let's use a "scatter plot" for that. 
+# These plots are good to plot two continuous variables, one in each axis (e.g. X and Y).
+# Actually, we want to inspect how the error behaves at different values of y'.
 
-# Puntos importantes:
-# (1.1) Siempre se dice que "los errores se cancelan mutuamente"
-# (1.2) Ej.: error de medicion en encuestas (mentirosos). 
+plot(biv.model$residuals, biv.model$fitted.values)
 
+# What do we want? "Homoscedastic" errors.
+# That is, errors with CONSTANT VARIANCE. 
+# The opposite is when we have "heteroskedastic" errors (non-constant variance errors).
+# We don't want that. 
 
-
-# Una manera grafica de ver el error, es ver un scatter plot
-# entre el error y el valor real.
-
-plot(reg.bivariada$residuals, reg.bivariada$fitted.values)
-
-# Residuos deben ser HOMOESQUEDASTICOS (VARIANZA CONSTANTE).
-
-# (1) Como seria un grafico donde hay problemas? 
-# (2) Como pensar en la "normalidad" del error graficamente?
-# (3.1) Un "buen" error "no tiene patrones claros".
-# Dibujar un ejemplo.
-# (4) Razones por las que incrementa nuestro error? 
+# (1) How does it look like when we are in trouble? ("heteroskedasticity")
+# (2) How can we re-think about this concept, "normally distributed errors with mean 0"?
+# (3.1) A "good" error doesn't have a clear pattern. 
+# (4) Why do we have errors in our models anyways?
 
 ########################
-# Regresion Multiple
+# Multivariate Regression
 ########################
 
-# Regresion "multiple" o "multivariada" tiene mas de una variable "independiente".
+# "Multiple" o "multivariate" regression has more than one X.
+# HERE
 
 # Pensemos en la idea de que una variable sea "independiente".
 # Para ello, pensemos en nuestra ecuacion lineal de nuevo.
@@ -136,35 +141,35 @@ plot(reg.bivariada$residuals, reg.bivariada$fitted.values)
 # (4.1) No podemos poner la misma variable a los dos lados del "="
 # Es decir, no podemos estimar "y ~ y" (o "x ~ x").
 
-# Pensemos en las notas del ramo de Matematicas de Pedro y Juan.
+# Pensemos en las notas del ramo de Matematicas de A y B.
 pj = data.frame(
-  nombre=c("Pedro", "Juan"),
-  nota.en.matematicas=c(3,5)
-  )
+  name=c("A", "B"),
+  grade.math=c(3,5)
+)
 
 pj # ve como se ve el objeto "pj".
 
-lm(pj$nota.en.matematicas ~ pj$nota.en.matematicas) # Error
+lm(pj$grade.math ~ pj$grade.math) # Error
 
 
 # (4.2) La misma variable independiente dos veces:
 
 # Es decir, y = x1 + x1 NO SE PUEDE. Veamos por que.
 
-# Volvamos a Pedro y Juan (y dejemos a Diego fuera mientras).
+# Volvamos a A y B (y dejemos a Diego fuera mientras).
 
-# Pensemos nuevamente en las notas en Matematicas de Pedro y Juan.
+# Pensemos nuevamente en las notas en Matematicas de A y B.
 data.frame(
-  nombre=c("Pedro", "Juan"),
-  nota.en.matamticas=c(3,5)
-  )
+  name=c("A", "B"),
+  grade.math=c(3,5)
+)
 
-# Ahora, entremos las notas de Pedro y Juan en una matriz DOS VECES.
+# Ahora, entremos las notas de A y B en una matriz DOS VECES.
 # La matriz se llama "x".
 x = matrix(
   c(3,5,3,5),
   ncol = 2
-  )
+)
 x
 
 # Fijate que la primera y la segunda columna significan lo mismo ("notas en matematicas").
@@ -268,20 +273,20 @@ colnames(dat) # "column names)
 
 
 
-reg.multivariada = lm(repression ~ democracy + pop + vdiss, dat) # Completar
+multivariate.model = lm(repression ~ democracy + pop + vdiss, dat) # Completar
 
 
-summary(reg.multivariada) # Hoy solo miraremos los coeficientes. Otro dia veremos el error std.
+summary(multivariate.model) # Hoy solo miraremos los coeficientes. Otro dia veremos el error std.
 
 
 
 
 # Primero, calculemos y'
-dat$repression.prima2 = predict.lm(reg.multivariada)
+dat$repression.prime2 = predict.lm(multivariate.model)
 
 # Segundo, calculemos el error:
-dat$error2 = reg.multivariada$residuals
-# lo que predecimos (predict.lm(reg.multivariada)) y lo que observamos (dat$repression).
+dat$error2 = multivariate.model$residuals
+# lo que predecimos (predict.lm(multivariate.model)) y lo que observamos (dat$repression).
 
 # Veamos...
 head(dat)
@@ -291,10 +296,10 @@ p_load(lattice) # Para graficos
 densityplot(dat$error2)
 
 # Ves un pastron o algo "inusual"?
-plot(dat$repression.prima2, dat$error2)
+plot(dat$repression.prime2, dat$error2)
 
 # Funcion (que veremos mas adelante) para plotear diagnosticos. 
-plot(reg.multivariada)
+plot(multivariate.model)
 
 
 # Summary ("Resumen")
@@ -321,19 +326,19 @@ p_load(texreg) # paquete para hacer tablas con varios modelos.
 
 screenreg( # funcion
   list( # ponemos los dos modelos en una lista, que es otro objeto que R ocupa.
-    reg.bivariada, # nuestro primer modelo
-    reg.multivariada # nuestro segundo modelo
-    )
+    biv.model, # nuestro primer modelo
+    multivariate.model # nuestro segundo modelo
   )
+)
 
 # (1) Como interpretamos esta tabla?
 
 # Tambien podemos graficar nuestros coeficientes
 p_load(coefplot)
 multiplot(
-  reg.bivariada, # nuestro primer modelo univariado
-  reg.multivariada # nuestro segundo modelo multivariado
-  )
+  biv.model, # nuestro primer modelo univariado
+  multivariate.model # nuestro segundo modelo multivariado
+)
 
 # (1) Como interpretamos esto?
 
