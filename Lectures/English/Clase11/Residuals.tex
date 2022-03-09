@@ -42,7 +42,7 @@
 \pagestyle{fancy} % All pages have headers and footers
 \fancyhead{} % Blank out the default header
 \fancyfoot{} % Blank out the default footer
-\fancyhead[C]{Residuos} % Custom header text
+\fancyhead[C]{Residuals} % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
 %----------------------------------------------------------------------------------------
@@ -188,12 +188,12 @@
 %{/Users/hectorbahamonde/RU/Term5/Experiments_Redlawsk/Experiment/Data/}
 %}
 \hspace{-5mm}{\bf Profesor}: H\'ector Bahamonde.\\
-\texttt{e:}\href{mailto:hector.bahamonde@uoh.cl}{\texttt{hector.bahamonde@uoh.cl}}\\
+\texttt{e:}\href{mailto:hibano@utu.fi}{\texttt{hibano@utu.fi}}\\
 \texttt{w:}\href{http://www.hectorbahamonde.com}{\texttt{www.hectorbahamonde.com}}\\
-{\bf Curso}: OLS.
+{\bf Course}: OLS.
 
 \begin{center}
-\textbf{Residuos}
+\textbf{Residuals}
 
 
 \begin{gather}
@@ -203,15 +203,15 @@ y_{i} \ =\ \beta_{0}+\beta_{1}x_{i} \ +\ e_{i} \notag\\
 
 
 \begin{gather}
-\text{Represi\'on}_{i} \ =\ \beta_{0}+\beta_{1}\text{Democracia}_{i} \ +e_{i} \notag\\
+\text{Repression}_{i} \ =\ \beta_{0}+\beta_{1}\text{Democracy}_{i} \ +e_{i} \notag\\
 \notag
 \end{gather}
 
 \end{center}
 
 
+...let's see how the OLS model, but in matrix form. For simplicity, we will just focus on the first three countries.
 
-...y veamos c\'omo se ve el modelo OLS, pero con matrices. S\'olo observemos para los primeros tres pa\'ises.
 
 
 \begin{equation*}
@@ -236,6 +236,6 @@ i_{N}
 \end{bmatrix}_{\epsilon_{i}}
 \end{equation*}
 
-Es f\'acil ver entonces que $\epsilon_{i}= y_{i}-\hat y_{i}$. 
+Since $\hat y_{i} = \beta_{0}+\beta_{1}\text{Democracy}_{i}$, then it's easy to see that $\epsilon_{i}= y_{i}-\hat y_{i}$. Or in simple, the error ($\epsilon_{i}$) is the difference between what I am predicting ($\hat y_{i}$) and what I am observing ($y_{i}$). It makes complete sense: it quantifies how ``wrong'' my model is.
 
 \end{document}
