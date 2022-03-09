@@ -1,10 +1,10 @@
-# La mecánica detrás del OLS (II): matrices en R.
+# The "mechanics" behid OLS (II): Matrix Algebra in R
 
 cat("\014")
 rm(list=ls())
 graphics.off()
 
-# definir x
+# define x
 x = matrix(
   c(1,1,1,2,7,3,2,4,6),
   nrow = 3, 
@@ -13,7 +13,7 @@ x = matrix(
 
 x
 
-# definir y
+# define y
 y = matrix(
     c(3,5,7),
   nrow = 3, 
@@ -22,41 +22,41 @@ y = matrix(
 
 y
 ###########################
-# transponer x con comando "t"
+# traspose x with "t" function
 ###########################
 t(x)
 
 ###########################
-# x'x
+# multiply transposed x times x: x'x
 ###########################
 t(x) %*% x
 
 ###########################
-# inverse
+# take the inverse
 ###########################
 
-## primero, encontrar determinante
+## first, find the determinant
 # det(t(x)%*%x)
 # 324
 
-## segundo, encontrar Adjacente
+## second, find the adjacent
 
-# Hagamos el proceso de manera directa. Invirtamos x'x
+# Let's do this process directly. Let's invert x'x
 
 solve(t(x)%*%x)
 
 ###########################
-# Modelo
+# Model
 ###########################
 
-# En Matriz: b = (x'x)-1*x'y
+# In matrix form: b = (x'x)-1*x'y
 options(scipen=99)
 solve(t(x) %*% x)%*%t(x)%*%y # beta
 
 b = round(solve(t(x) %*% x)%*%t(x)%*%y, 0)
 b
 
-# Usando el comando "lm"
+# Luckily the function "lm" does all these (and more!) automatically.
 data = data.frame(
         x=x[,2:3],
         y=y
@@ -64,5 +64,5 @@ data = data.frame(
 
 data
 
-modelo = lm(y ~ x.1 + x.2, data) # "lineal model"
-summary(modelo)
+model = lm(y ~ x.1 + x.2, data) # "lineal model"
+summary(model)

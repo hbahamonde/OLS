@@ -1,4 +1,4 @@
-# Introducción a modelos lineales: Qué es OLS?
+# Introducing OLS: What is this anyways?
 
 cat("\014")
 rm(list=ls())
@@ -6,7 +6,7 @@ graphics.off()
 options(scipen=9999999)
 
 #######################################################
-# Cual es la relacion entre educacion y prestigio? 
+# What's the relationship between schooling and prestige?
 #######################################################
 
 # Let's create a toy dataset.
