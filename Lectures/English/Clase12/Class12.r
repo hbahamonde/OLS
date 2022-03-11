@@ -1,4 +1,4 @@
-# Confidence intervals, standard error and variance-coviariance matrix.
+# Confidence intervals, standard error and variance-covariance matrix.
 #################################################################
 cat("\014")
 rm(list=ls())
