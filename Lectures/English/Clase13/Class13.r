@@ -1,134 +1,122 @@
-# Test de hipótesis (t test), errores Tipo I y II, significancia estadística (p-values).
+# Hypothesis Testing (t test), Errors Type I and II, Statistical Significance (p-values)
 #################################################################
 cat("\014")
 rm(list=ls())
 graphics.off()
 
 #################################################################
-# Motivacion
+# Motivation
 #################################################################
 
-# Hasta el momento sabemos interpretar las primeras dos columnas de nuestra tabla de regresion.
-# Es decir, (a) los betas (Estimadores o Coeficientes) y (b) el error estandard. 
-# Tambien sabemos (c) que son los intervalos de confianza y cual es su relacion con los 
-# errores estandard. Sin embargo, hasta el momento no sabemos que son esas estrellas
-# que aparecen en nuestra tabla.
+# So far we know how to interpret the coefficients and the std. errors.
+# We also know what confidence intervals are and its relationship
+# with the std. errors. However, we still need to know what those stars
+# are every time we do a summary(model).
 
-# Esto es lo que aprenderemos hoy. El coeficiente nos dice el tamano del efecto.
-# Sin embargo, hay una posibildiad de que estemos equivocados. Recuerda,
-# nuestra logica es frecuentista. El 95% de confianza significa que si 
-# el mismo fenomeno se repitiera 100 veces, 95 veces sucederia lo que estamos
-# prediciendo. 
+# This is what we are goint to learn now. The betas are the size of effect.
+# However, since we live in an *inferential* world, there is always a chance or 
+# probability that the effect is actually ZERO!
+# For instance, say some beta1 = 25, there is a chance that that in reality 
+# beta1 = 0. 
 
-# Como hacemos este calculo? Esto esta muy relacionado a los intervalos de confianza. 
-# Para esto, necesitamos hacer tests de hipotesis y CALCULAR
-# CUAN CERCANOS O LEJANOS ESTAMOS DE QUE NUESTROS BETAS SEAN LO QUE NOSOTROS
-# CREEMOS QUE SON.
+# How can we be compute this uncertainty? How can be "sure" that beta1 is NOT 0?
 
+# Part of the answer relies on the concept of confidence interval. 
 
 #################################################################
-# Estimemos un modelo
+# Let's estimate a model.
 #################################################################
 
-# Cargar paquete para cargar bases que no son de R.
 # install.packages("foreign")
-library(foreign) # significa "foraneo"
-options(scipen = 1000000) # apagar notacion cientifica.
+library(foreign) 
+options(scipen = 1000000)
 dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/cow.dta")
 
+# Let's motivate this problem with the following question:
+# What explains the size of a population in a country?
 
-# Hoy pensaremos en que factores ayudan a subir la poblacion en los paises.
+# Let's discuss:
+# (1) What's the relationship between population and democracy?
+# (2) What's the relationship beween population size and political repression?
 
-# (1) Que relacion podria haber entre poblacion y democracia?
-# (2) Que relacion podria haber entre poblacion y represion politica?
+# Model
+model.1 = lm(pop ~ democracy + repression, dat)
 
-# Modelo
-modelo.1 = lm(pop ~ democracy + repression, dat)
+options(scipen = 1000000) 
+summary(model.1)
 
-# resumen del modelo
-options(scipen = 1000000) # apagar notacion cientifica.
-summary(modelo.1)
+# Let's interpret the model.
 
-# (1) Que podemos deducir de nuestro modelo? (Interpreta la tabla)
+# Checklist: always run this checklist. 
 
-# Checklist: (SIEMPRE EJECUTAR ESTE CHECKLIST)
-## (1) Interpretar estimadores.
-summary(modelo.1)
+# (1) Interpret coefficients.
+summary(model.1)
 
-## (2) Observar los errores estandard.
-summary(modelo.1)
+# (2) Check your std. errors.
+summary(model.1)
 
-## (3) Checkear normalidad de los residuos: y' con residuos.
-plot(modelo.1$fitted.values, modelo.1$residuals)
+# (3) Check normality of residuals against your predicted values
+plot(model.1$fitted.values, model.1$residuals)
 
-## (4) Checkear significancia estadistica (asunto de hoy).
-summary(modelo.1)
-
-
-#################################################################
-# Significancia Estadistica: p-values
-#################################################################
-
-## Significancia: en simple, es la probabilidad de que nuestros betas sean 0.
-## Es decir, la probabilidad de que, por ej., beta(1) no sea 2345, si no que 0.
-## En este caso, hay un 69,84% de probabilidad de que el efecto sea 0. 
-## Asi mismo, hay un 24.41% de que beta(2) no sea 18707, si no que sea 0.
-
-## (1) Hasta que punto debieramos rechazar la idea de que b1=0? Cual es el 
-## % "magico" que nos diga "ok, estoy segur@ de que b1=0 y no b1=2345?
-
-## Estrellas denotan significancia. 
-### * = la probabilidad de que el beta sea 0 es igual/menor al 1%
-### ** = la probabilidad de que el beta sea 0 es igual/menor al 0.1%
-### *** = la probabilidad de que el beta sea 0 es igual a 0%
-
-## Otros niveles:
-### . = la probabilidad de que el beta sea 0 es igual al 5%
-
-## (4) Checkear significancia estadistica: 
-### Que podemos decir de la significancia estadistica de nuestros coeficientes?
+# (4) Check statistical significance (today's topic).
+summary(model.1)
 
 #################################################################
-# Apliquemos lo que sabemos respecto a Intervalos de Confianza
+# Statistical Significance: p-values
 #################################################################
 
-# p-values e intervalos de confianza estan altamente relacionados.
+# Statistical significance in simple, is the probability that the estimated betas
+# are 0. In this case, there is a 69,84% probability that the TRUE effect of beta(1) 
+# isn't really 2345 but 0. Similarly, there is a 24.41% probability that beta(2) 
+# isn't 18707 but 0.
 
-# Plotear modelo
+# Discuss:
+# What's really the threshold we should adopt to distrust/trust our results?
+
+# Those stars denote "statistical significance"
+# * = the probability that beta = 0 is equal or less than 1%.
+# ** = the probability that beta = 0 is equal or less than 0.1%.
+# *** = the probability that beta = 0 is equal to 0%.
+
+# Others:
+# "." = the probability that beta = 0 is equal to 5%.
+
+# What can we say about the statistical significance of our model?
+
+#################################################################
+# Let's bring in the confidence intervals again.
+#################################################################
+
+# P-values and confidene intervals are highly related to eachother. 
+
+# Let's plot the model in three ways.
+
+# 1. Coefficient
 # install.packages("coefplot")
 library(coefplot)
-coefplot(modelo.1, strict = T) # plot de coeficientes
+coefplot(model.1, strict = T)
 
-# mostrar el detalle de los intervalos de confianza
-confint(modelo.1, strict = T)
+# 2. Confidence intervals table (just the mean!).
+confint(model.1, strict = T)
 
-
-#################################################################
-# Pero ocurre algo muy raro aqui....?
-#################################################################
-
-# (1) Que similitudes encontramos entre nuestra tabla de regresion, 
-# "confint" y "coefplot"? Las tres herramientas nos estan comunicando el mismo
-# mensaje de alerta.... o no?
-
-# (2) Pero que diferencias encontramos entre la tabla, coefplot/confint?
-
-# Veamos mas en detalle el problema...
-# install.packages("effects")
+# Confidence interval of the entire range of the distribution of your x's
 library(effects)
-plot(allEffects(modelo.1))
+plot(allEffects(model.1))
 
-# otro ejemplo
+# Other example of the latter.
 options(scipen = 999999) # apagar notacion cientifica.
 library(ggeffects)
-mydf <- ggpredict(modelo.1)
+mydf <- ggpredict(model.1)
 
-mydf # ve los resultados.
 
-plot(mydf$democracy)
-plot(mydf$repression)
+# Discuss...
 
-# (3) Que podemos concluir? 
+# Note the following:
+# Whatever is inside the confidence intervals contain the true value.
+# P-values---very conveniently---go from 0 to 1.
+# P-values larger than 0.005 mean that there is a 5% that beta=0. 
+## Think about this again: We don't work with "truths", but with things that are not false! 
+## Put it differently, we work with things that are 5% fals, tops. 
 
 #################################################################
 # OK, misterio resuelto. Y es por esto que necesitamos pensar en P-values
@@ -139,7 +127,7 @@ plot(mydf$repression)
 # esta denotado por "Pr(>|t|)").
 
 # Volvamos a mirar la tabla
-summary(modelo.1)
+summary(model.1)
 
 # Vamos por parte.
 # Primero, veamos lo que el p-value es (los numeros en la columna  "Pr(>|t|)").
@@ -211,13 +199,13 @@ summary(modelo.1)
 
 # install.packages("texreg")
 library(texreg)
-screenreg(modelo.1, ci.force = F)
+screenreg(model.1, ci.force = F)
 
 
 ### Tabla que incorpora estas criticas
 # install.packages("texreg")
 library(texreg)
-screenreg(modelo.1, ci.force = T) # nuestro paquete "screenreg" que ya conocemos,
+screenreg(model.1, ci.force = T) # nuestro paquete "screenreg" que ya conocemos,
 # pero ahora, forzando los intervalos de confianza ("confidence intervals"), por 
 # eso, "ci.force = T" ("T" por "true").
 
