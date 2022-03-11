@@ -10,7 +10,7 @@
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \linespread{1.05} % Line spacing - Palatino needs more space between lines
 \usepackage{microtype} % Slightly tweak font spacing for aesthetics
-
+\usepackage{multirow}
 \usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
 \usepackage{multicol} % Used for the two-column layout of the document
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
@@ -42,7 +42,7 @@
 \pagestyle{fancy} % All pages have headers and footers
 \fancyhead{} % Blank out the default header
 \fancyfoot{} % Blank out the default footer
-\fancyhead[C]{$\bullet$ Trabajo Final Grupal $\bullet$} % Custom header text
+\fancyhead[C]{$\bullet$ Final Assignment $\bullet$} % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
 %----------------------------------------------------------------------------------------
@@ -187,47 +187,67 @@
 %\graphicspath{
 %{/Users/hectorbahamonde/RU/Term5/Experiments_Redlawsk/Experiment/Data/}
 %}
-\hspace{-5mm}{\bf Profesor}: H\'ector Bahamonde, PhD.\\
-\texttt{e:}\href{mailto:hector.bahamonde@uoh.cl}{\texttt{hector.bahamonde@uoh.cl}}\\
+\hspace{-5mm}{\bf Professor}: H\'ector Bahamonde, PhD.\\
+\texttt{e:}\href{mailto:hibano@utu.fi}{\texttt{hibano@utu.fi}}\\
 \texttt{w:}\href{http://www.hectorbahamonde.com}{\texttt{www.HectorBahamonde.com}}\\
 {\bf Curso}: OLS.\\
-\hspace{-5mm}{\bf TA}: Gonzalo Barr\'ia.
+\hspace{-5mm}{\bf TA}: Valterri Pulkkinen.
 
 
 \vspace{-0.8cm}
-\section*{Instrucciones Generales}
+\section*{Instructions}
 
-Usando la base de datos que ser\'a asignada al azar y dentro de los plazos establecidos en la secci\'on \emph{Tareas} de \texttt{uCampus}, deber\'as:
+Using the randomly assigned dataset, and within the deadline established in the program, you will:
 
 \begin{enumerate}
-	\item {\bf Generar una pregunta de investigaci\'on}. Un ejemplo de pregunta de investigaci\'on puede ser \emph{Qu\'e explica Y?} Para esto, ay\'udate del \emph{codebook} (archivo de texto que contiene el nombre de la variable y su definici\'on).
+	\item {\bf Generate a research question}. An example might be \emph{What explains Y?} To answer this question, use the \emph{codebook}, and see which of the included variables might help you answer your research question. Also, remember to articulate your work based on the variables you do have.
 	
-	\item {\bf Generar una hip\'otesis de trabajo}. Una hip\'otesis de trabajo es una respuesta (una afirmaci\'on) \emph{hipot\'etica} a esta pregunta. Un ejemplo podr\'ia ser: \emph{Y es explicado por $X_{1}$}. En general, aqu\'i tambi\'en explicas \emph{por qu\'e} $X_{1}$ explica $Y$.
+	\item {\bf Generate a working hypothesis}. A working hypothesis is an answer (an assertion). An example might be \emph{$Y$ can be explained because of $X_{1}$}. In general, here you also explain \emph{why} you think that's the case.
 	
-	\item  {\bf Generar una hip\'otesis alternativa}. Al igual que la hip\'otesis de trabajo, la hip\'otesis alternativa es una afirmaci\'on. La diferencia es que la hip\'otesis alternativa plantea una respuesta diferente (o \emph{alternativa}) a la hip\'otesis de trabajo. Si la de trabajo respond\'ia $X_{1}$, la alternativa podr\'ia ser $X_{2}$.
+	\item  {\bf Generate an alternative hypothesis}. Just like the working hypothesis, the working one is an assertion. The difference is that the alternative answers the question differently. For instance, here you can hypothesize that $Y$ is rather explained by $X_{2}$ (not $X_{1}$).
 	
-	\item {\bf Testear ambas hip\'otesis}. Para ello deber\'as ocupar modelos lineales. Recuerda, entonces, que deber\'as formular una pregunta de investigaci\'on y dos hip\'otesis (de trabajo y alternativa) que puedas testear. Para efectos del trabajo, no te servir\'a formular una hip\'otesis (o pregunta), si es que no tienes variables relevantes para contestar la pregunta de investigaci\'on. Entonces la recomendaci\'on es que orientes tus hip\'otesis y pregunta de investigaci\'on a la informaci\'on que tengas disponible en la base de datos. {\bf Recuerda que tu variable dependiente \emph{debe} ser continua}.
+	\item {\bf Hypothesis testing}. To do this you will need to perform at least one OLS model. Remember, $Y$ should be continuous. Also, remember to use control variables. Always justify your control variables (tell us \emph{why} you decided to include them). Maybe a (super) quick literature review and a short analysis of the problem might guide your decision-making process.
 
-	\item {\bf Deber\'as tener al menos dos especificaciones}. Es decir, al menos un modelo lineal para testear la hip\'otesis de trabajo y al menos otro modelo lineal para testear la hip\'otesis alternativa. Si sienten que otro modelo debiera ir en el trabajo, adelante. Pero sigue siendo posible tener la nota m\'axima teniendo el m\'inimo (al menos, un modelo por hip\'otesis). %S\'olo toma en cuenta que si una pregunta ``queda en el aire'', y un modelo adicional no es presentado, esto podr\'ia bajar tu nota.
 
-	\item {\bf En ambos modelos, deber\'as tener controles}. Recuerda que los controles son otras variables que entran en la misma ecuaci\'on, y que ayudan a mantener los efectos constantes en las medias de esas variables. Para cada control deber\'as justificar la decisi\'on de incluir los controles que incluiste. Esto es discursivo, y como vimos en clases, deriva de la teor\'ia, la revisi\'on bibliogr\'afica, y hasta de la intuici\'on. 
+	\item {\bf Presentation}.  \emph{After testing both hypothesis, for which one do you find statistical support?} To answer this question, look at the (1) p-values, (2) standard errors, (3) r$^{2}$ of the model, and (4) effect sizes ($\beta$). Do \emph{not} copy and paste \texttt{R} output into your presentation. Present a carefully designed regression table.
 
-	\item {\bf Presentaci\'on de resultados}. \emph{Para qu\'e hip\'otesis encuentras evidencia suficiente para confirmarla?} Para responder esta pregunta, deber\'as comentar (1) p-values, (2) errores est\'andard, (3) r$^{2}$ del modelo, (4) tama\~no del efecto (betas). No olvides usar al menos una tabla y un gr\'afico por modelo.
+	\item {\bf Post-estimation}. Using a scatter plot, check (1) normality of your residuals/errors, and (2) homo/hetero-scedasticity. (a) Answer in your presentation: \emph{Do your residuals behave according to the assumptions behind OLS theory?}
 
-	\item {\bf Post-estimaci\'on}. Usando un solo scatter plot, revisa (1) normalidad de residuos (``errores'') y (2) homo/hetero-esquedasticidad. Responde las siguientes preguntas: (a) \emph{les parece que los errores del(los) modelo(s) cumple(n) con los supuestos de los modelos lineales?} (b) \emph{Qu\'e significa(n) substantivamente ese(esos) supuestos?}
+	\item {\bf In-class presentation (``conference'')}. In the presentation you should talk about all these issues. Each presentation should last approximately 10-15 minutes. You will have to convince us that you did everything that's possible to find an appropriate model and that you tested all your assumptions. The rest of the class will not only listen to the presentation, but also will contribute to the discussion via constructive criticism. 
 
-  %\item {\bf An\'alisis cualitativo}. Selecciona uno de los m\'etodos cualitativos abordados en el semestre y complementa los datos cualitativos con tus an\'alisis cuantitativo. \emph{Qu\'e diferencias/similitudes puedes observar?}
-
-	\item {\bf Presentaci\'on final en clases}. En la presentaci\'on final deber\'an abordar todos estos puntos. El \'unico punto que deber\'an a\~nadir extra, es la mini revisi\'on bibliogr\'afica. La presentaci\'on no deber\'a durar m\'as de diez minutos. \emph{Todos los integrantes del grupo deber\'an presentar}. La idea de presentar es que puedan recibir comentarios del resto de los compa\~neros. El trabajo del grupo ser\'a convencer a la audiencia que han hecho todo lo posible para poder responder adecuadamente ambas hip\'otesis.
-
-	\item {\bf Productos finales}: 
+	\item {\bf Products}: 
 
 		\begin{enumerate}
-			\item {\bf Trabajo Final}: un \emph{script} de \texttt{R} enviado por \texttt{uCampus}. No habr\'a un informe final. Aseg\'urate que el \emph{script} corra sin problemas, que los paquetes que usas est\'en declarados, etc.
-			\item {\bf Presentaci\'on final}: un \emph{Power Point} presentado en clases por todos los integrantes del grupo. Todos los aspectos se\~nalados arriba deber\'an estar abordados en esta presentaci\'on.
+			\item {\bf A script}: submit a \texttt{R} script with all your data analyses. Remember that the script should run properly and should not get stuck. For that, include in your code all the packages and libraries so I can replicate your work.  
+			\item {\bf One presentation}: a conference-style presentation with a Power Point.
 		\end{enumerate}
 
 \end{enumerate}
+
+\newpage
+\section*{Datasets and Dependent Variables}
+
+
+%\afterpage{
+\begin{table}[ph!]
+\begin{center}
+\begin{scriptsize}
+{\renewcommand{\arraystretch}{2}%
+\begin{tabular}{  c |  c | c | c }
+\toprule
+\textbf{Library}             & \textbf{Dataset}  & \textbf{Codebook} & \textbf{Dependent Variable} \\
+\midrule
+\multirow{6}{*}{\texttt{library(AER)}}  & \texttt{data(Fatalities)}      & \texttt{help(Fatalities)}      & \texttt{Fatalities\$fatal} \\\cline{2-4}
+                                        & \texttt{data(Guns)}            & \texttt{help(Guns)}            & \texttt{Guns\$violent} \\\cline{2-4}
+                                        & \texttt{data(HousePrices)}     & \texttt{help(HousePrices)}     & \texttt{HousePrices\$price} \\\cline{2-4}
+                                        & \texttt{data(Journals)}        & \texttt{help(Journals)}        & \texttt{Journals\$price} \\\cline{2-4}
+                                        & \texttt{data(TeachingRatings)} & \texttt{help(TeachingRatings)} & \texttt{TeachingRatings\$beauty} \\\cline{2-4}
+\bottomrule
+\end{tabular}}
+\end{scriptsize}
+\end{center}
+\end{table}
+%}
 
 
 \end{document}
