@@ -123,226 +123,157 @@ plot(biv.model$residuals, biv.model$fitted.values)
 # Multivariate Regression
 ########################
 
-# "Multiple" o "multivariate" regression has more than one X.
-# HERE
+# "Multiple" o "multivariate" regression models have more than one X.
 
-# Pensemos en la idea de que una variable sea "independiente".
-# Para ello, pensemos en nuestra ecuacion lineal de nuevo.
+# Let's think for a bit about the meaning of the concept "INDEPENDENT variable."
+# What's supposed to be "independent" about an "independent variable"?
 
-# y = b0 + b1x1 + e (esta es bivariada: una "x")
-# y = b0 + b1x1 + b2x2 + b3x3 + e ("multivariada" o "multiple").
+# Let's write our basic OLS equation model again.
+# y = b0 + b1x1 + b2x2 + b3x3 + e
 
+# Let's dicuss these:
+# (1) Why are independent variables called "independent"?
+# (2) Does it matter the order in which the X's are arranged in the equation?
+# (3) How many X's should I put in the equation?
+# (4) Which independent variables CAN'T include?
 
-# (1) Por que se llama "independiente"?
-# (2) Importa en que orden vayan las variables?
-# (3) Cuantas variables independientes podemos tener?
-# (4) Que variables independientes NO PODEMOS tener?
+#####################
+# WE CANNOT DO THESE
+#####################
 
-# (4.1) No podemos poner la misma variable a los dos lados del "="
-# Es decir, no podemos estimar "y ~ y" (o "x ~ x").
+# (4.1) We can't put the same variable on both sides of the "="
+# That is, we can't do "y ~ y" (or "x ~ x").
 
-# Pensemos en las notas del ramo de Matematicas de A y B.
+# Let's create a toy example 
 pj = data.frame(
-  name=c("A", "B"),
-  grade.math=c(3,5)
-)
+  brand=c("A", "B"),
+  number=c(3,5)
+  )
 
-pj # ve como se ve el objeto "pj".
+# inspect the object
+pj 
 
-lm(pj$grade.math ~ pj$grade.math) # Error
+# Model
+lm(pj$number ~ pj$number) # Error...
 
 
-# (4.2) La misma variable independiente dos veces:
+# (4.2) The same variable twice.
 
-# Es decir, y = x1 + x1 NO SE PUEDE. Veamos por que.
+# That is, y = x1 + x1 # CAN'T DO THAT 
+# Let's see why...
 
-# Volvamos a A y B (y dejemos a Diego fuera mientras).
-
-# Pensemos nuevamente en las notas en Matematicas de A y B.
-data.frame(
-  name=c("A", "B"),
-  grade.math=c(3,5)
-)
-
-# Ahora, entremos las notas de A y B en una matriz DOS VECES.
-# La matriz se llama "x".
+# let's create a matrix
 x = matrix(
   c(3,5,3,5),
   ncol = 2
-)
+  )
+
+# inspect the object
 x
 
-# Fijate que la primera y la segunda columna significan lo mismo ("notas en matematicas").
+# Let's remember how beta is calculated
+# (x'x)^-1x'y
+
+# Transpose x
+t(x) # OK, this is possible
+
+# Multiply x'x
+t(x) %*% x # OK, also possible
+
+# Now, let's keep on going, and try to invert (x'x)
+library(matlib)
+inv(t(x) %*% x) # Matrix is not invertible.
+# Technically, this means that the "determinant" of the matrix is 0.
+
+# Let's try anyways...
+summary(lm(repression ~ democracy + democracy, dat)) # What happened here?
+
+# This problem has a name: *perfect* multicollinearity.  
+
+# Let's see another example of multicollinearity.
+m2 = matrix(c(3,5,6,10), ncol = 2)
+
+m2 
+
+# Do you notice anything interesting about this matrix?
 
 
-# Volvamos al modelo. Queremos ver que la ecuacion de regresion con dos variables
-# independientes que son identicas es imposible. Es decir, esto es imposible:
+# let's take the determinant of "m2"
+options(scipen=10000) # turns off scientific notation
+det(m2) # determinant is 0, hence matrix is not invertible.
 
-# y = b0 + b1x1 + b2x1 + e
-# donde "x1" es "Notas en Matematicas" (fijate que x1 que entro dos veces).
+# Let's discuss:
+# (1) When can we have this kind of problem of perfect collinearity?
+# (2) Do you think this problem is common at all?
 
-# Tratemos de estimar los betas via matrices.
-# (x'x)^-1x'y (esta es la formula...solo para recordar).
-# Ahora veamos si es posible hacer esto cuando estimamos el modelo x = x.
+# OK, let's continue...
 
-# Transponer x
-t(x) # Ok, es posible
+# Now let's estimate a multivariate model.
 
-# Multiplicar x'x
-t(x) %*% x # Ok, es posible
+# What can explain levels of repression? 
+colnames(dat)
 
-# Ahora, siguiendo la formula, tratemos de inviertir (x'x)
-library(matlib) # para invertir matrices
-inv(t(x) %*% x) # Matriz no es invertible
-## Esto significa que la determinante de la matriz es 0.
+# "pop" (population)?
+# "rgdpch" (economic growth)?
+# "vdiss" (terrorism)?
 
+multivariate.model = lm(repression ~ democracy + pop + vdiss, dat) # what else?
 
+summary(multivariate.model)
 
-# Es por esto que lm() no sabe muy bien que hacer con este problema. Veamos.
-
-## Intento 1
-summary(lm(repression ~ democracy + democracy, dat)) # Que paso aqui?
-
-# Forcemos a R a hacerlo
-# Intento 2
-dat$democracy2 = dat$democracy # Enganando a R...
-summary(lm(repression ~ democracy + democracy2, dat)) # Que paso aqui?
-
-# Nuevamente det(x'x)=0.
-
-# Tecnicamente, aqui tenemos problemas de "colinearidad perfecta"
-
-# Ejemplo 1: Colinearidad Perfecta (de nuevo)
-m1 = matrix(c(3,5,3,5), ncol = 2) # Define matrix "m"
-m1 # ve como se ve la matrix "m1"
-
-# El resultado sera muy cercano a 0, y sera un numero muy 
-# pequeno, por lo que debemos apagar la notacion cientifica
-
-options(scipen=10000) # Apaga la notacion cientifica
-
-# toma la determinante de matrix "m1"
-det(m1) # da practicamente 0. Eso es "malo" (la matriz no es invertible).
-
-
-# Ejemplo 2: Multicolinearidad (que es diferente a Colinearidad Perfecta)
-# Colinearidad perfecta, es precisamente eso, "perfecta"
-# Multicolinearidad es la version mas ligera de "colinearidad perfecta".
-
-# ejemplo
-m2 = matrix(c(3,5,6,10), ncol = 2) # Define matrix "m"
-
-m2 # llama a la matrix "m2" para verla
-
-# Notan algo especial en esta matrix?
-
-# el segundo vector de x2 es una "combinacion lineal" del primer
-# vector: cual combinacion lineal?
-
-
-# El resultado sera muy cercano a 0, y sera un numero muy 
-# pequeno, por lo que debemos apagar la notacion cientifica
-
-options(scipen=10000) # Apaga la notacion cientifica
-
-# toma la determinante de matrix "m"
-det(m2) # mismo problema. |m2| = 0, o "la determinante de m2 es cero, 
-# por lo que m2 no es invertible"
-
-
-# En ambos ejemplos ("m1" y "m2"), si la determinante es 0, la matrix no es
-# invertible, y no podemos hacer la regresion.
-
-# (1) En que casos REALES podemos tener problemas de 
-# colinearidad perfecta?
-
-# (2) Por que es MUY COMUN tener problemas de colinearidad "imperfecta" (o "multicolinearidad")
-# en ciencias sociales?
-
-# OK, sigamos.
-
-# Estimemos un modelo lineal multivariado.
-
-# (1) Que mas podria ser importante para explicar/predecir represion?
-
-colnames(dat) # "column names)
-
-# "pop" (poblacion)?
-# "rgdpch" (crecimiento economico)?
-# "vdiss" (terrorismo)?
-
-
-
-multivariate.model = lm(repression ~ democracy + pop + vdiss, dat) # Completar
-
-
-summary(multivariate.model) # Hoy solo miraremos los coeficientes. Otro dia veremos el error std.
-
-
-
-
-# Primero, calculemos y'
+# let's compute the prediction y'
 dat$repression.prime2 = predict.lm(multivariate.model)
 
-# Segundo, calculemos el error:
+# Now, let's calculate the error 
 dat$error2 = multivariate.model$residuals
-# lo que predecimos (predict.lm(multivariate.model)) y lo que observamos (dat$repression).
 
-# Veamos...
+# Let's check...
 head(dat)
 
-# Graficando el error: Densidad
-p_load(lattice) # Para graficos
+# Let's plot the residual: Density Plot *check for normality*.
+p_load(lattice)
 densityplot(dat$error2)
 
-# Ves un pastron o algo "inusual"?
+# Let's plot the residual: Scatter Plot *check for patterns*.
 plot(dat$repression.prime2, dat$error2)
 
-# Funcion (que veremos mas adelante) para plotear diagnosticos. 
+# Check the model. Later we will discuss this plot in more depth.
 plot(multivariate.model)
 
-
-# Summary ("Resumen")
+# Summary
 summary(dat$error2)
 
-# Pensemos en los coeficientes (los betas)
+#Let's think about the coefficients (betas).
 
-# (1) Como se leen los betas ahora que tenemos mas variables?
-# (2) Que significa "constantes en el promedio"?  
+# Let's discuss:
+# (1) How do you interpret the betas now that we have more variables? (remember, it's a multivariate model).
+# (2) What does it mean (substantively) "constant at their means"?
 
 
 ########################
-# Mostrar resultados: tabla y grafico (coefplot)
+# Different Ways to Show Results: Tables and Plots (coefplot)
 ########################
 
-# Incertidumbre es el fantasma de este curso. 
-# Nunca sabemos si tenemos el "modelo verdadero".
-# Es por esto que siempre hacemos mas de un modelo, y 
-# mostramos mas de un modelo en nuestro trabajo. 
-
-# Hagamos una tabla para mostrar nuestros resultados.
+# Uncertainty.
+# We never will know if we have the "true model."
+# That's why we always try different specifications.
 
 p_load(texreg) # paquete para hacer tablas con varios modelos.
 
-screenreg( # funcion
-  list( # ponemos los dos modelos en una lista, que es otro objeto que R ocupa.
-    biv.model, # nuestro primer modelo
-    multivariate.model # nuestro segundo modelo
+screenreg( 
+  list( 
+    biv.model, # first model
+    multivariate.model # second model
   )
 )
 
-# (1) Como interpretamos esta tabla?
+# How do we interpret this table?
 
-# Tambien podemos graficar nuestros coeficientes
+# Let's plot our results. It conveys the same information! 
 p_load(coefplot)
 multiplot(
-  biv.model, # nuestro primer modelo univariado
-  multivariate.model # nuestro segundo modelo multivariado
-)
+  biv.model,
+  multivariate.model
+  )
 
-# (1) Como interpretamos esto?
-
-
-# Planteado para la proxima clase: 
-## (a) intervalos de confianza.
-## (b) linea de cero (significancia estadistica)
+# How do we interpret this plot?

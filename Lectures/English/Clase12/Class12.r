@@ -1,211 +1,148 @@
-# Intervalos de confianza, error estándar y variance-covariance matrix.
+# Confidence intervals, standard error and variance-coviariance matrix.
 #################################################################
 cat("\014")
 rm(list=ls())
 graphics.off()
 
 
-# Cargar paquete para cargar bases que no son de R.
-# install.packages("foreign")
-library(foreign) # significa "foraneo"
-options(scipen = 1000000) # apagar notacion cientifica.
+library(foreign)
+options(scipen = 1000000)
 dat = read.dta("https://github.com/hbahamonde/OLS/raw/master/Datasets/cow.dta")
 
-# Estimar modelo lineal: relacion entre crecimiento economico y democracia, controlando por poblacion
-modelo.1 = lm(rgdpch ~ democracy + pop, dat)
-summary(modelo.1)
+# Let's estimate a model about the relationship between economic growth and democracy, controlling for population.
+model.1 = lm(rgdpch ~ democracy + pop, dat)
+summary(model.1)
 
-# (1) Que significa "controlando por"?
+# What does it mean "controlling for population"? 
 
+# Let's get our confidence intervals. 
+confint(model.1, level = 0.95) # 95% of confidence.
+confint(model.1, level = 0.99) # 99% of confidence.
 
-# Obtener intervalos de confianza
-## Estos valores representan la incertidumbre de nuestra estimacion al promedio de cada variable, 
-## manteniendo las otras variables independientes "constantes en sus medias".
-confint(modelo.1, level = 0.95) # 95% de confianza
-confint(modelo.1, level = 0.99) # 99% de confianza
+# Let's discuss this a little bit further...
+# In social sciences we usually use 95% of confidence.
+# (1) "Confidence" in *what* exactly?
+# (2) Why 95% and not, say, 92%?
+# (3) What do these number mean anyways? 
+# (4) Why do the "2.5%" and "97.5%" numbers in the table mean? (Use whiteboard...)
 
-# DIBUJAR EN EL PIZARRON LA REPRESENTACION DE QUE _SIGNIFICA_ 
-# "EL 95%", Y DE POR QUE VEMOS LOS NUMEROS "2.5%" Y "97.5%"
-# EN NUESTRA TABLA DE "CONFINT".
+# Very powerful idea: our estimates (e.g., betas) are ESTIMATIONS...duhhh.
+# This means that the price we pay for them is UNCERTAINTY. 
+# Let's SEE this uncertainty.
 
-# Fijate que el intervalo de confianza de "democracia" va de ~1179 a ~2097
-## "~" significa "aproximadamente". Esos valores representan, nuevamente,
-## valores de nuestra "y" (es decir, "crecimiento economico", segun lo
-## estimamos en nuestro "modelo.1".)
-
-# Tambien podemos ver los coeficientes y su incertidumbre 
-# en forma grafica tambien.
-
-# plotear CI
 # install.packages("coefplot", "ggplot2")
 library(coefplot, ggplot2)
-coefplot(modelo.1)
+coefplot(model.1)
+
+# (1) Compare the coefficients in the table and in the plot. 
+# (2) What do we see in the plot?
+# (3) What can we say about the different coefficients?
+# (4) What can we say respet to the *precision* of our estimates? 
+# (5) What do we want? And do we want to avoid? 
+# (6) Why are we getting wide/narrow confidence intervals? Does that depend on what exactly?
 
 
+# Now, bare in mind that the uncertainty that coefplot shows is for the mean (average) of that distribution.
+# A better view is to observe how our estimated uncertainty VARIES as we move along the range of our variable. 
+# Make sure you understand this: it is REALLY important.
 
-
-# (1) Compara los numeros de la tabla "confint" y lo que ves en el grafico.
-# (2) Que es lo que vemos en este grafico?
-# (3) Que podemos decir de los distintos coeficientes?
-# (4) Que podemos decir respecto al ancho de los intervalos de confianza?
-# (5) Que es mejor? Intervalos de confianza "angostos" o "anchos"?
-
-# Sin embargo, hay algunas veces que queremos observar como esta incertidumbre
-# varia a medida que recorremos la distribucion entera (no solo el promedio).
-## Atencion: "coefplot" y la tabla de coeficientes ("summary(modelo.1)") 
-## solo muestra la incertidumbre respecto al PROMEDIO ("el centro") de la distribucion.
-## Lo que quiero decir, es que hay veces en que queremos ver como es que 
-## la incertidumbre (es decir, los intervalos de confianza) VARIAN
-## segun nos movemos a lo LARGO de la distribucion, es decir, cuando
-## vemos mas que el solo PROMEDIO.
-
-### ESTE PUNTO ES IMPORTANTE, y ASEGURATE DE ENTENDERLO BIEN.
-
-# Veamos como se ve esta incertidumbre a lo LARGO de la distribucion.
-
+# Let's see this in practice. 
 
 # install.packages("effects")
 library(effects)
-plot(allEffects(modelo.1))
+plot(allEffects(model.1))
 
-# (1) Que vemos en este grafico? 
-# * DIBUJAR EN LA PIZARRA: CUANDO AVANZO UNA UNIDAD EN X, AVANZO 1179.9 EN DEMOCRACIA.
-# (2) Que notan respecto al grado de incertidumbre?
+# (1) What are we seeing here? 
+# Let's see the effect on the whiteboard, and draw the lineal delta. (1179.9 democracy)
+# (2) Do you see anything that might explain part of our uncertainty?
 
-# OK. Ya sabemos lo que los intervalos de confianza significan, y para que estan.
-# Ahora calculemos intervalos de confianza a mano, y veamos de donde vienen
-# estos numeros.
+# Now that we know that the confidence intervals are, let's figure out where they come from, and how
+# can we calculate them.
 
 
 ########################################################
-# Como estimar manualmente los intervalos de confianza
+# Manual computation of confidence intervals
 ########################################################
 
-# Todo empieza estimando la Varianza del Error (sigma^2).
+# Everything begins estimating the variance of the error (how disperse the error is)
+# We call this sigma^2
 
-# Primero, obtengamos el error
-e = as.vector(modelo.1$residuals)
-e # es simplemente un vector con todos los errores (diferencia entre observado
-# y predicho)
+# First, let's extract the estimated error. 
+e = as.vector(model.1$residuals)
+e 
 
-# Segundo, veamos cuantos parametros estimamos. Sera importante para la formula.
-k = 3 # numero de variables a estimar (incluyendo intercepto).
-# Tenemos "democracy", "pop", "Intercept". Entonces, tenemos 3 parametros.
+# Second, let's see how many parameters we estimated. 
+k = 3 # number of variables we used in our model (including the intercept) 
+# We've got "democracy", "pop", "Intercept". 
 
-# sigma.2 (varianza del error)
-# Varianza es una medida de la variabilidad o dispersion de un vector. En este caso, del vector "e", que es nuestro error. Matematicamente, es la suma de los elementos diagonales que resultan de la multiplicacion entre el vector del error y el vector del error traspuesto, dividido por la cantidad de observaciones menos el numero de parametros que estaremos estimando (3 en este ejemplo).
+# sigma.2 (variance of the error)
+# Mathematically, it's just the sum of the diagonal elements  of the (e*e')/N-k matrix 
 sigma.2 = (1/(nrow(dat)-k))*sum(diag(e %*% t(e)))
 
-
-# Tercero, obtengamos la matriz "x". La matriz "x" representa lo que observamos.
-## Recuerda que para calcular el intercepto, debemos poner una columna de 1's del mismo largo que la dimension de el resto de las variables. 
-unos = rep(1, nrow(dat)) # repetir "1" 112 veces, que es el largo de la base de datos
-# que lo acabo de calcular con "nrow(dat)".
-
-## OK, ahora creemos la matrix "x".
-x = matrix(c(unos, dat$democracy, dat$pop), ncol=3) 
-x # Ve como quedo.
+# Third, let's get the X matrix ("what we observe").
+# To obtain the intercept, we will put a column of 1's of the same lenght of our X matrix.
+ones = rep(1, nrow(dat)) 
 
 
-# Cuarto, estimemos los errores estandard. 
-# Es importante sacar los errores estandard porque necesitamos eso para calcular los intervalos de confianza.
+# OK, let's generate the "X" matrix
+x = matrix(c(ones, dat$democracy, dat$pop), ncol=3) 
+x 
 
-# Los errores estandard de hecho, salen en nuestra tabla de regresion.
+# Let's estimate the standard errors. 
+summary(model.1) # Actually our table tells us the standard errors. They are SUPER important (they tell us our uncertainty).
 
-summary(modelo.1) # "Std. Error"
+# To compute the standard errors, first we need to take a look at the variance-covariance matrix.
+# Variances are the diagonal elements of the matrix, and the covariances are the off-diagonal elements of the matrix.
 
-# Para calcular los errores estandard, usaremos una vieja tecnica de matrices.
+library(matlib)
 
-# Esta matriz es famosa, y se llama Matriz de Varianza-Covarianza.
-# Las varianzas aparecen en la diagonal, y las covarianzas fuera de la diagonal.
+# Let's calculate the variance-covariance matrix.
+# To do this, we should do the following:
+# sigma^2 * (x'x)^-1
 
-library(matlib) # paquete para hacer operaciones con matrices.
-
-# Calculemos la Matriz de Varianza-Covarianza
-# Multiplicar sigma^2 por (x'x)^-1
 options(scipen=999)
 sigma.2 * inv(t(x) %*% x)
 
-# Pero habia un camino mas corto...
-vcov(modelo.1)
+# Luckily there was a shorter way...
+vcov(model.1)
 
-# Recapitulemos, esta matriz de Varianzas y Covarianzas tiene elementos importantes para calcular el error estandard, que sera necesario para calcular el intervalo de confianza.
+# Remember, the variance-covariance matrix has important elements to calculate the std. errors.
+# At the same time, the std. errors are important to compute the confidence intervals. So...
+# Variance-Covariance Matrix --> Std. Errors --> Confidence Intervals.
 
-# Lo interesante es que la raiz cuadrada de la diagonal, son los errores estandard.
+# Interestingly, the square of the square of the matrix we just computed contains the std. errors!
 sqrt(diag(sigma.2 * inv(t(x) %*% x)))
 
-# Comprobemos. Los errores std. del "summary" debieran ser los mismos
-# que los que estimamos nosotros manualmente.
-summary(modelo.1)
+# Let's check...
+summary(model.1)
 
-# OK. Una manera de anotar esto, es extraer elemento por elemento de lo que acabamos de calcular. 
-sqrt(diag(sigma.2 * inv(t(x) %*% x)))[1] # error std. del intercepto
-sqrt(diag(sigma.2 * inv(t(x) %*% x)))[2] # error std. de democracy
-sqrt(diag(sigma.2 * inv(t(x) %*% x)))[3] # error std. de pop.
+# But hey, let's try to really understand what the std. errors are. (Now that we know how to calculate them).
+# Std. errors are a measure of uncertainty of our coefficients. The larger the error, the larger the uncertainty. 
+# How large or small are your std. errors? Std. errors just make sense in the context of your model/coefficients. And really
+# there isn't a "rule of thumb" to say "this is a "big"/"small" std. error. 
 
+# Not let's talk about confidence intervals. 
+# Remember, confidence intervals are constructed using the std. errors.
 
-## Hablemos del error estandar
-### La manera en la que debemos entender el error estandard (SE) asociado al 
-### coeficiente (lo que vemos en "summary(modelo.1)") es como un ESTIMATIVO de 
-### la desviacion estandard de la POBLACION.
+# Let's define oir "degrees of freedom" 
+degrees.of.freedom = nrow(dat)-2
 
-### ATENCION: Poblacion es distinto a MUESTRA. Pensemos mas en esto...
+degrees.of.freedom 
 
-### Pensemos en esto por un segundo. La razon por la que ESTIMAMOS, MODELAMOS, y 
-### tenemos INCERTIDUMBRE, es precisamente porque NO PODEMOS acceder a la poblacion.
-### Es decir, dado que es imposible tener TODOS LOS DATOS, nosotros trabajamos
-### con MUESTRAS. Un ejemplo de esto, es una encuesta para conocer preferencias 
-### politicas. Dado que no podemos entrevistar a todo el pais (POBLACION), entrevistamos
-### a una MUESTRA, generalmente, aleatoria. 
+# Let's define the formula of the confidence intervals.
+# coefficient +/- t * Std. Error of the Coefficient
+# It's a "double" calculus...
+# coefficient + t * Std. Error of the Coefficient
+# coefficient - t * Std. Error of the Coefficient
 
-### Entonces, el error estandard del coeficiente hace referencia a algo que no conocemos
+# Note that it's all about the coefficient.
 
-### En ese sentido, es precisamente la informacion que necesitamos para calcular los Intervalos de Confianza (nuestro tema de hoy).
+# But there is a new element "t".
+# That value is a critical value extracted from the "t distribution".
 
-### Antes de seguir, definamos los "grados de libertad"
-### Se define como el numero de observaciones - 2.
-grados.de.libertad = nrow(dat)-2
-
-grados.de.libertad # ...veamos.
-
-### La manera en que calculamos el intervalo de confianza,
-### es la siguiente:
-
-### Formula del intervalo de confianza
-### coeficiente +/- t * SE del coeficiente.
-
-# Es un calculo "doble":
-### coeficiente + t * SE del coeficiente.
-### coeficiente - t * SE del coeficiente.
-
-
-### Hasta el momento, sabemos como derivar el coeficiente ( o "beta"). 
-### Solo recuerda nuestros ej's en matrices:
-### beta = (x'x)^-1x'y
-
-### En la clase de hoy, aprendimos tambien a sacar el error estandard 
-### y entendimos lo que significa.
-### Recuerda, el SE se saca asi:
-### sqrt(diag(sigma.2 * inv(t(x) %*% x)))
-### Es decir, la raiz cuadrada del los elementos diagonales de la
-### multiplicacion entre sigma^2 y x'x (que es el "variance-covariance matrix").
-
-### Para completar nuestra formula de los intervalos de confianza,
-### necesitamos un ultimo elemento, "t". 
-### T es un valor critico que sacamos de una distribicion 
-### llamada "t". 
-
-
-#### Ocupemos una funcion para conseguir estos valores criticos.
-t = qt(1-.05/2, grados.de.libertad) # valores criticos de t, a un 95% de confianza.
-
-# "1-.05" porque queremos el 95% de la distribucion.
-# Piensa en "la distribucion" como al area bajo la curva
-# que representa "confianza". Es por eso que decimos 
-# que "estamos 95% seguros/confiados que nuestra estimacion
-# es cierta"
-# Y es dividido por dos ("/2") porque queremos repartir esa
-# confianza a ambos lados de la distribucion.
+# We will use a function to obtain these "critical values" (from the t distribution).
+t = qt(1-.05/2, degrees.of.freedom) # critical values for 95% confidence intervals.
+# And we divide this by two because we want to "split" this "confidence" in both sides of the distribution.
 
 # 
 10631.611789 - t * sqrt(diag(sigma.2 * inv(t(x) %*% x)))[1]  # (Intercept)  #  9136.09240230
@@ -220,9 +157,8 @@ t = qt(1-.05/2, grados.de.libertad) # valores criticos de t, a un 95% de confian
 0.002947     + t * sqrt(diag(sigma.2 * inv(t(x) %*% x)))[3]  # pop 
 
 
-# Pero nuevamente, siempre hay un camino mas corto.
-confint(modelo.1, level = 0.95) # 95% de confianza
+# But hey, there was a shorter way again...
+confint(model.1, level = 0.95) # 95% de confianza
 
-# Discutir
-## (1) Por que 95 vs. 99? 
-## (2) Logica frecuentista: limites del "supuesto asintotico". Es posible?
+# Discuss
+# "Frequentist" paradigm: What does 95% mean? Hint: if this "experiment" were repeated 100 times...
