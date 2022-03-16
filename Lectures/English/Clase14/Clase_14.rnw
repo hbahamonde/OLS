@@ -151,7 +151,7 @@ headpunct=:
 \pagestyle{fancy} % All pages have headers and footers
 \fancyhead{} % Blank out the default header
 \fancyfoot{} % Blank out the default footer
-\fancyhead[C]{OLS: T\'erminos de Interacci\'on} % Custom header text
+\fancyhead[C]{OLS: Interaction Terms} % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
 
@@ -184,57 +184,59 @@ if (!require("pacman")) install.packages("pacman"); library(pacman)
 
 
 
-\hspace{-5mm}{\bf Profesor}: H\'ector Bahamonde, PhD.\\
-\texttt{e:}\href{mailto:hector.bahamonde@uoh.cl}{\texttt{hector.bahamonde@uoh.cl}}\\
-\texttt{w:}\href{http://www.hectorbahamonde.com}{\texttt{www.hectorbahamonde.com}}\\
-{\bf Curso}: MLE.\\
-\hspace{-5mm}{\bf TA}: Gonzalo Barr\'ia.
+\hspace{-5mm}{\bf Professor}: H\'ector Bahamonde, PhD.\\
+\texttt{e:}\href{mailto:hibano@utu.fi}{\texttt{hibano@utu.fi}}\\
+\texttt{w:}\href{http://www.hectorbahamonde.com}{\texttt{www.HectorBahamonde.com}}\\
+{\bf Curso}: OLS.\\
+\hspace{-5mm}{\bf TA}: Valterri Pulkkinen.
 
 
-\section*{T\'erminos de Interacci\'on: Introducci\'on}
+\section*{Interaction Terms: An Introduction}
 
-Un modelo lineal tradicional---como el de la \autoref{eq:ols}---te muestra el efecto de una variable $x_{1}$ (\emph{educaci\'on}) sobre $y$ manteniendo la variable de control $x_{2}$ (\emph{hombre}) constante en su media. 
+Traditional linear models---like the one in \autoref{eq:ols}---shows the effect of a variable $x_{1}$ (\emph{schooling}) over $y$, keeping the control variable $x_{2}$ (\emph{man}) constant at its mean.
 
     \begin{equation}\label{eq:ols}
-      \text{ingresos}_{i} \;=\; \beta_{0} + \beta_{1}\text{educaci\'on}_{i} + \beta_{2}\text{hombre}_{i} + \epsilon_{i}
+      \text{income}_{i} \;=\; \beta_{0} + \beta_{1}\text{schooling}_{i} + \beta_{2}\text{man}_{i} + \epsilon_{i}
     \end{equation}
 
-{\color{red}Por qu\'e es importante controlar por g\'enero?}    
+{\color{red}By the way, Why is it important to even control for gender, like in \autoref{eq:ols}}?
 
-Un t\'ermino de interacci\'on, sin embargo, se usa cuando queremos saber el efecto {\bf combinado} de dos variables. La ventaja del t\'ermino de interacci\'on es que muestra el efecto de las dos variables  $x_{1}$ {\bf y}  $x_{2}$ impactando $y$ al mismo tiempo. Por ejemplo, si quisi\'eramos saber cu\'al es el efecto que tiene la variable \emph{educaci\'on} ($x_{1}$) {\bf y} (esto es, en {\bf combinaci\'on con}) \emph{hombre} ($x_{2}$) sobre \emph{ingresos} ($y_{i}$), deber\'iamos estimar la siguiente ecuaci\'on:
+An interaction term, however, is used when we want to know the {\bf combined} effect of two (or more) independent variables. The advantage is that interaction terms show the effect on $y$ of the two variables at the same time ($x_{1}$ {\bf and}  $x_{2}$).
+
+For instance, if we wanted to know what's the combined effect of \emph{schooling} ($x_{1}$) {\bf and} (that is, in {\bf combination with}) \emph{man} ($x_{2}$) over \emph{income} ($y_{i}$), we should estimate the following equation: 
+
 
     \begin{equation}\label{eq:int:term}
-      \text{ingresos}_{i} \;=\; \beta_{0} + \beta_{1}\text{educaci\'on}_{i} + \beta_{2}\text{hombre}_{i} + \beta_{3}{\text{educaci\'on}_{i} \times \text{hombre}}_{i}  + \epsilon_{i}
+      \text{income}_{i} \;=\; \beta_{0} + \beta_{1}\text{schooling}_{i} + \beta_{2}\text{man}_{i} + \beta_{3}{\text{schooling}_{i} {\color{red}\times} \text{man}}_{i}  + \epsilon_{i}
     \end{equation}
 
-En este ejemplo asume que la variable \emph{hombre} s\'olo toma valores 0 (mujer) y 1 (hombre). 
+\paragraph{Substantive} From a substantive point of view, interaction terms are relevant because they shed light on interactive questions. Like in this case, there are very compelling reasons to believe that---unfortunately---if we had two subjects, one male and one female with similarly low levels of schooling, man might be more likely to be better off compared to the female individual. This is particularly in developing contexts. Hence, it makes sense from a substantive point of view to study how our results vary by gender.
 
-\paragraph{Substantivo} Desde un punto de vista substantivo los termin\'os de interacci\'on son relevantes porque dan luz a preguntas de tipo interactivas: existen serias razones para pensar que---lamentablemente---no es lo mismo ser un hombre con educaci\'on a una mujer con educaci\'on. Nota c\'omo ahora estamos refiri\'endonos a \emph{ambos} factores impactando la variable dependiente de manera conjunta.
-
-\paragraph{Parametrizaci\'on} La manera en la que est\'a parametrizada el modelo lineal con interacciones es \emph{parecida} al modelo tradicional. Pero existen algunas diferencias. Volvamos a la \autoref{eq:int:term}.
+\paragraph{Parametrization} The way in which we specify a interactive model is very similar to traditional linear models, but with important differences. Let's see this closely by taking a look at \autoref{eq:int:term} again: 
 
 \begin{enumerate}
-  \item Los par\'ametros $\beta_{0}$ y $\beta_{1}$ son el intercepto y la pendiente---respectivamente---de la ``categor\'ia de referencia'', es decir, de la categor\'ia base: cuando la variable \emph{hombre}=0 (es decir, el caso de las mujeres). Esto es muy intuitivo. Cuando la variable \emph{hombre}=0, el modelo se reduce a \autoref{eq:int:term:0}.
-  \item El intercepto para el otro grupo---\emph{hombre}=1, es decir, el caso de los hombres---es $\beta_{0}+\beta_{2}$, mientras que la pendiente est\'a dada por $\beta_{1}+\beta_{3}$. De la misma manera, es muy intuitivo. Ve la \autoref{eq:int:term:1}
+  \item Parameters $\beta_{0}$ and $\beta_{1}$ are the intercept and the slope, respectively of the ``reference category.'' In this case, the reference category is the ``base category'', or mathematically, when \emph{man}=0, that is, for ``women.'' This is very intuitive. When the variable \emph{man}=0, the model is reduced to \autoref{eq:int:term:0}.
+
+  \item The intercept is for the other group---\emph{man}=1, that is, for the men in the dataset. In these case, it should be $\beta_{0}+\beta_{2}$, mientras que la pendiente est\'a dada por $\beta_{1}+\beta_{3}$. De la misma manera, es muy intuitivo. Ve la \autoref{eq:int:term:1}
 \end{enumerate}
 
 
 
     \begin{equation}\label{eq:int:term:0}
     \begin{split}
-      \text{ingresos}_{i}  = \beta_{0} + \beta_{1}\text{educaci\'on}_{i} +& \beta_{2}\text{hombre}_{i} + \beta_{3}{\text{educaci\'on}_{i} \times \text{hombre}}_{i}  + \epsilon_{i}\\
-      \text{ingresos}_{i}  = \beta_{0} + \beta_{1}\text{educaci\'on}_{i} +& \beta_{2}{\color{red}0} + \beta_{3}{\text{educaci\'on}_{i} \times {\color{red}0}}_{i}  + \epsilon_{i}\\
-      \text{ingresos}_{i} = \beta_{0} + \beta_{1}\text{educaci\'on}_{i}  +& {\color{red}0} + {\color{red}0}  + \epsilon_{i}\\
-      \text{ingresos}_{i} = \beta_{0} + \beta_{1}\text{educaci\'on}_{i}  +& \epsilon_{i}
+      \text{income}_{i}  = \beta_{0} + \beta_{1}\text{schooling}_{i} +& \beta_{2}\text{man}_{i} + \beta_{3}{\text{schooling}_{i} \times \text{man}}_{i}  + \epsilon_{i}\\
+      \text{income}_{i}  = \beta_{0} + \beta_{1}\text{schooling}_{i} +& \beta_{2}{\color{red}0} + \beta_{3}{\text{schooling}_{i} \times {\color{red}0}}_{i}  + \epsilon_{i}\\
+      \text{income}_{i} = \beta_{0} + \beta_{1}\text{schooling}_{i}  +& {\color{red}0} + {\color{red}0}  + \epsilon_{i}\\
+      \text{income}_{i} = \beta_{0} + \beta_{1}\text{schooling}_{i}  +& \epsilon_{i}
       \end{split}
     \end{equation}
 
     \begin{equation}\label{eq:int:term:1}
     \begin{split}
-      \text{ingresos}_{i}  = \beta_{0} + \beta_{1}\text{educaci\'on}_{i} +& \beta_{2}\text{hombre}_{i} + \beta_{3}{\text{educaci\'on}_{i} \times \text{hombre}}_{i}  + \epsilon_{i}\\
-      \text{ingresos}_{i}  = \beta_{0} + \beta_{1}\text{educaci\'on}_{i} +& \beta_{2}{\color{red}1} + \beta_{3}{\text{educaci\'on}_{i} \times {\color{red}1}}_{i}  + \epsilon_{i}\\
-      \text{ingresos}_{i} = \beta_{0} + \beta_{1}\text{educaci\'on}_{i}  +& {\color{red}\beta_{2}} + {\color{red}\beta_{3}{\text{educaci\'on}_{i}}}  + \epsilon_{i}\\
-      \text{ingresos}_{i} = (\beta_{0} + {\color{red}\beta_{2}}) +& \text{educaci\'on}_{i}\times(\beta_{1}+{\color{red}\beta_{3}})  + \epsilon_{i}
+      \text{income}_{i}  = \beta_{0} + \beta_{1}\text{schooling}_{i} +& \beta_{2}\text{man}_{i} + \beta_{3}{\text{schooling}_{i} \times \text{man}}_{i}  + \epsilon_{i}\\
+      \text{income}_{i}  = \beta_{0} + \beta_{1}\text{schooling}_{i} +& \beta_{2}{\color{red}1} + \beta_{3}{\text{schooling}_{i} \times {\color{red}1}}_{i}  + \epsilon_{i}\\
+      \text{income}_{i} = \beta_{0} + \beta_{1}\text{schooling}_{i}  +& {\color{red}\beta_{2}} + {\color{red}\beta_{3}{\text{schooling}_{i}}}  + \epsilon_{i}\\
+      \text{income}_{i} = (\beta_{0} + {\color{red}\beta_{2}}) +& \text{schooling}_{i}\times(\beta_{1}+{\color{red}\beta_{3}})  + \epsilon_{i}
       \end{split}
     \end{equation}
 
@@ -250,11 +252,11 @@ En este ejemplo asume que la variable \emph{hombre} s\'olo toma valores 0 (mujer
 \section*{Buenas Pr\'acticas}
 
 
-F\'ijate que cada vez que incluimos un t\'ermino de interacci\'on ($\text{educaci\'on}_{i} \times {\text{hombre}}_{i}$), para interpretar su par\'ametro asociado ($\beta_{3}$), es necesario incluir los sub-t\'erminos por separado. Esto es, permitir que la ecuaci\'on tenga un par\'ametro independiente asociado a \emph{educaci\'on} y \emph{hombre}, esto es, $\beta_{1}$ y $\beta_{2}$ (tal y como aparece en \autoref{eq:int:term}). Si estimamos s\'olo la siguiente ecuaci\'on, $\beta_{3}$ estar\'a sesgado. {\bf NO HAGAS LO SIGUIENTE}:
+F\'ijate que cada vez que incluimos un t\'ermino de interacci\'on ($\text{schooling}_{i} \times {\text{man}}_{i}$), para interpretar su par\'ametro asociado ($\beta_{3}$), es necesario incluir los sub-t\'erminos por separado. Esto es, permitir que la ecuaci\'on tenga un par\'ametro independiente asociado a \emph{schooling} y \emph{man}, esto es, $\beta_{1}$ y $\beta_{2}$ (tal y como aparece en \autoref{eq:int:term}). Si estimamos s\'olo la siguiente ecuaci\'on, $\beta_{3}$ estar\'a sesgado. {\bf NO HAGAS LO SIGUIENTE}:
 
 
     \begin{equation}\label{eq:int:term:mala}
-      \text{ingresos}_{i} \;=\; \beta_{0} + \beta_{3}{\text{hombre}}_{i}\times \text{educaci\'on}_{i} + \epsilon_{i}
+      \text{income}_{i} \;=\; \beta_{0} + \beta_{3}{\text{man}}_{i}\times \text{schooling}_{i} + \epsilon_{i}
     \end{equation}
 
 
@@ -264,7 +266,7 @@ F\'ijate que cada vez que incluimos un t\'ermino de interacci\'on ($\text{educac
 De acuerdo a \textcite[73]{Brambor2006},\footnote{Ecuaciones 11-13.} el efecto marginal en la ecuaci\'on \autoref{eq:normal},
 
     \begin{equation}\label{eq:normal}
-      \text{ingresos}_{i} \;=\; \beta_{0} + \beta_{1}\text{educaci\'on}_{i} + \beta_{2}\text{hombre}_{i} + \epsilon_{i}
+      \text{income}_{i} \;=\; \beta_{0} + \beta_{1}\text{schooling}_{i} + \beta_{2}\text{man}_{i} + \epsilon_{i}
     \end{equation}
 
 est\'a dado por el siguiente c\'alculo:
@@ -276,12 +278,12 @@ est\'a dado por el siguiente c\'alculo:
 Sin embargo el t\'ermino de interacci\'on en \autoref{eq:int:term} es distinto, y est\'a dado por el siguiente c\'alculo:
 
     \begin{equation}\label{ef:marg:t:i}
-      \frac{\partial y}{\partial x_{1}} = \beta_{1} + \beta_{3}\text{hombre}
+      \frac{\partial y}{\partial x_{1}} = \beta_{1} + \beta_{3}\text{man}
     \end{equation} % this shows in https://rdrr.io/cran/margins/f/vignettes/Introduction.Rmd Brambor's paper got the equation with a typo. 
 
 En palabras, es \emph{cu\'anto cambia $y$ cuando cambia $x$, seg\'un niveles de la variable hombre}.
 
-Cambiemos de ejemplo, y estimemos un modelo con tres niveles (no dos, como \emph{hombre}).
+Cambiemos de ejemplo, y estimemos un modelo con tres niveles (no dos, como \emph{man}).
 
 Carguemos los datos:
 
@@ -317,7 +319,7 @@ p_load(scatterplot3d)
 scatterplot3d(Duncan$income, Duncan$type, Duncan$prestige, color = as.numeric(Duncan$type))
 @
 
-Usemos una base de datos donde todas las variables son continuas (no como en el ejemplo donde \emph{hombre} es dicot\'omica):
+Usemos una base de datos donde todas las variables son continuas (no como en el ejemplo donde \emph{man} es dicot\'omica):
 
 <<i:c:5, echo = TRUE, warning = FALSE, message = F, fig.align='center', fig.width=6, fig.height=6,dpi=1000,cache=F, include = TRUE>>=
 p_load(car,rgl)
