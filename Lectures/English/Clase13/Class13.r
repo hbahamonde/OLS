@@ -114,122 +114,89 @@ mydf <- ggpredict(model.1)
 # Note the following:
 # Whatever is inside the confidence intervals contain the true value.
 # P-values---very conveniently---go from 0 to 1.
-# P-values larger than 0.005 mean that there is a 5% that beta=0. 
-## Think about this again: We don't work with "truths", but with things that are not false! 
-## Put it differently, we work with things that are 5% fals, tops. 
-
-#################################################################
-# OK, misterio resuelto. Y es por esto que necesitamos pensar en P-values
-#################################################################
-
-# En nuestra tabla de regresion, el "p-value" esta dado por la probabildiad de que
-# el "valor t" ("t value") sea mayor al numero absoluto de t (en la tabla,
-# esta denotado por "Pr(>|t|)").
-
-# Volvamos a mirar la tabla
-summary(model.1)
-
-# Vamos por parte.
-# Primero, veamos lo que el p-value es (los numeros en la columna  "Pr(>|t|)").
-
-# (1) Un p-value es la probabilidad de que nuestro efecto sea "falso".
-# Esto en matematicas significa que nuestro efecto sea realmente "0".
-
-# (2) Como es una probabilidad, el p-value (o valor "p") es una escala
-# que va de 0 a 1. 
-
-# (3) En ciencias sociales, existe la convencion de que un p-value 
-# superior al 5%, se cuenta como "falso." Es decir, cuando nuestro p-value,
-# que es nuestra probabilidad de que nuestro efecto sea falso/cero, es mayor a 5%,
-# concluimos que el efecto es "realmente" cero. Ahora, si el p-value es menor 
-# a 5%, consideramos que la probabilidad de que sea falso es chica, y podemos
-# creer que nuestro efecto en realidad es "verdadero" o mas bien "no-cero" o "no falso".
-
-
-# Recuerda: 5% significa 5/100=0.05. Entonces, un p-value menor a 0.05 indica que 
-# nuestro efecto es verdadero o "no-falso", y un p-value mayor a 0.05 indica que nuestro efecto es falso/0. Es por esto que los p-values de los coeficientes que son iguales o menores a 0.05 tienen estrellas, y los que son mayores no tienen. 
+# P-values larger than 0.005 mean that there is more than a 5% chance that beta=0 
+# So we consider it as FALSE!
+# Think about this again: We don't work with "truths", but with things that are not false! 
+# Put it differently, we work with things that are at most 5% false,
+# or things that are least 95% "true."
 
 
 #################################################################
-# Estadistico T
+# T Statistic
 #################################################################
 
-# Lo siguiente es el "t value" o "valor t" (o "estadistico t").
-# El t value es el coeficiente/error estandard.
+# The t-statistic is just the coefficient/std. error.
 
 48303/19052
 2345/6036
 18707/15973
 
-# Esto significa que cuando el error estandard es grande (lo que es "malo"), 
-# t value se vuelve mas chico. Nosotros queremos lo contrario. Ojala t values
-# que son cercanos a dos. En general, esos t values tienen un p-value < 0.05.
+# This means that when our std. error is big (something that we do NOT want)
+# the t-statistic becomes smaller. We want the opposite.
+# We want t statistics that are close to 2. In general, those t statistics
+# have a p-value < 0.05.
 
-# En otras palabras, el t value es una medida de dispersion de nuestra estimacion.
-# Mientras mas dispersa, mas alta es la probabilidad de que--en su dispersion--
-# nuestra estimacion toque el cero. 
+# In other words, the t statistic is a measurement of dispersion of our estimation.
+# The more disperse, the higher the probability that our estimatation gets closer to 0.
 
-#################################################################
-# Al pensar en los p-values y los intervalos de confianza,
-# hemos tratado de minimizar nuestros Errores Tipo 1 y 2.
-#################################################################
 
-# La logica en investigacion en ciencias sociales tiene que ver con la idea de 
-# ver si hay suficiente evidencia en contra de la "hipotesis nula" (es decir, no hay efecto). En otras palabras, un@ no trata de buscar "verdades" (o estimaciones estadisticamente
-# significativas). Un@ trabaja con estimaciones que son hasta 5% falsas (o 95% verdaderas).
-
-# En concreto, un@ trata de minimizar la posibildiad del error "Tipo 1".
-
-# Error Tipo 2: falsos negativos.
-# Error Tipo 1: falsos positivos.
-
-# Definir ambos.
 
 
 #################################################################
-# Pensamiento Critico
+# All we have done is just to quantify the way we social scientist
+# test our hypotheses.
+# Enter the "Type 1" and "Type 2" errors.
+#################################################################
+
+# In social sciences we don't "search for the truth," but rather
+# verify if certain hypothesis "survives" a bunch of (statistical) proofs.
+# If our hypothesis does survive, we stick to that idea (until it gets 
+# "falsified" in the future).
+
+# In other words, we try to rule of Type 1 errors
+# Type 1 Errors: false positives.
+
+# There are also Type 2 errors:
+# False negatives. 
+
+#################################################################
+# Critical Thinking
 #################################################################
 
 # P-values.
-#----
 
-## (1) Criticas al p-value. Por que 5% y no 3% por ejemplo?
-## (2) Comunicando resultados: tablas con CI en vez de estrellas.
+# (1) Do you feel comfortable with the idea of the 5% threshold? Why not 3? 
+# (or something else?)
 
+# (2) Communicating results in tables AND overcoming the 5% "dictatorship" 
 
 # install.packages("texreg")
 library(texreg)
-screenreg(model.1, ci.force = F)
+screenreg(model.1, ci.force = F) # WITHOUT C.I.
+
+screenreg(model.1, ci.force = T) # WITH C.I.
 
 
-### Tabla que incorpora estas criticas
-# install.packages("texreg")
-library(texreg)
-screenreg(model.1, ci.force = T) # nuestro paquete "screenreg" que ya conocemos,
-# pero ahora, forzando los intervalos de confianza ("confidence intervals"), por 
-# eso, "ci.force = T" ("T" por "true").
-
-
-
-# Asintotica 
+# Asymptotics 
 #----
 
-## Asintotica, recordemos, es la idea frecuentista de tener 
-## una base de datos infinita. Como esto es imposible,
-## "el mal menor" es tener la mayor cantidad de datos: mientras mas, mejor.
-
-### Demostrar en la pizarra que esto puede llegar a conducir a otros problemas.
-### Mas datos, varianza es mas chica, el valor esperado mas preciso.
-
-
-#### (1) Mientras mas datos tenemos, nuestras distribuciones se ponen mas perfectas, 
-#### delgadas, y precisas. Eso hace que encontremos independencia estadistica mas facil.
-#### (2) Falsos positivos! 
+# Asymptotics is the idea that the more data, the better.
+# Within the framework of "frequentist" statistics (our world...)
+# one of the assumptions is that our analyses assume
+# we HAVE INFINITE DATA! But, Do we?
 
 hist(rnorm(10,0,1))
 hist(rnorm(50,0,1))
 hist(rnorm(250,0,1))
 hist(rnorm(2500000,0,1))
+
+# As we can see, another potential problem with this is that the more data
+# we have, the more "perfect" our distributions will be. 
+# This has a direct impact on statistical significance: it makes it EASIER
+# to find statistical significance. 
+# In other words, when we have really huge datasets, EVERYTHING becomes
+# statistical significant. 
+
 
 
 
