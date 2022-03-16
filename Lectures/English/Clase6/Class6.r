@@ -1,4 +1,4 @@
-# Descriptive Stats: Probability Theory, Distributions, Variance.
+# Descriptive Stats (I): Probability Theory, Distributions, Variance.
 #################################################################
 
 # Let's clean everything...

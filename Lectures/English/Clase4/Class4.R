@@ -20,7 +20,7 @@ Prestige$income.categorical <- ifelse(Prestige$income > mean(Prestige$income), "
 # These are usually "factor" variables in R (like "pear", "apple", and "banana"). 
 # Now let's convert that variable to "factor"...and then plot.
 Prestige$income.categorical = as.factor(Prestige$income.categorical )
-plot(as.factor(Prestige$income.categorical)) 
+plot(Prestige$income.categorical)
 
 # What can we learn about this plot?
 
@@ -48,7 +48,7 @@ plot(Prestige$income.categorical, Prestige$women.categorical)
 plot(Prestige$income.categorical, Prestige$women)
 
 # It shows the first quartile (25%), the median or second quartile (50%), and the third quartile (74%).
-# In addition, it shows the minimum and the maximim, plus the outliers...a lot of information!
+# In addition, it shows the minimum and the maximum, plus the outliers...a lot of information!
 
 # What does this particular plot show?
 
@@ -88,7 +88,7 @@ ggplot(heights, aes(height, fill=sex)) + geom_density(alpha = 0.2)
 # Time series plots // Working with time...
 ############################################
 
-# Let's see the monthly sales of a gift store in a hotel in Austrialia
+# Let's see the monthly sales of a gift store in a hotel in Australia
 
 # The date goes from 1987 to 1993. 
 souvenir <- scan("http://robjhyndman.com/tsdldata/data/fancy.dat") 

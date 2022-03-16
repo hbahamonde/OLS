@@ -26,7 +26,7 @@ head(Prestige)
 
 # Why would you need to do this?
 
-## Drop function
+# Drop function
 # install.packages("dplyr") 
 library(dplyr)
 
@@ -35,15 +35,15 @@ library(dplyr)
 # Let's check what columns we already have in the Prestige data.frame.
 colnames(Prestige)
 
-### DF1 will have all except for "type" and "census"
+# DF1 will have all except for "type" and "census"
 Prestige.drop.1 = dplyr::select(Prestige, -c("type", "census"))
 colnames(Prestige.drop.1)
 
-### DF2 will have everything but "education" y "women"
+# DF2 will have everything but "education" y "women"
 Prestige.drop.2 = dplyr::select(Prestige,-c(education, women))
 colnames(Prestige.drop.2)
 
-### DF3 will be just "education" and "women"
+# DF3 will be just "education" and "women"
 Prestige.drop.3 = dplyr::select(Prestige, c(education, women))
 colnames(Prestige.drop.3)
 
@@ -99,7 +99,7 @@ lattice::histogram(Prestige$income, breaks=100)
 
 # Because of this issue, we will have to "transform" this variable.
 # Notice that income (and all things related to money!) behave usually this way. Why?
-# The kind of transformation (logs) will normalize our distribution.
+# The kind of transformation (logs) will "normalize" our distribution.
 # What we achieve with normalization is to reduce the "dispersion" of the distribution. Why do we need that? 
 
 log(Prestige$income)

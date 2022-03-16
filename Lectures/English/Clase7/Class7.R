@@ -5,6 +5,12 @@ rm(list=ls())
 graphics.off()
 options(scipen=9999999)
 
+# Load little function to compute mode (for later)
+mode <- function(v) {
+  uniqv <- unique(v)
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
 
 ############################################
 # Types of Distributions
@@ -14,14 +20,13 @@ options(scipen=9999999)
         # 1) There are many more distributions than the normal one.
         # 2) Distributions "look different"!
         # 3) Each one of them has a distinctive way of recognizing them.
-        # 4) Most of the methods we will learn this semester are suited for studying normal distributions only.
+        # 4) Most of the methods we will learn this semester are suited for studying *normal* distributions only.
 
 # We will use simulations methods to learn how different these distributions look alike.
 
 ############################################
 # Normal (Standard)
 ############################################
-
 
 set.seed(123) # lets set a pattern for the random-generating process.
 dist.normal = rnorm(100, mean = 0, sd = 1)
@@ -34,6 +39,13 @@ summary(dist.normal) # plot
 # Properties
         # 1) - inf to + inf
         # 2) Mode = Median = Mean ("average").
+
+mean(dist.normal) # canned function
+median(dist.normal) # canned function
+mode(dist.normal) # user-written function
+
+        # OK---pretty close. What could make these numbers to be equal, as theory predicts?
+
         # 3) Continuous numbers (no "discrete").
 
 # Can you know think of an example of this distribution? Think of something "social" or "political" or even "economic".
@@ -67,7 +79,7 @@ rbern(10, 0.9)
 # Binomial
 ############################################
 
-# It's lile Bernoulli, but for several "experiments." Let's imagine 24 sets of 10 coins each. 
+# It's like Bernoulli, but for several "experiments." Let's imagine 24 sets of 10 coins each. 
 # What we toss is a set at a time. Here we have 24 sets (or "experiments").
 
 set.seed(123)
@@ -77,14 +89,14 @@ rbinom(10, 24, 1)
         # 2. Number of "experiments."
         # 3. Probability of "success" of each experiment.
 
-# For instance, if the number of experiment is 24, and the probability is 1, all 24 coins will be head (i.e. 1, summing 24 each time).
+# For instance, if the number of experiment is 24, 
+# and the probability is 1, all 24 coins will be head (i.e. 1, summing 24 each time).
 
 # For instance, if the prob is 0.5, and we run 3 experiments,
 # the probability of having three "stacked" 1's (i.e. totalizing 3) is 50%.
 
 set.seed(123)
 rbinom(10, 3, 0.5)
-plot(rbinom(10, 3, 0.5))
 
 # Can you know think of an example of this distribution? Think of something "social" or "political."
 
