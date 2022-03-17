@@ -33,7 +33,7 @@ summary(model)
 
 # Interpretation: We always begin with our X.
 # "For every additional unit in X, Y moves up/down in [beta]."
-# ALWAYS, all betas, are expressed in units of the dependent variavle (Y).
+# ALWAYS, all betas, are expressed in units of the dependent variable (Y).
 # They are NEVER probabilities! 
 # If your dependent variable (y) is "prestige", beta1 is "units of prestige".
 # If your dependent variable (y) is "GDP", your betas (all of them!) will represent "GDP".
