@@ -4,7 +4,7 @@ cat("\014")
 rm(list=ls())
 graphics.off()
 
-# Now we're going to another OLS model using matrix algebra techniques.
+# Now we're going to estimate another OLS model using matrix algebra techniques.
 
 # While we've seen in class that coefficients are numbers, the emphasis 
 # has been on just that. Yes, coefficients are numbers, but the important 
@@ -93,19 +93,19 @@ x = Prestige$education
 x
 
 # Remember that to get beta0 you need to add a vector with as many 1's as the length of the dataset. 
-# Just like we did with our Person A, B, and C dataset.
+# Just like we did with our Person A, B, and C data set.
 # That's why many statisticians call it "the constant" (because it's just a constant, not a *variable*).
 
-# Let's tell R to repeat as many 1's as the length of our dataset.
+# Let's tell R to repeat as many 1's as the length of our data set.
 ones = rep(1,length(x)) 
 
 # Let's check
 ones
 
-# Now let's combine the "x" and "ones" objects
+# Now let's combine our "x" and "ones" objects
 
 x = matrix(
-  c(unos,x), # plug in 'ones' and 'x'
+  c(ones,x), # plug in 'ones' and 'x'
   ncol = 2 # organize these two guys in 2 columns.
   )
 
@@ -126,7 +126,7 @@ y
 # To transpose, use:
 # t()
 
-# To inver, use:
+# To invert, use:
 # inv()
 
 # Also, load the matlib library to use the  "inv()" function.

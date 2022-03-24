@@ -4,7 +4,7 @@ cat("\014")
 rm(list=ls())
 graphics.off()
 
-# In this class we will work with a famous dataset called 
+# In this class we will work with a famous data set called 
 # "Correlates of War." This data is widely used to study war. 
 
 # Today, we are going to think about the following question: What's the relationship
