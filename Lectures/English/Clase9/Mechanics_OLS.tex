@@ -275,8 +275,7 @@ Charly
 
 
 \begin{gather*}
- \text{Earnings}_{i} = \beta 0+\beta_{1}\text{Education}_{i} \ +\ \beta_{2}\text{Experience}_{i} + e_{i}\\\notag
-Y_{i} = \beta 0+\beta_{1}x1_{i} \ +\ \beta 2x2_{i} +e_{i} \notag
+ \text{Earnings}_{i} = \beta 0+\beta_{1}\text{Education}_{i} \ +\ \beta_{2}\text{Experience}_{i} + e_{i}
 \end{gather*}
 
 
@@ -346,12 +345,27 @@ It's easy to see that:
 \item The only parameter that's indexed (i.e. one row per observation or ``individual,'' hence the tiny ``\emph{i}'') is $\displaystyle \epsilon _{i}$. We will address this in another class. But basically, it's the ``error'' or ``residual.'' 
 \\
 \\
-Let's think about the case of ``Aldred.''  If $\displaystyle \beta 0\ =\ -3$, $\displaystyle \beta 1\ =\ 1$ and $\displaystyle \beta 2\ =\ 2$, we have that $\displaystyle y_{_{\text{Alfred}}} -3\ +\ 1( 2) \ +\ $2(2) = 3. Thus:
+Let's think about the case of ``Aldred.''  If,
+\\
+\\
+$\beta 0\ =\ -3$, 
+\\
+\\
+$\beta 1\ =\ 1$, and
+\\
+\\
+$\beta 2\ =\ 2$, then,
+\\
+\\
+we have that,
+\\
+\\
+$\displaystyle \hat{y}_{_{\text{Alfred}}} -3\ +\ 1( 2) \ +\ $2(2) = 3. Then if $y=3$ and $\hat{y}=3$, {\bf by how much did I miss my prediction?} Thus:
 \end{itemize}
 
 
 \begin{equation*}
-y_{\text{Alfred}} \ =\ 3\ =\ -3\ +1( 2) \ +2( 2) \ +\ 0
+\hat{y}_{\text{Alfred}} \ =\ 3\ =\ -3\ +1( 2) \ +2( 2) \ +\ 0
 \end{equation*}
 
 
@@ -365,10 +379,9 @@ y_{\text{Alfred}} \ =\ 3\ =\ -3\ +1( 2) \ +2( 2) \ +\ 0
 
 
 
-\paragraph{}{\Large \textbf{Deriving}$\displaystyle \beta $\textbf{ (quantitative effect of} $\displaystyle X$ \textbf{on} $\displaystyle Y$\textbf{):}}
-
-
-
+\paragraph{}{\Large \textbf{Deriving} \;$\displaystyle \beta $\textbf{ (quantitative effect of} $\displaystyle X$ \textbf{on} $\displaystyle Y$\textbf{):}}
+\\
+\\
 $\displaystyle \beta \ =\ \left( \boldsymbol{X}^{T} \boldsymbol{X}\right)^{-1} \boldsymbol{X}^{T} y$
 
 
@@ -478,4 +491,6 @@ This means that $\displaystyle \beta 0\ =\ 1,\ \beta 1\ =\ 0$ and that $\display
 6
 \end{bmatrix}_{x2} +e_{i}\\
 \end{gather*}
+
+Ok, let's now turn to \texttt{R}.
 \end{document}

@@ -52,20 +52,21 @@ predict(model)
 
 # In any case, predicting pretty much tells you about the 
 # performance of your model. 
-# Consider this: if you observed a "57" in your X, but your model predicts a "120"
-# your model is not performing well. I'll teach you ways to think about this soon.
+# Consider this: if you observed a "57" but your model predicts a "120"
+# your model is not performing well (It's 120-75 points off!). 
+# I'll teach you ways to think about this soon.
 
 # In more detail,
 
 # What we see :
-# Alfred had a 64, but our model predicts 62.63
-# Brandon had a 53, but our model predicts 53.49
-# Charly had a 67, but our model predicts 67.85
+# Alfred had a y=64, but our model predicts y=62.63
+# Brandon had a y=53, but our model predicts y=53.49
+# Charly had a y=67, but our model predicts y=67.85
 
 # Discuss: Are those departures big or small?
 
 # These departures are called "error," and it's the difference
-# between what we observe and what we estimate: the better the model,
+# between the Y we observe and the Y we estimate: the better the model,
 # the less "errors," which kind of makes sense. 
 
 # Let's use the whiteboard. 
