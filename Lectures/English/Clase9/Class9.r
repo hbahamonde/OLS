@@ -50,7 +50,7 @@ solve(t(x)%*%x)
 ###########################
 
 # In matrix form: b = (x'x)-1*x'y
-options(scipen=99)
+options(scipen=100)
 solve(t(x) %*% x)%*%t(x)%*%y # beta
 
 b = round(solve(t(x) %*% x)%*%t(x)%*%y, 0)
