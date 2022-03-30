@@ -258,7 +258,7 @@ summary(dat$error2)
 # We never will know if we have the "true model."
 # That's why we always try different specifications.
 
-p_load(texreg) # paquete para hacer tablas con varios modelos.
+p_load(texreg) # package to display a regression table but for several models.
 
 screenreg( 
   list( 
