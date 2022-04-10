@@ -30,19 +30,19 @@ confint(model.1, level = 0.99) # 99% of confidence.
 # This means that the price we pay for them is UNCERTAINTY. 
 # Let's SEE this uncertainty.
 
-# install.packages("coefplot", "ggplot2")
-library(coefplot, ggplot2)
-coefplot(model.1)
+# install.packages("dotwhisker", "ggplot2")
+library(dotwhisker, ggplot2)
+dwplot(model.1, show_intercept = T)
 
 # (1) Compare the coefficients in the table and in the plot. 
 # (2) What do we see in the plot?
 # (3) What can we say about the different coefficients?
-# (4) What can we say respet to the *precision* of our estimates? 
-# (5) What do we want? And do we want to avoid? 
+# (4) What can we say respect to the *precision* of our estimates? 
+# (5) What do we want? And what do we want to avoid? 
 # (6) Why are we getting wide/narrow confidence intervals? Does that depend on what exactly?
 
 
-# Now, bare in mind that the uncertainty that coefplot shows is for the mean (average) of that distribution.
+# Now, bare in mind that the uncertainty that dotwhisker shows is for the mean (average) of that distribution.
 # A better view is to observe how our estimated uncertainty VARIES as we move along the range of our variable. 
 # Make sure you understand this: it is REALLY important.
 
@@ -53,7 +53,7 @@ library(effects)
 plot(allEffects(model.1))
 
 # (1) What are we seeing here? 
-# Let's see the effect on the whiteboard, and draw the lineal delta. (1179.9 democracy)
+# Let's see the effect on the whiteboard, and draw the lineal delta. (1638 democracy)
 # (2) Do you see anything that might explain part of our uncertainty?
 
 # Now that we know that the confidence intervals are, let's figure out where they come from, and how
@@ -80,7 +80,7 @@ k = 3 # number of variables we used in our model (including the intercept)
 sigma.2 = (1/(nrow(dat)-k))*sum(diag(e %*% t(e)))
 
 # Third, let's get the X matrix ("what we observe").
-# To obtain the intercept, we will put a column of 1's of the same lenght of our X matrix.
+# To obtain the intercept, we will put a column of 1's of the same length of our X matrix.
 ones = rep(1, nrow(dat)) 
 
 
@@ -94,6 +94,7 @@ summary(model.1) # Actually our table tells us the standard errors. They are SUP
 # To compute the standard errors, first we need to take a look at the variance-covariance matrix.
 # Variances are the diagonal elements of the matrix, and the covariances are the off-diagonal elements of the matrix.
 
+# install.packages("matlib")
 library(matlib)
 
 # Let's calculate the variance-covariance matrix.
@@ -110,7 +111,7 @@ vcov(model.1)
 # At the same time, the std. errors are important to compute the confidence intervals. So...
 # Variance-Covariance Matrix --> Std. Errors --> Confidence Intervals.
 
-# Interestingly, the square of the square of the matrix we just computed contains the std. errors!
+# Interestingly, the square root of the diagonal elements of the matrix (e.g. the variances) are the std. errors!
 sqrt(diag(sigma.2 * inv(t(x) %*% x)))
 
 # Let's check...
@@ -118,13 +119,13 @@ summary(model.1)
 
 # But hey, let's try to really understand what the std. errors are. (Now that we know how to calculate them).
 # Std. errors are a measure of uncertainty of our coefficients. The larger the error, the larger the uncertainty. 
-# How large or small are your std. errors? Std. errors just make sense in the context of your model/coefficients. And really
-# there isn't a "rule of thumb" to say "this is a "big"/"small" std. error. 
+# How large or small are your std. errors? Std. errors just make sense in the context of your model/coefficients. And really there isn't a "rule of thumb" to say "this is a "big"/"small" std. error. 
+# However, the unit of the standard errors is the same as your x.
 
 # Not let's talk about confidence intervals. 
 # Remember, confidence intervals are constructed using the std. errors.
 
-# Let's define oir "degrees of freedom" 
+# Let's define our "degrees of freedom" 
 degrees.of.freedom = nrow(dat)-2
 
 degrees.of.freedom 
