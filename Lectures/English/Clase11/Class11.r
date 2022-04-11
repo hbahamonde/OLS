@@ -184,6 +184,7 @@ t(x) # OK, this is possible
 t(x) %*% x # OK, also possible
 
 # Now, let's keep on going, and try to invert (x'x)
+# install.packages("matlib")
 library(matlib)
 inv(t(x) %*% x) # Matrix is not invertible.
 # Technically, this means that the "determinant" of the matrix is 0.

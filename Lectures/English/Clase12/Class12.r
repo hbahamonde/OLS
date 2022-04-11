@@ -30,6 +30,7 @@ confint(model.1, level = 0.99) # 99% of confidence.
 # This means that the price we pay for them is UNCERTAINTY. 
 # Let's SEE this uncertainty.
 
+
 # install.packages("dotwhisker", "ggplot2")
 library(dotwhisker, ggplot2)
 dwplot(model.1, show_intercept = T)
