@@ -116,7 +116,7 @@ plot(biv.model$residuals, biv.model$fitted.values)
 
 # (1) How does it look like when we are in trouble? ("heteroskedasticity")
 # (2) How can we re-think about this concept, "normally distributed errors with mean 0"?
-# (3.1) A "good" error doesn't have a clear pattern. 
+# (3) A "good" error doesn't have a clear pattern. 
 # (4) Why do we have errors in our models anyways?
 
 ########################
@@ -131,11 +131,14 @@ plot(biv.model$residuals, biv.model$fitted.values)
 # Let's write our basic OLS equation model again.
 # y = b0 + b1x1 + b2x2 + b3x3 + e
 
-# Let's dicuss these:
+# Let's discuss these:
 # (1) Why are independent variables called "independent"?
 # (2) Does it matter the order in which the X's are arranged in the equation?
 # (3) How many X's should I put in the equation?
 # (4) Which independent variables CAN'T include?
+
+# THE CONCEPT OF "INDEPENDENCE" IS CLOSELY RELATED TO THE 
+# CONCEPT OF MULTICOLLINEARITY.
 
 #####################
 # WE CANNOT DO THESE
